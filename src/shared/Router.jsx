@@ -47,9 +47,8 @@ function Router() {
         <Route path="/chats" element={<Chats />} />
         {/* 채팅방 상세 */}
         <Route path="/chats/:id" element={<Chat />} />
-        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories/:id" element={<Categories />} />
         {/* 카테고리별 상품리스트 페이지 */}
-        <Route path="/categories/:id" />
       </Routes>
     </BrowserRouter>
   );

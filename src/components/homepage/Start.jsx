@@ -67,6 +67,9 @@ const Main = styled.div`
     line-height: 1.4;
     text-align: center;
   }
+  @media (max-width: 400px) {
+    padding-top: 50%;
+  }
 `;
 
 const Buttons = styled.div`

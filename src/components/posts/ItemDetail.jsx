@@ -22,16 +22,11 @@ const ItemDetail = () => {
           <h3>포켓몬 빵 미개봉 상품 일괄 판매</h3>
           <PostDetailBox>
             <strong>기타 중고물품</strong>
-            <span>· 13분전</span>
+            <span> · 13분전</span>
           </PostDetailBox>
-          <PostContent>
-            로켓단 11월 1일, 이상해씨 11월 2일, dsanjd sdj로켓단 11월 1일,
-            이상해씨 11월 2일, dsanjd sdj 로켓단 11월 1일, 이상해씨 11월 2일,
-            dsanjd sdj 로켓단 11월 1일, 이상해씨 11월 2일, dsanjd sdj 로켓단
-            11월 1일, 이상해씨 11월 2일, dsanjd sdj
-          </PostContent>
+          <PostContent>로켓단 11월 1일, 이상해씨 11월 2일</PostContent>
           <PostSub>
-            <span>채팅 1</span>
+            <span>채팅 1 </span>
             <span> · 조회 12</span>
           </PostSub>
         </PostContainer>
@@ -57,7 +52,7 @@ const Container = styled.div`
 
 const UserContainer = styled.div`
   display: flex;
-  padding: 0.8rem 0;
+  padding: 0.8rem 1rem;
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   width: 100%;
 `;
@@ -74,13 +69,18 @@ const UserImage = styled.div`
 `;
 
 const TextContainer = styled.div`
+  &:hover {
+    h3 {
+      font-weight: 600;
+    }
+    div {
+      font-weight: 500;
+    }
+  }
   h3 {
     margin-top: 0.3rem;
     font-size: 1rem;
     cursor: pointer;
-    &:hover {
-      font-weight: 600;
-    }
   }
   div {
     margin-top: 0.5rem;
@@ -90,7 +90,7 @@ const TextContainer = styled.div`
 `;
 
 const PostContainer = styled.div`
-  padding-top: 1rem;
+  padding: 1rem 1rem 0rem 1rem;
   h3 {
     font-weight: 600;
     font-size: 1.2rem;
@@ -98,7 +98,7 @@ const PostContainer = styled.div`
 `;
 
 const PostDetailBox = styled.div`
-  padding: 0.8rem 0;
+  padding: 0.8rem 0 1.1rem 0;
   color: ${(props) => props.theme.fontColor.lightGray};
   font-size: 0.9rem;
   strong {
@@ -119,7 +119,6 @@ const PostSub = styled.div`
 
 // 최상위 컴포넌트
 const Wrapper = styled.div`
-  padding-top: 1rem;
   width: 100%;
   height: 100%;
 `;

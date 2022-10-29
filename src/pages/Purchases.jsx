@@ -8,7 +8,7 @@ import PurChasesItem from "../components/mypage/PurchasesItem";
 
 const Purchases = () => {
   return (
-    <Layout>
+    <Layout isDetail={false}>
       <DetailHeader title={"구매내역"} />
       <Main {...mainStyle}>
         {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (

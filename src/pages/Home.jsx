@@ -2,7 +2,7 @@ import Posts from "../components/homepage/Posts";
 import Start from "../components/homepage/Start";
 
 function Home() {
-  const exist = false;
+  const exist = true;
   return <>{exist ? <Start /> : <Posts />}</>;
 }
 

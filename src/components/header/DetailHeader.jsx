@@ -15,7 +15,7 @@ function DetailHeader({ isDetail, title, _onClick, type }) {
           </span>
           {isDetail ? (
             <span>
-              <HomeSvg />
+              <HomeSvg _width={2} />
             </span>
           ) : null}
         </RightNavItem>
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   align-items: center;
   border-bottom: 1px solid
     ${(props) => (props.isDetail ? "none" : props.theme.borderColor.lightGray)};
-  position: relative;
+  position: ${(props) => (props.isDetail ? "absolute" : "relative")};
   nav {
     display: flex;
     align-items: center;
@@ -59,16 +59,17 @@ const RightNavItem = styled.div`
   z-index: 1;
   transition: color 0.2s linear;
   span {
-    color: ${(props) => (props.isDetail ? "white" : "inherit")};
+    color: ${(props) => (props.isDetail ? "rgba(255,255,255,0.7)" : "inherit")};
     cursor: pointer;
     &:hover {
-      color: ${(props) => props.theme.fontColor.lightGray};
+      color: white;
     }
   }
   svg {
     position: relative;
     top: 10px;
     width: 1.6rem;
+    margin-right: 0.5rem;
   }
   svg:nth-child(2) {
     margin-left: 1rem;

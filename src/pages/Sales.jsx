@@ -11,7 +11,7 @@ const Sales = () => {
   const [focus, setFocus] = useState(true);
   const onClick = () => setFocus((prev) => !prev);
   return (
-    <Layout>
+    <Layout isDetail={false}>
       <DetailHeader title={"판매내역"} />
       <Main {...mainStyle}>
         <Btns>

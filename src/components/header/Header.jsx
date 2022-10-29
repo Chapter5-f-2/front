@@ -20,7 +20,7 @@ function Header({ title, isHome = false }) {
           <li>
             <Magnify />
           </li>
-          <li onClick={() => navigate("/categories")}>
+          <li onClick={() => navigate("/categories/1")}>
             <ListSvg />
           </li>
           <li>
