@@ -1,6 +1,6 @@
 import React from "react";
 
-const ListSvg = () => {
+const ListSvg = ({ _width = 1.7 }) => {
   return (
     <svg
       className="w-6 h-6"
@@ -12,7 +12,7 @@ const ListSvg = () => {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={1.7}
+        strokeWidth={_width}
         d="M4 6h16M4 10h16M4 14h16M4 18h16"
       />
     </svg>

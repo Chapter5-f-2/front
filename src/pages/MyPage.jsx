@@ -15,6 +15,9 @@ import CalculatorSvg from "../static/svg/CalculatorSvg";
 import EditSvg from "../static/svg/EditSvg";
 import MegaPhoneSvg from "../static/svg/MegaPhoneSvg";
 import ArchiveSvg from "../static/svg/ArchiveSvg";
+import LocationSvg from "../static/svg/LocationSvg";
+import { TargetSvg } from "../static/svg/TargetSvg";
+import MailSvg from "../static/svg/MailSvg";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ const MyPage = () => {
               </div>
             </TextContainer>
           </div>
-          <div onClick={() => navigate("/profiles/1")}>
+          <div onClick={() => navigate("/profiles/1/edit")}>
             <Left />
           </div>
         </UserContainer>
@@ -45,25 +48,25 @@ const MyPage = () => {
           <NavList>
             <Link to={"/my-page/sales"}>
               <MyNav>
-                <ListSvg />
+                <ListSvg _width={1.5} />
                 <span>판매내역</span>
               </MyNav>
             </Link>
             <Link to={"/my-page/purchases"}>
               <MyNav>
-                <ShopSvg />
+                <ShopSvg _width={1.5} />
                 <Purchase>구매내역</Purchase>
               </MyNav>
             </Link>
             <Link to={"/my-page/interests"}>
               <MyNav>
-                <EmptyHeartSvg />
+                <EmptyHeartSvg _width={1.5} />
                 <span>관심목록</span>
               </MyNav>
             </Link>
             <Link to={"/my-page/account"}>
               <MyNav>
-                <CalculatorSvg />
+                <CalculatorSvg _width={1.5} />
                 <span>당근가계부</span>
               </MyNav>
             </Link>
@@ -74,7 +77,7 @@ const MyPage = () => {
           <NavList>
             <Link to="">
               <MyNav>
-                <EditSvg />
+                <EditSvg _width={1.5} />
                 <span>동네생활 글/댓글</span>
               </MyNav>
             </Link>
@@ -85,18 +88,41 @@ const MyPage = () => {
           <NavList>
             <Link to="">
               <MyNav>
-                <ArchiveSvg />
+                <ArchiveSvg _width={1.5} />
                 <span>비즈프로필 관리</span>
               </MyNav>
             </Link>
             <Link to="">
               <MyNav>
-                <MegaPhoneSvg />
+                <MegaPhoneSvg _width={1.5} />
                 <span>광고</span>
               </MyNav>
             </Link>
           </NavList>
         </MyBusiness>
+        <MyEtc>
+          <h3>기타</h3>
+          <NavList>
+            <Link to="">
+              <MyNav>
+                <LocationSvg _width={1.5} />
+                <span>내 동네 설정</span>
+              </MyNav>
+            </Link>
+            <Link to="">
+              <MyNav>
+                <TargetSvg _width={1.5} />
+                <span>동네 인증하기</span>
+              </MyNav>
+            </Link>
+            <Link to="">
+              <MyNav>
+                <MailSvg _width={1.5} />
+                <span>친구초대</span>
+              </MyNav>
+            </Link>
+          </NavList>
+        </MyEtc>
       </Main>
       <Footer />
     </Layout>
@@ -215,3 +241,4 @@ const Purchase = styled.span`
 
 const MyDongnae = styled(MyDeal)``;
 const MyBusiness = styled(MyDeal)``;
+const MyEtc = styled(MyDeal)``;

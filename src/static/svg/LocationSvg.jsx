@@ -1,6 +1,6 @@
 import React from "react";
 
-const ShopSvg = ({ _width = 2 }) => {
+const LocationSvg = ({ _width = 1.5 }) => {
   return (
     <svg
       className="w-6 h-6"
@@ -13,10 +13,16 @@ const ShopSvg = ({ _width = 2 }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={_width}
-        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
       />
     </svg>
   );
 };
 
-export default ShopSvg;
+export default LocationSvg;
