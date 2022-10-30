@@ -63,8 +63,8 @@ const FooterContainer = styled.div`
       font-size: 1.2rem;
     }
   }
-  @media (max-width: 400px) {
+  /* @media (max-width: 400px) {
     height: 90px;
     padding-bottom: 20px;
-  }
+  } */
 `;

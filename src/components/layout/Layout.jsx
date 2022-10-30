@@ -21,8 +21,8 @@ const Wrapper = styled.div`
   grid-template-rows: ${(props) =>
     props.isDetail ? "1fr 60px" : "50px 1fr 60px"};
   @media (max-width: 400px) {
-    grid-template-rows: ${(props) =>
-      props.isDetail ? "1fr 90px" : "50px 1fr 90px"};
+    /* grid-template-rows: ${(props) =>
+      props.isDetail ? "1fr 90px" : "50px 1fr 90px"}; */
     max-height: 100vh;
   }
 `;
