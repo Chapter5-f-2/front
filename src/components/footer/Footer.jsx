@@ -55,6 +55,10 @@ const FooterContainer = styled.ul`
   bottom: 0;
   height: 60px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
+  @media (max-width: 400px) {
+    height: 90px;
+    padding-bottom: 20px;
+  }
 `;
 
 const Item = styled.li`

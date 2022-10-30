@@ -34,6 +34,9 @@ const Wrapper = styled.div`
   width: 100%;
   ${FlexAlignBox}
   background-color: ${(props) => props.theme.bgColor};
+  @media (max-width: 400px) {
+    padding-bottom: 20px;
+  }
 `;
 
 const FooterContainer = styled.form`
