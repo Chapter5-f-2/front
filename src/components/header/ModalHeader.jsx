@@ -1,37 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import DotSvg from "../../pages/DotSvg";
-import HomeSvg from "../../static/svg/HomeSvg";
-
+import CancelSvg from "../../static/svg/CancelSvg";
 import Left from "../../static/svg/Left";
 
-function DetailHeader({ isDetail, title, _onClick, type }) {
+function ModalHeader({ title, _onClick, type }) {
   const navigate = useNavigate();
   return (
-    <Wrapper isDetail={isDetail}>
+    <Wrapper>
       <nav>
-        <RightNavItem style={{ top: 3 }} isDetail={isDetail}>
+        <RightNavItem style={{ top: 3 }}>
           <span onClick={() => navigate(-1)}>
-            <Left />
+            {type === "write" ? <CancelSvg _width={1.8} /> : <Left />}
           </span>
-          {isDetail ? (
-            <span onClick={() => navigate("/")}>
-              <HomeSvg _width={2} />
-            </span>
-          ) : null}
         </RightNavItem>
         <LeftNavItem>
           {type === "write" ? <span onClick={_onClick}>완료</span> : null}
-          {isDetail ? <DotSvg /> : null}
         </LeftNavItem>
-        {isDetail ? null : <Title>{title}</Title>}
+        <Title>{title}</Title>
       </nav>
     </Wrapper>
   );
 }
-export default DetailHeader;
+export default ModalHeader;
 
-DetailHeader.defaultProps = {
+ModalHeader.defaultProps = {
   _onClick: () => {},
   isDetail: false,
   title: "",
@@ -42,8 +34,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 425px;
   align-items: center;
-  border-bottom: 1px solid
-    ${(props) => (props.isDetail ? "none" : props.theme.borderColor.lightGray)};
+  border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   position: ${(props) => (props.isDetail ? "absolute" : "relative")};
   nav {
     display: flex;
@@ -64,8 +55,7 @@ const RightNavItem = styled.div`
     color: ${(props) => (props.isDetail ? "rgba(255,255,255,0.7)" : "inherit")};
     cursor: pointer;
     &:hover {
-      color: ${(props) =>
-        props.isDetail ? "white" : props.theme.fontColor.lightGray};
+      color: ${(props) => props.theme.fontColor.lightGray};
     }
   }
   svg {
@@ -82,19 +72,15 @@ const RightNavItem = styled.div`
 const LeftNavItem = styled.ul`
   z-index: 1;
   transition: color 0.2s linear;
+  position: absolute;
+  right: 1.2rem;
   span {
+    color: ${(props) => props.theme.fontColor.orange};
+    font-weight: 500;
+    font-size: 1.1rem;
     cursor: pointer;
     &:hover {
       color: ${(props) => props.theme.fontColor.lightGray};
-    }
-  }
-  svg {
-    width: 1.7rem;
-    margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    &:hover {
-      color: rgba(255, 255, 255, 1);
     }
   }
 `;

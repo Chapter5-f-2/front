@@ -24,7 +24,9 @@ const ItemDetail = () => {
             <strong>기타 중고물품</strong>
             <span> · 13분전</span>
           </PostDetailBox>
-          <PostContent>로켓단 11월 1일, 이상해씨 11월 2일</PostContent>
+          <PostContent>
+            로켓단 11월 1일, 이상해씨 11월 2일 로켓단 11월 1일,
+          </PostContent>
           <PostSub>
             <span>채팅 1 </span>
             <span> · 조회 12</span>

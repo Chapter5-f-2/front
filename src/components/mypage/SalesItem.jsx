@@ -53,6 +53,9 @@ const Item = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   cursor: pointer;
   background-color: ${(props) => props.theme.bgColor};
+  &:hover {
+    background-color: ${(props) => props.theme.hoverColor};
+  }
 `;
 
 const ImageContainer = styled.div`

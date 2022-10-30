@@ -28,7 +28,7 @@ function Footer() {
           <span>채팅</span>
         </Item>
         <Item
-          pathname={pathname === "/my-page"}
+          pathname={pathname.includes("/my-page")}
           onClick={() => navigate("/my-page")}
         >
           <HumanSvg />

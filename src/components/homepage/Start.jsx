@@ -76,6 +76,7 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   span {
     margin-top: 2rem;
     color: ${(props) => props.theme.fontColor.lightGray};

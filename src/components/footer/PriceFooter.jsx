@@ -25,6 +25,7 @@ export default PriceFooter;
 PriceFooter.defaultProps = {
   _onClick: () => {},
 };
+
 const Wrapper = styled.div`
   width: 100%;
   ${FlexAlignBox}

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { FlexAlignBox, FlexColumnBox } from "../../shared/styles/flex";
 import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
+import HeartSvg from "../../static/svg/HeartSvg";
 
 const InterestsItem = ({ isProfile = false }) => {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ const InterestsItem = ({ isProfile = false }) => {
           <TextContainer>
             <div>
               <h3>포켓몬 빵</h3>
-              {isProfile ? null : <EmptyHeartSvg />}
             </div>
             <div>
               <span>화도읍</span>
@@ -37,6 +37,7 @@ const InterestsItem = ({ isProfile = false }) => {
           </SvgContainer>
         </InfoContainer>
       </Item>
+      <BtnSvg>{isProfile ? null : <HeartSvg />}</BtnSvg>
     </ItemWrapper>
   );
 };
@@ -50,6 +51,9 @@ const Item = styled.div`
   cursor: pointer;
   background-color: ${(props) => props.theme.bgColor};
   position: relative;
+  &:hover {
+    background-color: ${(props) => props.theme.hoverColor};
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -77,13 +81,6 @@ const TextContainer = styled.div`
 
     h3 {
       font-size: 1rem;
-    }
-    svg {
-      width: 1.5rem;
-      color: ${(props) => props.theme.fontColor.lightGray};
-      &:hover {
-        color: ${(props) => props.theme.fontColor.black};
-      }
     }
   }
   div:nth-child(2) {
@@ -131,23 +128,44 @@ const SvgContainer = styled.div`
   }
 `;
 
+const BtnSvg = styled.button`
+  position: absolute;
+  top: 0.6rem;
+  right: 0.3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 2;
+
+  svg {
+    width: 1.5rem;
+    color: #fa8075;
+  }
+  &:hover {
+    color: ${(props) => props.theme.fontColor.lightGray};
+  }
+`;
 // 최상위 컴포넌트
 const ItemWrapper = styled.div`
-  margin-bottom: ${(props) => (props.isProfile ? "0rem" : "0.6rem")};
+  position: relative;
+  margin-bottom: ${(props) => (props.isProfile ? "0rem" : "0rem")};
+  // 0.6rem
   &:last-child {
     margin-bottom: 0px;
   }
   &:hover {
-    ${TextContainer} {
-      font-weight: 600;
-    }
-    ${SvgContainer} {
+    ${BtnSvg} {
       svg {
-        color: ${(props) => props.theme.fontColor.gray};
+        color: #fb5e50;
       }
-      span {
-        color: ${(props) => props.theme.fontColor.gray};
+    }
+  }
+  ${BtnSvg} {
+    &:hover {
+      svg {
+        color: rgba(0, 0, 0, 0.2);
       }
     }
   }
 `;
+
+// 최상위 컴포넌트

@@ -1,4 +1,6 @@
-function CommentSvg({ _width = 1.8 }) {
+import React from "react";
+
+const CancelSvg = ({ _width = 2 }) => {
   return (
     <svg
       className="w-6 h-6"
@@ -11,10 +13,10 @@ function CommentSvg({ _width = 1.8 }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={_width}
-        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+        d="M6 18L18 6M6 6l12 12"
       />
     </svg>
   );
-}
+};
 
-export default CommentSvg;
+export default CancelSvg;

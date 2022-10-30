@@ -3,6 +3,7 @@ import Account from "../pages/Account";
 import Categories from "../pages/Categories";
 import Chat from "../pages/Chat";
 import Chats from "../pages/Chats";
+import EditPost from "../pages/EditPost";
 import EditProfile from "../pages/EditProfile";
 import Home from "../pages/Home";
 import Interests from "../pages/Interests";
@@ -10,10 +11,10 @@ import Join from "../pages/Join";
 import Login from "../pages/Login";
 import MyPage from "../pages/MyPage";
 import PostDetail from "../pages/PostDetail";
-import PostWrite from "../pages/PostWrite";
 import Profile from "../pages/Profile";
 import Purchases from "../pages/Purchases";
 import Sales from "../pages/Sales";
+import WritePost from "../pages/WritePost";
 
 function Router() {
   return (
@@ -24,7 +25,9 @@ function Router() {
         {/* 상품 디테일 페이지 (상품수정은 모달창)*/}
         <Route path="/posts/:id" element={<PostDetail />} />
         {/* 상품 작성 페이지 */}
-        <Route path="/posts/write" element={<PostWrite />} />
+        <Route path="/posts/write" element={<WritePost />} />
+        {/* 상품 수정 페이지 */}
+        <Route path="/posts/:id/edit" element={<EditPost />} />
         {/* 로그인 페이지 */}
         <Route path="/login" element={<Login />} />
         {/* 회원가입 페이지 */}

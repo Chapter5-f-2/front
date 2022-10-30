@@ -29,10 +29,10 @@ const PurChasesItem = ({ focus }) => {
           </TextContainer>
           <SvgContainer>
             <span>
-              <CommentSvg />3
+              <CommentSvg _width={1.5} />3
             </span>
             <span>
-              <EmptyHeartSvg />2
+              <EmptyHeartSvg _width={1.5} />2
             </span>
           </SvgContainer>
         </InfoContainer>
@@ -55,6 +55,9 @@ const Item = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   cursor: pointer;
   background-color: ${(props) => props.theme.bgColor};
+  &:hover {
+    background-color: ${(props) => props.theme.hoverColor};
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -140,10 +143,10 @@ const SvgContainer = styled.div`
   span {
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.4);
     font-size: 0.8rem;
     svg {
-      width: 1.4rem;
+      width: 1.3rem;
       margin-right: 0.1rem;
       margin-left: 0.3rem;
     }
@@ -156,6 +159,7 @@ const BtnSvg = styled.button`
   right: 0.2rem;
   width: 2.5rem;
   height: 2.5rem;
+  color: ${(props) => props.theme.fontColor.black};
   &:hover {
     color: ${(props) => props.theme.fontColor.lightGray};
   }
@@ -166,18 +170,5 @@ const ItemWrapper = styled.div`
   position: relative;
   &:last-child {
     margin-bottom: 0px;
-  }
-  &:hover {
-    ${TextContainer} {
-      font-weight: 600;
-    }
-    ${SvgContainer} {
-      svg {
-        color: ${(props) => props.theme.fontColor.gray};
-      }
-      span {
-        color: ${(props) => props.theme.fontColor.gray};
-      }
-    }
   }
 `;

@@ -23,10 +23,10 @@ const PostItem = () => {
         </TextContainer>
         <SvgContainer>
           <span>
-            <CommentSvg />3
+            <CommentSvg _width={1.5} />3
           </span>
           <span>
-            <EmptyHeartSvg />2
+            <EmptyHeartSvg _width={1.5} />2
           </span>
         </SvgContainer>
       </InfoContainer>
@@ -77,9 +77,9 @@ const SvgContainer = styled.div`
   span {
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.4);
     svg {
-      width: 1.4rem;
+      width: 1.1rem;
       margin-right: 0.1rem;
       margin-left: 0.3rem;
     }
@@ -91,11 +91,11 @@ const Item = styled.div`
   padding: 1rem 0;
   display: flex;
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
+
   cursor: pointer;
   &:hover {
-    ${TextContainer} {
-      font-weight: 600;
-    }
+    background-color: ${(props) => props.theme.hoverColor};
+
     ${SvgContainer} {
       svg {
         color: ${(props) => props.theme.fontColor.gray};

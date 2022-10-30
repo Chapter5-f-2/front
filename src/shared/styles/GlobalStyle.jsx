@@ -64,7 +64,8 @@ body{
   background-color: #FAF7F2;
   ${FlexCenterBox};
   height:100vh;
-  color:${(props) => props.theme.fontColor.black}
+  color:${(props) => props.theme.fontColor.black};
+  font-family: "San Francisco", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 *{
