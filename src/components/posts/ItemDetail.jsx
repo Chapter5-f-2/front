@@ -41,9 +41,12 @@ export default ItemDetail;
 
 const ImgContainer = styled.div`
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 100%;
   max-height: 250px;
   background-color: rgba(0, 0, 0, 0.4);
+  @media (max-width: 400px) {
+    max-height: 50vh;
+  }
 `;
 
 const Container = styled.div`
