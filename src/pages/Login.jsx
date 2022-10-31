@@ -5,6 +5,7 @@ import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 
+
 const Login = () => {
   const {
     register,
@@ -12,19 +13,14 @@ const Login = () => {
     formState: { errors },
     /* setError, */
   } = useForm();
-  const onValid = (data) => {
-    /* if (data !== data) {
-      setError(
-        "Password",
-        { message: "이메일과 일치하지 않는 비밀번호입니다." },
-        { shouldFocus: true }
-      );
-    } */
+  const onSubmit = () => {
+   
   };
+
   return (
     <Layout>
       <DetailHeader title={"로그인"} />
-      <LoginForm onSubmit={handleSubmit(onValid)}>
+      <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>이메일</label>
           <input
@@ -58,7 +54,7 @@ const Login = () => {
 export default Login;
 
 const LoginForm = styled.form`
-  background-color: ${(props) => props.theme.fontColor.darkOrange};
+  
   padding: 0 1rem;
   width: 100%;
   overflow-x: hidden;
@@ -81,7 +77,7 @@ const LoginForm = styled.form`
     height: 6vh;
     margin: 0 auto;
     font-size: 18px;
-    border: 4px solid #e84118;
+    border: 4px solid ${(props) => props.theme.fontColor.darkOrange}; 
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     padding-left: 0.5rem;
@@ -99,16 +95,12 @@ const LoginForm = styled.form`
     height: 6vh;
     margin: 0 auto;
     margin-top: 20px;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 18px;
 
-    border: 4px solid #e84118;
+    border: 4px solid #ff8300;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    &:hover {
-      color: ${(props) => props.theme.fontColor.black};
-      transition: color 0.2s ease-in;
-    }
   }
 `;
