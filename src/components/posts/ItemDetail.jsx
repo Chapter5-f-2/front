@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Left from "../../static/svg/Left";
 
-const ItemDetail = ({ setIsShow }) => {
+const ItemDetail = ({ btnFn }) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -20,7 +20,7 @@ const ItemDetail = ({ setIsShow }) => {
           </TextContainer>
         </UserContainer>
         <PostContainer>
-          <StateBtn onClick={setIsShow}>
+          <StateBtn onClick={btnFn.openModal}>
             판매중 <Left _width={2.5} />
           </StateBtn>
           <h3>포켓몬 빵 미개봉 상품 일괄 판매</h3>

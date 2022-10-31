@@ -12,8 +12,8 @@ function Chats() {
       <Header title={"채팅"} />
       <SubMain>
         <Wrapper>
-          {[1, 2, 3].map((item) => (
-            <ChatsItem />
+          {[1, 2, 3].map((item, idx) => (
+            <ChatsItem key={idx} />
           ))}
         </Wrapper>
       </SubMain>

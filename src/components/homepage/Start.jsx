@@ -51,7 +51,7 @@ const Wrapper = styled.div`
 
 const Main = styled.div`
   display: flex;
-  padding-top: 25%;
+  padding-top: 50%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -67,9 +67,9 @@ const Main = styled.div`
     line-height: 1.4;
     text-align: center;
   }
-  @media (max-width: 400px) {
+  /* @media (max-width: 400px) {
     padding-top: 50%;
-  }
+  } */
 `;
 
 const Buttons = styled.div`

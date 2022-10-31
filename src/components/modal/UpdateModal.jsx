@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { FlexColumnBox } from "../../shared/styles/flex";
 import { motion } from "framer-motion";
-const State = ({ btnFn }) => {
+const UpdateModal = ({ btnFn }) => {
   const onClick = (num) => {
-    btnFn.closeModal();
+    btnFn.closeUpdateModal();
   };
   return (
     <Wrapper
@@ -15,18 +15,17 @@ const State = ({ btnFn }) => {
       transition={{ type: "tween" }}
     >
       <Buttons>
-        <h3>상태 변경</h3>
-        <span onClick={() => onClick()}>판매중</span>
-        <span onClick={() => onClick()}>예약중</span>
-        <span onClick={() => onClick()}>거래완료</span>
+        <span onClick={() => onClick()}>게시글 수정</span>
+        <span onClick={() => onClick()}>끌어올리기</span>
+        <span onClick={() => onClick()}>숨기기</span>
+        <span onClick={() => onClick()}>삭제</span>
       </Buttons>
-      <Button onClick={() => btnFn.closeModal()}>닫기</Button>
+      <Button onClick={() => btnFn.closeUpdateModal()}>취소</Button>
     </Wrapper>
   );
 };
 
-export default State;
-
+export default UpdateModal;
 const boxVariants = {
   initial: {
     y: 200,
@@ -41,7 +40,6 @@ const boxVariants = {
     opacity: 0.6,
   },
 };
-
 const Wrapper = styled(motion.div)`
   width: 100%;
   position: absolute;
@@ -74,6 +72,12 @@ const Buttons = styled.div`
       background-color: #ffffff;
     }
   }
+  span:last-child {
+    color: red;
+    &:hover {
+      font-weight: 600;
+    }
+  }
 `;
 
 const Button = styled.button`
@@ -84,7 +88,8 @@ const Button = styled.button`
   cursor: pointer;
   width: 100%;
   color: #2a86ff;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 500;
   &:hover {
     color: rgba(0, 0, 0, 0.8);
     background-color: #ffffff;

@@ -1,17 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
 import { FlexAlignBox, FlexCenterBox } from "../../shared/styles/flex";
 import BellSvg from "../../static/svg/BellSvg";
 import BottomArrowSvg from "../../static/svg/BottomArrowSvg";
 import ListSvg from "../../static/svg/ListSvg";
 import Magnify from "../../static/svg/Magnify";
 
-function Header({ title, isHome = false }) {
-  const navigate = useNavigate();
+function Header({ title, isHome = false, onClick }) {
+  const setShowCategory = useSetRecoilState(showCategoryAtom);
   return (
     <Wrapper>
       <nav>
-        <RightNavItem style={{ top: 3 }}>
+        <RightNavItem style={{ top: 3 }} onClick={onClick}>
           {title}
           {isHome ? <BottomArrowSvg /> : null}
         </RightNavItem>
@@ -20,7 +22,7 @@ function Header({ title, isHome = false }) {
           <li>
             <Magnify />
           </li>
-          <li onClick={() => navigate("/categories/1")}>
+          <li onClick={() => setShowCategory((prev) => !prev)}>
             <ListSvg />
           </li>
           <li>

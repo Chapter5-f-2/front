@@ -1,22 +1,40 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
 import { FlexColumnBox } from "../../shared/styles/flex";
 import ModalHeader from "../header/ModalHeader";
 import Layout from "../layout/Layout";
 import Main from "../layout/Main";
-
-const PostCategory = ({ onClick, setCategory }) => {
+import { motion } from "framer-motion";
+const PostCategory = ({ onClick, setCategory, type = "" }) => {
+  const setShowCategory = useSetRecoilState(showCategoryAtom);
+  const navigate = useNavigate();
   const setCategoryId = (num) => {
-    setCategory(num);
-    onClick();
+    if (type === "header") {
+      navigate(`/categories/${num}`);
+      setShowCategory((prev) => !prev);
+    } else {
+      setCategory(num);
+      onClick();
+    }
   };
   return (
-    <PostCategoryModal>
+    <PostCategoryModal
+      variants={ModalAni}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ type: "tween", duration: 0.2 }}
+    >
       <Layout>
         <ModalHeader
           title={"중고거래 카테고리"}
           type="modal"
-          _onClick={onClick}
+          _onClick={
+            type === "header" ? () => setShowCategory((prev) => !prev) : onClick
+          }
         />
         <Main>
           <CategoryList>
@@ -46,7 +64,13 @@ const PostCategory = ({ onClick, setCategory }) => {
 
 export default PostCategory;
 
-const PostCategoryModal = styled.div`
+const ModalAni = {
+  initial: { x: 450, opacity: 1 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: 450, opacity: 1 },
+};
+
+const PostCategoryModal = styled(motion.div)`
   position: absolute;
   z-index: 100;
 `;

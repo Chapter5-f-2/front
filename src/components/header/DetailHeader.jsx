@@ -20,7 +20,7 @@ function DetailHeader({ isDetail, title, _onClick, type }) {
             </span>
           ) : null}
         </RightNavItem>
-        <LeftNavItem>
+        <LeftNavItem onClick={_onClick}>
           {type === "write" ? <span onClick={_onClick}>완료</span> : null}
           {isDetail ? <DotSvg /> : null}
         </LeftNavItem>

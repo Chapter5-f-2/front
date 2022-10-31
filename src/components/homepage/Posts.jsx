@@ -1,26 +1,46 @@
+import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import FloatBtn from "../../elements/FloatBtn";
+import {
+  showCategoryAtom,
+  showLocationAtom,
+} from "../../shared/atoms/modalAtoms";
 import Footer from "../footer/Footer";
 
 import Header from "../header/Header";
 import Layout from "../layout/Layout";
-import Main from "../layout/Main";
 import SubMain from "../layout/SubMain";
+import LocationModal from "../modal/LocationModal";
+import PostCategory from "../modal/PostCategory";
 import PostItem from "../posts/PostItem";
-
+import { AnimatePresence } from "framer-motion";
 function Posts() {
+  const showCategory = useRecoilValue(showCategoryAtom);
+  const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
+  const [location, setLocation] = useState(null);
   return (
     <Layout>
-      <Header title={"호평동"} isHome={true} />
+      <Header
+        title={"호평동"}
+        isHome={true}
+        onClick={() => setShowLocation(true)}
+      />
       <SubMain>
         <Wrapper>
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-            <PostItem />
+          {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
+            <PostItem key={idx} />
           ))}
         </Wrapper>
       </SubMain>
       <FloatBtn />
       <Footer />
+      <AnimatePresence>
+        {showCategory ? <PostCategory type={"header"} /> : null}
+        {showLocation ? (
+          <LocationModal type={"header"} setLocation={setLocation} />
+        ) : null}
+      </AnimatePresence>
     </Layout>
   );
 }
