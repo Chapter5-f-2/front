@@ -8,7 +8,6 @@ import Footer from "../components/footer/Footer";
 const Login = () => {
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
     /* setError, */
@@ -81,11 +80,11 @@ const LoginForm = styled.form`
     width: 80%;
     height: 6vh;
     margin: 0 auto;
-    /* margin-bottom: 2rem; */
     font-size: 18px;
     border: 4px solid #e84118;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    padding-left: 0.5rem;
   }
 
   span {

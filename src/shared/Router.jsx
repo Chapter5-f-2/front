@@ -15,6 +15,7 @@ import Profile from "../pages/Profile";
 import Purchases from "../pages/Purchases";
 import Sales from "../pages/Sales";
 
+
 function Router() {
   return (
     <BrowserRouter>
