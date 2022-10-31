@@ -1,4 +1,4 @@
-function Left() {
+function Left({ _width = 2 }) {
   return (
     <svg
       className="w-6 h-6"
@@ -10,7 +10,7 @@ function Left() {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={_width}
         d="M15 19l-7-7 7-7"
       />
     </svg>

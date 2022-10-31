@@ -9,8 +9,12 @@ function ModalHeader({ title, _onClick, type }) {
     <Wrapper>
       <nav>
         <RightNavItem style={{ top: 3 }}>
-          <span onClick={() => navigate(-1)}>
-            {type === "write" ? <CancelSvg _width={1.8} /> : <Left />}
+          <span onClick={type === "modal" ? _onClick : () => navigate(-1)}>
+            {type === "write" || type === "modal" ? (
+              <CancelSvg _width={1.8} />
+            ) : (
+              <Left />
+            )}
           </span>
         </RightNavItem>
         <LeftNavItem>

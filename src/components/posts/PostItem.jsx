@@ -88,7 +88,7 @@ const SvgContainer = styled.div`
 
 // 최상위 컴포넌트
 const Item = styled.div`
-  padding: 1rem 0;
+  padding: 1rem;
   display: flex;
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
 

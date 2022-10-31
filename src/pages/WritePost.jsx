@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import Footer from "../components/footer/Footer";
 import ModalHeader from "../components/header/ModalHeader";
 import Layout from "../components/layout/Layout";
 import Main from "../components/layout/Main";
+import PostCategory from "../components/modal/PostCategory";
 import ImagePreview from "../components/posts/ImagePreview";
 import { FlexBetweenBox, FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
@@ -15,7 +16,9 @@ import Left from "../static/svg/Left";
 const WritePost = () => {
   const { register, handleSubmit, watch } = useForm();
   const navigate = useNavigate();
-
+  const [isShow, setIsShow] = useState(false);
+  const [categoryId, setCategoryId] = useState();
+  console.log(categoryId);
   return (
     <Layout>
       <ModalHeader
@@ -38,7 +41,7 @@ const WritePost = () => {
             type="text"
             placeholder="글 제목"
           />
-          <CategoryBox>
+          <CategoryBox onClick={() => setIsShow(true)}>
             <span>카테고리 선택</span>
             <span>
               <Left />
@@ -59,6 +62,12 @@ const WritePost = () => {
         </Form>
       </Main>
       <Footer />
+      {isShow ? (
+        <PostCategory
+          onClick={() => setIsShow((prev) => !prev)}
+          setCategory={setCategoryId}
+        />
+      ) : null}
     </Layout>
   );
 };

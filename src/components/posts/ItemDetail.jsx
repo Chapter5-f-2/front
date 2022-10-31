@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Left from "../../static/svg/Left";
 
-const ItemDetail = () => {
+const ItemDetail = ({ setIsShow }) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -19,6 +20,9 @@ const ItemDetail = () => {
           </TextContainer>
         </UserContainer>
         <PostContainer>
+          <StateBtn onClick={setIsShow}>
+            판매중 <Left _width={2.5} />
+          </StateBtn>
           <h3>포켓몬 빵 미개봉 상품 일괄 판매</h3>
           <PostDetailBox>
             <strong>기타 중고물품</strong>
@@ -99,6 +103,23 @@ const PostContainer = styled.div`
   h3 {
     font-weight: 600;
     font-size: 1.2rem;
+  }
+`;
+
+const StateBtn = styled.button`
+  display: flex;
+  padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  svg {
+    width: 1rem;
+    margin-left: 0.7rem;
+    transform: rotateZ(270deg);
+  }
+  &:hover {
+    color: ${(props) => props.theme.fontColor.lightGray};
+    border: 1px solid ${(props) => props.theme.fontColor.lightGray};
   }
 `;
 

@@ -3,15 +3,16 @@ import styled from "styled-components";
 import Button from "../../elements/Button";
 import { FlexAlignBox } from "../../shared/styles/flex";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
+import HeartSvg from "../../static/svg/HeartSvg";
 
-function PriceFooter() {
+function PriceFooter({ isWish, setIsWish }) {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <FooterContainer>
+      <FooterContainer isWish={isWish}>
         <div>
-          <span>
-            <EmptyHeartSvg />
+          <span onClick={() => setIsWish((prev) => !prev)}>
+            {isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
           <strong>17,000원</strong>
         </div>
@@ -49,13 +50,19 @@ const FooterContainer = styled.div`
       cursor: pointer;
       &:hover {
         svg {
-          color: ${(props) => props.theme.fontColor.black};
+          color: ${(props) =>
+            props.isWish
+              ? props.theme.btnColor.darkOrange
+              : props.theme.fontColor.black};
         }
       }
     }
     svg {
       width: 1.5rem;
-      color: ${(props) => props.theme.fontColor.lightGray};
+      color: ${(props) =>
+        props.isWish
+          ? props.theme.btnColor.orange
+          : props.theme.fontColor.lightGray};
     }
     strong {
       padding-left: 1rem;

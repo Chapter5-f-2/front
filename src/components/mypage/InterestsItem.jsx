@@ -138,7 +138,7 @@ const BtnSvg = styled.button`
 
   svg {
     width: 1.5rem;
-    color: #fa8075;
+    color: ${(props) => props.theme.btnColor.orange};
   }
   &:hover {
     color: ${(props) => props.theme.fontColor.lightGray};
@@ -155,14 +155,14 @@ const ItemWrapper = styled.div`
   &:hover {
     ${BtnSvg} {
       svg {
-        color: #fb5e50;
+        color: ${(props) => props.theme.btnColor.darkOrange};
       }
     }
   }
   ${BtnSvg} {
     &:hover {
       svg {
-        color: rgba(0, 0, 0, 0.2);
+        color: #fb5e50;
       }
     }
   }
