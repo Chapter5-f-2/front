@@ -5,6 +5,8 @@ import Header from "../components/header/Header";
 import Layout from "../components/layout/Layout";
 
 import SubMain from "../components/layout/SubMain";
+import SmallSpinner from "../static/svg/SmallSpinner";
+import { AnimatePresence } from "framer-motion";
 
 function Chats() {
   return (
@@ -12,6 +14,9 @@ function Chats() {
       <Header title={"채팅"} />
       <SubMain>
         <Wrapper>
+          <AnimatePresence>
+            {true ? <SmallSpinner></SmallSpinner> : null}
+          </AnimatePresence>
           {[1, 2, 3].map((item, idx) => (
             <ChatsItem key={idx} />
           ))}

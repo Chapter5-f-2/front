@@ -1,8 +1,9 @@
+import { useState } from "react";
 import Posts from "../components/homepage/Posts";
 import Start from "../components/homepage/Start";
 
 function Home() {
-  const exist = false;
+  const [exist] = useState(false);
   return <>{exist ? <Start /> : <Posts />}</>;
 }
 

@@ -3,12 +3,19 @@ import Button from "../../elements/Button";
 import Layout from "../layout/Layout";
 import CarrotPng from "../../static/img/CarrotPng.png";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 function Start() {
   const navigate = useNavigate();
   return (
     <Layout>
       <Wrapper>
-        <Main>
+        <Main
+          variants={MainAni}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ type: "tween", duration: 1 }}
+        >
           <img src={CarrotPng} alt="" />
           <h3>당신 근처의 당근마켓</h3>
           <p>
@@ -33,6 +40,12 @@ function Start() {
 
 export default Start;
 
+const MainAni = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 20 },
+};
+
 const btnStyle = {
   _width: "100%",
   _bgColor: "#EF904D",
@@ -49,7 +62,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Main = styled.div`
+const Main = styled(motion.div)`
   display: flex;
   padding-top: 50%;
   flex-direction: column;
