@@ -12,7 +12,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 const Join = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, watch,} = useForm();
+  const { register, handleSubmit, formState: { errors }, watch, setError} = useForm();
   const onSubmit = async (data) => {
   try {
     const response = await axios.post("",data)
@@ -27,6 +27,16 @@ const Join = () => {
     alert("회원가입에 실패했습니다.")
     return
   }
+}
+
+const onValid = (data) => {
+  if(data.password !== data.confirm) {
+    setError(
+      "confirm", 
+      { message: "비밀번호가 일치하지 않습니다"},
+      { shouldFocus: true }
+    )
+  };
 }
 
   // userId, Key, Nickname, pw , email, profileimg, createAt
@@ -66,10 +76,9 @@ const Join = () => {
   return (
     <Layout>
       <DetailHeader title={"회원가입"} />
-      <JoinForm onSubmit={handleSubmit(onSubmit)}>
+      <JoinForm onSubmit={handleSubmit(onSubmit,onValid)}>
         <div>
           <h1>회원정보를 설정해주세요</h1>
-          <h3>기본 정보들을 입력해주세요!</h3>
           <label>이메일</label>
           <Email>
           <Input
@@ -77,7 +86,7 @@ const Join = () => {
             })}
             placeholder="Email"
           />
-          <DupButton onClick={emailDup}>중복 검사</DupButton>
+          <DupButton onClick={emailDup}>Check</DupButton>
           </Email>
           <span>{errors.email?.message}</span>
           <label>비밀번호</label>
@@ -104,7 +113,7 @@ const Join = () => {
           <Nickname>
           <Input
             {...register("nickname", { required: "닉네임을 10자 이내로 입력해주세요", })} placeholder="NickName" maxLength="10" />
-          <DupButton onClick={nicknameDup}>중복 검사</DupButton>
+          <DupButton onClick={nicknameDup}>Check</DupButton>
           </Nickname>
           <span>{errors.nickname?.message}</span>
           <Button>완료</Button>
@@ -118,7 +127,6 @@ const Join = () => {
 export default Join;
 
 const JoinForm = styled.form`
-  background-color: ${(props) => props.theme.fontColor.darkOrange};
   padding: 0 2rem;
   width: 100%;
   overflow-x: hidden;
@@ -128,36 +136,37 @@ const JoinForm = styled.form`
     flex-direction: column;
     &>input {
     width: 100%;
+    height: 4vh;
     margin: 0 auto;
     padding: 0.8rem 1rem;
     font-size: 15px;
-    border: 4px solid #e84118;
+    border: 1px solid #ff6f06;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    font-weight: bold;
+
   }
   }
 
   h1 {
     margin-top: 1rem;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
+    margin-bottom: 0.2rem;
   }
 
 
   label {
-    margin-top: 0.25rem;
+    margin-top: 0.45rem;
     margin-bottom: 0.5rem;
     padding: 0 0.4rem;
-    font-weight: bold;
-  }
-
+    
+  } 
   span {
-    max-width: 80%;
+    width: 83%;
     margin-top: 5px;
     padding: 0 0.4rem;
-    color: #fbc531;
-    font-weight: bold;
+    font-size: 0.8rem;
+    color: #fb3131;
   }
 
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
@@ -166,45 +175,44 @@ const JoinForm = styled.form`
     transition: color 0.2s ease-in;
   }
 
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  overflow:hidden;
 `;
 const Button = styled.button`
-  border: 4px solid #e84118;
+  border: 2px solid #ff6f06;
   border-radius: 10px;
   width: 100%;
   height: 6vh;
   margin: 0 auto;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   color: white;
-  font-weight: bold;
   font-size: 18px;
+  background-color: ${(props) => props.theme.fontColor.darkOrange}
 `;
 
 const Email = styled.div`
   display: grid;
   grid-template-columns: 1fr 50px;
   border-radius: 10px;
-  border: 5px solid #e84118;
+  border: 1px solid #ff6f06;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 `;
 
 const DupButton = styled.button`
-  /* border: 2px solid #e84118; */
-  background-color: ${(props) => props.theme.fontColor.orange};
-  font-weight: bold;
+  background-color: #ff6f06;
   border-radius: 5px;
   line-height: 1.2;
   width: 100%;
-  border-radius: 0px 5px 5px 0px;
+  color: white;
+  border-radius: 5px 6px 6px 5px;
+  margin: 5px 5px 5px -5px;
 `;
 
 const Input = styled.input`
-  padding: 0.8rem 1rem;
-  border-radius: 5px 0px 0px 5px;
+  padding: 1rem 1rem;
+  height: 4vh;
+  border-radius: 10px 0px 0px 10px;
   border: white;
-  font-weight: bold;
   font-size: 15px;
   width: 100%;
 `;
@@ -216,16 +224,14 @@ box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 const Blank = styled.div`
   background-color: white;
   border-radius: 5px;
-  border-radius: 5px 0px 0px 5px;
+  border-radius: 10px 5px 5px 10px;
   width: 100%;
   margin: 0 auto;
   height: 4vh;
   display: flex;
   align-items: center;
   padding: 0.8rem 1rem;
-  font-weight: bold;
   font-size: 15px;
-  
 `;
 
 const SelectTown = styled(Email)`
@@ -234,3 +240,4 @@ const SelectTown = styled(Email)`
 `;
 
 const SelectButton = styled.button``;
+

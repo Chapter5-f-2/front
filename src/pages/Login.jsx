@@ -13,9 +13,7 @@ const Login = () => {
     formState: { errors },
     /* setError, */
   } = useForm();
-  const onSubmit = () => {
-   
-  };
+  const onSubmit = () => {};
 
   return (
     <Layout>
@@ -54,8 +52,7 @@ const Login = () => {
 export default Login;
 
 const LoginForm = styled.form`
-  
-  padding: 0 1rem;
+  padding: 0 2rem;
   width: 100%;
   overflow-x: hidden;
 
@@ -68,16 +65,15 @@ const LoginForm = styled.form`
   label {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    margin-left: 12%;
-    font-weight: bold;
+    padding: 0 0.4rem;
   }
 
   input {
-    width: 80%;
-    height: 6vh;
+    width: 100%;
+    height: 4vh;
     margin: 0 auto;
-    font-size: 18px;
-    border: 4px solid ${(props) => props.theme.fontColor.darkOrange}; 
+    font-size: 15px;
+    border: 1px solid #ff6f06; 
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     padding-left: 0.5rem;
@@ -86,21 +82,20 @@ const LoginForm = styled.form`
   span {
     margin-top: 5px;
     margin-left: 12%;
-    color: #fbc531;
-    font-weight: bold;
+    font-size: 0.8rem;
+    color: #fb3131;
   }
 
   button {
-    width: 80%;
+    width: 100%;
     height: 6vh;
     margin: 0 auto;
     margin-top: 20px;
-    color: black;
+    color: white;
     font-weight: bold;
     font-size: 18px;
-
-    border: 4px solid #ff8300;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #ff6f06
   }
 `;
