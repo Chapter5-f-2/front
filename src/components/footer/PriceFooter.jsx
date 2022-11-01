@@ -1,20 +1,27 @@
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { queryClient } from "../..";
+import { toggleWish } from "../../apis/query/postApi";
 import Button from "../../elements/Button";
 import { FlexAlignBox } from "../../shared/styles/flex";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import HeartSvg from "../../static/svg/HeartSvg";
 
-function PriceFooter({ isWish, setIsWish }) {
+// 채팅방 ID 받아야함
+function PriceFooter({ post, id }) {
   const navigate = useNavigate();
+  const { mutate: toggleWishFn } = useMutation(() => toggleWish(id), {
+    onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
+  });
   return (
     <Wrapper>
-      <FooterContainer isWish={isWish}>
+      <FooterContainer isWish={post.isWish}>
         <div>
-          <span onClick={() => setIsWish((prev) => !prev)}>
-            {isWish ? <HeartSvg /> : <EmptyHeartSvg />}
+          <span onClick={toggleWishFn}>
+            {post.isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
-          <strong>17,000원</strong>
+          <strong>{post?.price}원</strong>
         </div>
         <Button _onClick={() => navigate("/chats/1")}>채팅하기</Button>
       </FooterContainer>

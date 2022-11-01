@@ -2,10 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { FlexColumnBox } from "../../shared/styles/flex";
 import { motion } from "framer-motion";
-const UpdateModal = ({ btnFn }) => {
-  const onClick = (num) => {
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import { removePost } from "../../apis/query/postApi";
+
+const UpdateModal = ({ btnFn, id }) => {
+  const navigate = useNavigate();
+  const { mutate: deleteFn } = useMutation(removePost);
+
+  const onDeleteClick = () => {
+    deleteFn(id);
     btnFn.closeUpdateModal();
   };
+
+  const onUpdateClick = () => {
+    navigate(`/posts/${id}/edit`);
+    btnFn.closeUpdateModal();
+  };
+
   return (
     <Wrapper
       variants={boxVariants}
@@ -15,10 +29,10 @@ const UpdateModal = ({ btnFn }) => {
       transition={{ type: "tween" }}
     >
       <Buttons>
-        <span onClick={() => onClick()}>게시글 수정</span>
-        <span onClick={() => onClick()}>끌어올리기</span>
-        <span onClick={() => onClick()}>숨기기</span>
-        <span onClick={() => onClick()}>삭제</span>
+        <span onClick={onUpdateClick}>게시글 수정</span>
+        <span onClick={() => btnFn.closeUpdateModal()}>끌어올리기</span>
+        <span onClick={() => btnFn.closeUpdateModal()}>숨기기</span>
+        <span onClick={onDeleteClick}>삭제</span>
       </Buttons>
       <Button onClick={() => btnFn.closeUpdateModal()}>취소</Button>
     </Wrapper>

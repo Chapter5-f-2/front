@@ -1,31 +1,55 @@
 import React from "react";
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { readSalePosts } from "../apis/query/userApi";
 import Footer from "../components/footer/Footer";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import SalesItem from "../components/mypage/SalesItem";
+import SmallSpinner from "../static/svg/SmallSpinner";
 
 const Sales = () => {
   const [focus, setFocus] = useState(true);
   const onClick = () => setFocus((prev) => !prev);
+  const {
+    data: sales,
+    isLoading: salesLoading,
+    error: salesError,
+  } = useQuery(["mypage", "sales"], readSalePosts);
+
+  const {
+    data: endSales,
+    isLoading: endSalesLoading,
+    error: endSalesError,
+  } = useQuery(["mypage", "endSales"]);
+
   return (
     <Layout isDetail={false}>
       <DetailHeader title={"판매내역"} />
       <Main {...mainStyle}>
         <Btns>
           <Btn focus={focus} onClick={!focus ? onClick : () => {}}>
-            판매중 1
+            판매중 {sales?.length}
           </Btn>
           <Btn focus={!focus} onClick={focus ? onClick : () => {}}>
-            거래완료 4
+            거래완료 {endSales?.length}
           </Btn>
         </Btns>
         <SubMain>
-          {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
-            <SalesItem key={idx} focus={!focus} />
-          ))}
+          {(salesLoading || endSalesLoading) && <SmallSpinner />}
+          {focus &&
+            sales &&
+            sales?.map((post) => (
+              <SalesItem key={post.postId} focus={!focus} post={post} />
+            ))}
+          {!focus &&
+            endSales &&
+            endSales?.map((post) => (
+              <SalesItem key={post.postId} focus={!focus} post={post} />
+            ))}
         </SubMain>
       </Main>
       <Footer />

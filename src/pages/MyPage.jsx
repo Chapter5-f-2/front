@@ -18,9 +18,12 @@ import ArchiveSvg from "../static/svg/ArchiveSvg";
 import LocationSvg from "../static/svg/LocationSvg";
 import { TargetSvg } from "../static/svg/TargetSvg";
 import MailSvg from "../static/svg/MailSvg";
+import UseUser from "../hooks/useUser";
+import getLocation from "../utils/getLocation";
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const user = UseUser();
   return (
     <Layout>
       <Header title={"나의 당근"} />
@@ -29,13 +32,13 @@ const MyPage = () => {
           <div>
             <UserImage />
             <TextContainer>
-              <h3>나먕쥬 밀탱크</h3>
+              <h3>{user?.nickname}</h3>
               <div>
-                <span>화도읍</span>
+                <span>{getLocation(user?.locationId)}</span>
               </div>
             </TextContainer>
           </div>
-          <div onClick={() => navigate("/profiles/1/edit")}>
+          <div onClick={() => navigate(`/profiles/${user?.userId}/edit`)}>
             <Left />
           </div>
         </UserContainer>

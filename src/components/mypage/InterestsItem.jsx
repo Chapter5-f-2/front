@@ -1,38 +1,45 @@
 import React from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FlexAlignBox, FlexColumnBox } from "../../shared/styles/flex";
 import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import HeartSvg from "../../static/svg/HeartSvg";
+import getLocation from "../../utils/getLocation";
+import timeCheck from "../../utils/timeCheck";
 
-const InterestsItem = ({ isProfile = false }) => {
+const InterestsItem = ({ isProfile = false, post }) => {
   const navigate = useNavigate();
+  const { mutate } = useMutation();
+  // toggleWish 하트에 연결 시켜야함
   return (
     <ItemWrapper isProfile={isProfile}>
-      <Item onClick={() => navigate("/posts/1")}>
+      <Item onClick={() => navigate(`/posts/${post.id}`)}>
         <ImageContainer>
-          <div />
+          <img src={post.postImgUrl} alt="" />
         </ImageContainer>
         <InfoContainer>
           <TextContainer>
             <div>
-              <h3>포켓몬 빵</h3>
+              <h3>{post.title}</h3>
             </div>
             <div>
-              <span>화도읍</span>
-              <span>· 1시간 전</span>
+              <span>{getLocation(post.locationId)}</span>
+              <span>· {timeCheck(+post.createdAt)}</span>
             </div>
             <strong>
-              <StatusBtn>거래완료</StatusBtn> 3,000원
+              <StatusBtn>거래완료</StatusBtn> {post.price}원
             </strong>
           </TextContainer>
           <SvgContainer>
             <span>
-              <CommentSvg />3
+              <CommentSvg />
+              {post.chatCount}
             </span>
             <span>
-              <EmptyHeartSvg />2
+              <EmptyHeartSvg />
+              {post.wishCount}
             </span>
           </SvgContainer>
         </InfoContainer>

@@ -1,19 +1,32 @@
 import React from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { readBuyPosts } from "../apis/query/userApi";
 import Footer from "../components/footer/Footer";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import PurChasesItem from "../components/mypage/PurchasesItem";
+import SmallSpinner from "../static/svg/SmallSpinner";
 
 const Purchases = () => {
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useQuery(["mypage", "purchases"], readBuyPosts);
+  if (error) return;
   return (
     <Layout isDetail={false}>
       <DetailHeader title={"구매내역"} />
+
       <Main {...mainStyle}>
-        {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
-          <PurChasesItem key={idx} />
-        ))}
+        {isLoading ? (
+          <SmallSpinner />
+        ) : (
+          posts &&
+          posts?.map((post, idx) => <PurChasesItem key={idx} post={post} />)
+        )}
       </Main>
       <Footer />
     </Layout>

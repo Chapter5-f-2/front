@@ -3,14 +3,18 @@ import styled from "styled-components";
 import { FlexCenterBox } from "../../shared/styles/flex";
 import CancelSvg from "../../static/svg/CancelSvg";
 
-const ImagePreview = () => {
+const ImagePreview = ({ preview, onClick }) => {
   return (
-    <ImgPreview>
-      <span>
-        <CancelSvg />
-      </span>
-      <div />
-    </ImgPreview>
+    <>
+      {preview ? (
+        <ImgPreview>
+          <span onClick={onClick}>
+            <CancelSvg />
+          </span>
+          <img src={preview} alt="" />
+        </ImgPreview>
+      ) : null}
+    </>
   );
 };
 
@@ -36,8 +40,9 @@ const ImgPreview = styled.div`
       background-color: ${(props) => props.theme.btnColor.black};
     }
   }
-  div {
+  img {
     width: 4rem;
+    object-fit: cover;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     aspect-ratio: 1/1;

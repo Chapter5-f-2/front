@@ -18,7 +18,7 @@ function ModalHeader({ title, _onClick, type }) {
           </span>
         </RightNavItem>
         <LeftNavItem>
-          {type === "write" ? <span onClick={_onClick}>완료</span> : null}
+          {type === "write" ? <button onClick={_onClick}>완료</button> : null}
         </LeftNavItem>
         <Title>{title}</Title>
       </nav>
@@ -78,7 +78,8 @@ const LeftNavItem = styled.ul`
   transition: color 0.2s linear;
   position: absolute;
   right: 1.2rem;
-  span {
+  button {
+    margin-bottom: -3px;
     color: ${(props) => props.theme.fontColor.orange};
     font-weight: 500;
     font-size: 1.1rem;

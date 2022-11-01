@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { addPost } from "../apis/query/postApi";
 import Footer from "../components/footer/Footer";
 import ModalHeader from "../components/header/ModalHeader";
 import Layout from "../components/layout/Layout";
@@ -10,39 +12,63 @@ import PostCategory from "../components/modal/PostCategory";
 import ImagePreview from "../components/posts/ImagePreview";
 import { FlexBetweenBox, FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
-import CancelSvg from "../static/svg/CancelSvg";
 import Left from "../static/svg/Left";
+import getCategory from "../utils/getCategory";
 
 const WritePost = () => {
   const { register, handleSubmit, watch } = useForm();
   const navigate = useNavigate();
   const [isShow, setIsShow] = useState(false);
-  const [categoryId, setCategoryId] = useState();
-  console.log(categoryId);
+  const [categoryId, setCategoryId] = useState(0);
+  const { mutate } = useMutation(addPost);
+  const formRef = useRef();
+  const [preview, setPreview] = useState();
+  const [file, setFile] = useState("");
+
+  const onChangePreView = (e) => {
+    const fileBlob = URL.createObjectURL(e.target.files[0]);
+    setFile((prev) => e.target.files[0]);
+    setPreview(fileBlob);
+  };
+
+  const onValid = (inputs) => {
+    mutate({ ...inputs, categoryId, postImgUrl: file });
+  };
+
+  const handleClick = () => {
+    formRef.current.dispatchEvent(
+      new Event("submit", { bubbles: true, cancelable: true })
+    );
+  };
+
+  const onClick = () => {
+    setPreview(null);
+    setFile(null);
+  };
   return (
     <Layout>
       <ModalHeader
         title={"중고 거래 글쓰기"}
         type="write"
-        _onClick={() => navigate("/posts/1")}
+        _onClick={handleClick}
       />
       <Main>
-        <Form>
+        <Form onSubmit={handleSubmit(onValid)} ref={formRef}>
           <ImgBoxs>
             <CameraBox>
               <CameraSvg />
-              <span>0/3</span>
-              <input type="file" />
+              <span>{file ? 1 : 0}/1</span>
+              <input onChange={onChangePreView} type="file" accept="*/image" />
             </CameraBox>
-            <ImagePreview />
+            <ImagePreview preview={preview} onClick={onClick} />
           </ImgBoxs>
           <TitleInput
-            {...register("title")}
+            {...register("title", { required: true })}
             type="text"
             placeholder="글 제목"
           />
           <CategoryBox onClick={() => setIsShow(true)}>
-            <span>카테고리 선택</span>
+            <span>{getCategory(categoryId)}</span>
             <span>
               <Left />
             </span>
@@ -50,13 +76,13 @@ const WritePost = () => {
           <PriceBox isFocus={watch().price}>
             <span>₩</span>
             <input
-              {...register("price")}
+              {...register("price", { required: true })}
               type="number"
               placeholder="가격 (선택사항)"
             />
           </PriceBox>
           <ContentBox
-            {...register("content")}
+            {...register("content", { required: true })}
             placeholder="사이즈,구매 시기, 사용감 (색바램,얼룩, 뜯어짐) 등"
           />
         </Form>

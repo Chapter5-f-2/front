@@ -2,8 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { FlexColumnBox } from "../../shared/styles/flex";
 import { motion } from "framer-motion";
-const State = ({ btnFn }) => {
-  const onClick = (num) => {
+import { useMutation } from "react-query";
+import { editPostStatus } from "../../apis/query/postApi";
+import { queryClient } from "../..";
+const State = ({ btnFn, id }) => {
+  const { mutate: editStatus } = useMutation(editPostStatus, {
+    onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
+  });
+  const onClick = async (num) => {
+    editStatus({ id, body: { status: num } });
     btnFn.closeModal();
   };
   return (
@@ -16,9 +23,9 @@ const State = ({ btnFn }) => {
     >
       <Buttons>
         <h3>상태 변경</h3>
-        <span onClick={() => onClick()}>판매중</span>
-        <span onClick={() => onClick()}>예약중</span>
-        <span onClick={() => onClick()}>거래완료</span>
+        <span onClick={() => onClick(0)}>판매중</span>
+        <span onClick={() => onClick(1)}>예약중</span>
+        <span onClick={() => onClick(2)}>거래완료</span>
       </Buttons>
       <Button onClick={() => btnFn.closeModal()}>닫기</Button>
     </Wrapper>
@@ -84,7 +91,8 @@ const Button = styled.button`
   cursor: pointer;
   width: 100%;
   color: #2a86ff;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1.1rem;
   &:hover {
     color: rgba(0, 0, 0, 0.8);
     background-color: #ffffff;
