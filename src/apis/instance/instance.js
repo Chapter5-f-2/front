@@ -1,12 +1,11 @@
 import axios from "axios";
-
-import { getCookieToken } from "./Cookie";
+import { getCookieToken } from "../../shared/Cookie";
 
 const baseURL = process.env.REACT_APP_SERVER_URL;
 
 const myToken = getCookieToken();
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL,
   headers: {
     Authorization: myToken,

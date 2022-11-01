@@ -183,7 +183,7 @@ const PasswordForm = styled.form`
     padding: 0.7rem 1rem;
     color: ${(props) => props.theme.fontColor.black};
     font-size: 1.1rem;
-    border: none;
+
     border: 1px solid ${(props) => props.theme.borderColor.lightGray};
     border-radius: 5px;
     &:focus {
