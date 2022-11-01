@@ -4,6 +4,7 @@ import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
+import { login } from "../apis/query/userApi";
 
 const Login = () => {
   const {
@@ -13,7 +14,22 @@ const Login = () => {
     /* setError, */
     watch,
   } = useForm();
-  const onSubmit = (inputs) => {};
+
+  const onSubmit = async (inputs) => {
+    try {
+      const response = await login({ ...inputs });
+      console.log(response);
+      if (response.status === 200) {
+        alert("로그인에 성공하였습니다.");
+        // return (window.location.href = "/");
+      } else {
+        alert("로그인에 실패하였습니다.");
+      }
+    } catch (e) {
+      console.log(e);
+      return alert("로그인에 실패하였습니다.");
+    }
+  };
 
   return (
     <Layout>
@@ -22,7 +38,7 @@ const Login = () => {
         <div>
           <label>이메일</label>
           <input
-            {...register("Email", {
+            {...register("email", {
               required: "이메일을 입력해주세요",
               pattern: {
                 value:
@@ -35,13 +51,17 @@ const Login = () => {
           <span>{errors?.Email?.message}</span>
           <label>비밀번호</label>
           <input
-            {...register("Password", {
+            {...register("password", {
               required: "비밀번호를 입력해주세요",
+              pattern: {
+                value: /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
+                message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
+              },
             })}
             placeholder="Password"
           />
           <span>{errors?.Password?.message}</span>
-          {watch("Email") === "" && watch("Password") === "" ? (
+          {watch("email") === "" && watch("password") === "" ? (
             <button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
               로그인
             </button>

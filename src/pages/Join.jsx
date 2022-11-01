@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
@@ -7,12 +7,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
-import { nicknameDup } from "../apis/query/userApi";
+import { emailDup, nicknameDup, signUp } from "../apis/query/userApi";
 
 /* 배포 URL / 인스턴스 IP주소 */
 
 const Join = () => {
   const navigate = useNavigate();
+  const [dups, setDups] = useState({ nickname: false, email: false });
   const {
     register,
     handleSubmit,
@@ -20,59 +21,77 @@ const Join = () => {
     watch,
     setError,
   } = useForm();
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post("", data);
-      if (response.ok) {
-        alert("회원가입에 성공했습니다.");
-        return navigate("/login");
-      } else {
-        alert("회원가입에 실패했습니다.");
-        return;
-      }
-    } catch (e) {
-      alert("회원가입에 실패했습니다.");
-      return;
-    }
-  };
 
-  const onValid = (data) => {
-    if (data.password !== data.confirm) {
+  const onSubmit = async (inputs) => {
+    if (inputs.password !== inputs.confirm) {
       setError(
         "confirm",
         { message: "비밀번호가 일치하지 않습니다" },
         { shouldFocus: true }
       );
     }
+
+    try {
+      const response = await signUp({
+        ...inputs,
+        locationId: 2,
+        profileImage:
+          "https://avatars.dicebear.com/api/identicon/wooncloud.svg",
+      });
+      if (response.data.ok) {
+        alert(response.data.message);
+        return navigate("/login");
+      } else {
+        alert(response.data.message);
+        return;
+      }
+    } catch (e) {
+      return alert("회원가입에 실패하였습니다.");
+    }
   };
 
-  const emailDup = async (e) => {
+  const unValid = (inputs) => {
+    console.log("실패");
+  };
+
+  const onEmailDup = async (e) => {
     e.preventDefault();
     const email = watch("email");
     try {
-      const response = await axios.post("", { email }).then((res) => {
-        if (res.data === true) {
-          alert("중복된 아이디입니다.");
-        } else {
-          alert("사용 가능한 아이디입니다.");
-        }
-      });
+      const response = await emailDup({ email });
+      if (response.data.ok) {
+        alert(response.data.message);
+        setDups((prev) => ({ ...prev, nickname: true }));
+      } else {
+        alert(response.data.message);
+      }
     } catch (e) {
-      return console.log(e);
+      console.log(e);
+      return alert("이미 사용중인 닉네임 입니다.");
     }
   };
 
   const onNicknameDup = async (e) => {
     e.preventDefault();
     const nickname = watch("nickname");
-    const response = nicknameDup({ nickname: nickname });
-    console.log(response);
+    try {
+      const response = await nicknameDup({ nickname });
+      if (response.data.ok) {
+        alert(response.data.message);
+        setDups((prev) => ({ ...prev, nickname: true }));
+      } else {
+        alert(response.data.message);
+      }
+    } catch (e) {
+      console.log(e);
+      return alert("이미 사용중인 닉네임 입니다.");
+    }
   };
 
   return (
     <Layout>
       <DetailHeader title={"회원가입"} />
-      <JoinForm onSubmit={handleSubmit(onSubmit, onValid)}>
+      <JoinForm onSubmit={handleSubmit(onSubmit, unValid)}>
         <div>
           <h1>회원정보를 설정해주세요</h1>
           <label>이메일</label>
@@ -88,7 +107,7 @@ const Join = () => {
               })}
               placeholder="Email"
             />
-            <DupButton onClick={emailDup}>Check</DupButton>
+            <DupButton onClick={onEmailDup}>Check</DupButton>
           </Email>
           <span>{errors.email?.message}</span>
           <label>비밀번호</label>
@@ -96,10 +115,8 @@ const Join = () => {
             {...register("password", {
               required: "비밀번호를 입력해주세요",
               pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
-                message:
-                  "최소 8자 최대 16자 1개 이상의 대,소문자, 1개의 숫자,특수 문자를 포함시켜주세요",
+                value: /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
+                message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
               },
             })}
             type="password"
