@@ -5,16 +5,15 @@ import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 
-
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     /* setError, */
-    watch
+    watch,
   } = useForm();
-  const onSubmit = () => {};
+  const onSubmit = (inputs) => {};
 
   return (
     <Layout>
@@ -42,7 +41,13 @@ const Login = () => {
             placeholder="Password"
           />
           <span>{errors?.Password?.message}</span>
-          {watch("Email") === "" && watch("Password") === "" ? <button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</button> : <button style={{backgroundColor:"#ff6f06"}}>로그인</button>}
+          {watch("Email") === "" && watch("Password") === "" ? (
+            <button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+              로그인
+            </button>
+          ) : (
+            <button style={{ backgroundColor: "#ff6f06" }}>로그인</button>
+          )}
         </div>
       </LoginForm>
       <Footer />
@@ -73,11 +78,11 @@ const LoginForm = styled.form`
     width: 100%;
     height: 5vh;
     margin: 0 auto;
-    font-size: 15px;
-    border: 1px solid ${(props)=> props.theme.fontColor.lightGray}; 
-    border-radius: 10px;
     padding-left: 0.5rem;
-    &:focus{
+    font-size: 15px;
+    border: 1px solid ${(props) => props.theme.fontColor.lightGray};
+    border-radius: 10px;
+    &:focus {
       border-color: #fb3131;
     }
   }
@@ -85,8 +90,8 @@ const LoginForm = styled.form`
   span {
     margin-top: 5px;
     margin-left: 12%;
-    font-size: 0.8rem;
     color: #fb3131;
+    font-size: 0.8rem;
   }
 
   button {
@@ -97,7 +102,7 @@ const LoginForm = styled.form`
     color: white;
     font-weight: bold;
     font-size: 18px;
+    background-color: #ff6f06;
     border-radius: 10px;
-    background-color: #ff6f06
   }
 `;
