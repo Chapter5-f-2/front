@@ -8,6 +8,7 @@ import SubMain from "../components/layout/SubMain";
 import SmallSpinner from "../static/svg/SmallSpinner";
 import { AnimatePresence } from "framer-motion";
 
+
 function Chats() {
   return (
     <Layout>
