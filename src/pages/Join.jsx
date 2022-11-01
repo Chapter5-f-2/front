@@ -76,7 +76,7 @@ const onValid = (data) => {
   return (
     <Layout>
       <DetailHeader title={"회원가입"} />
-      <JoinForm onSubmit={handleSubmit(onSubmit,onValid)}>
+      <JoinForm onSubmit={handleSubmit(onSubmit)}>
         <div>
           <h1>회원정보를 설정해주세요</h1>
           <label>이메일</label>
@@ -143,13 +143,12 @@ const JoinForm = styled.form`
     margin-bottom: 0.2rem;
   }
 
-
   label {
     margin-top: 0.45rem;
     margin-bottom: 0.5rem;
     padding: 0 0.4rem;
-    
   } 
+
   span {
     width: 83%;
     margin-top: 5px;

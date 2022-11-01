@@ -23,7 +23,7 @@ const Login = () => {
         <div>
           <label>이메일</label>
           <input
-            {...register("Email", {
+            {...register("email", {
               required: "이메일을 입력해주세요",
               pattern: {
                 value:
@@ -33,16 +33,17 @@ const Login = () => {
             })}
             placeholder="Email Address"
           />
-          <span>{errors?.Email?.message}</span>
+          <span>{errors?.email?.message}</span>
           <label>비밀번호</label>
           <input
-            {...register("Password", {
+            {...register("email", {
               required: "비밀번호를 입력해주세요",
             })}
+            type="password"
             placeholder="Password"
           />
-          <span>{errors?.Password?.message}</span>
-          {watch("Email") === "" && watch("Password") === "" ? <button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</button> : <button style={{backgroundColor:"#ff6f06"}}>로그인</button>}
+          <span>{errors?.password?.message}</span>
+          {watch("email") === "" && watch("password") === "" ? <button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</button> : <button style={{backgroundColor:"#ff6f06"}}>로그인</button>}
         </div>
       </LoginForm>
       <Footer />
@@ -55,6 +56,7 @@ export default Login;
 const LoginForm = styled.form`
   padding: 0 2rem;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
 
   div {
