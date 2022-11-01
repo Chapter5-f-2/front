@@ -8,6 +8,11 @@ import ModalHeader from "../header/ModalHeader";
 import Layout from "../layout/Layout";
 import Main from "../layout/Main";
 import { motion } from "framer-motion";
+import { FcMultipleDevices } from "react-icons/fc";
+import { FcAdvertising } from "react-icons/fc";
+import { GiClothes } from "react-icons/gi";
+import { GiSofa } from "react-icons/gi";
+
 const PostCategory = ({ onClick, setCategory, type = "" }) => {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
   const navigate = useNavigate();
@@ -39,19 +44,19 @@ const PostCategory = ({ onClick, setCategory, type = "" }) => {
         <Main>
           <CategoryList>
             <CategoryItem onClick={() => setCategoryId(1)}>
-              <div />
+              <div><FcMultipleDevices/></div>
               <span>전자/가전제품</span>
             </CategoryItem>
             <CategoryItem onClick={() => setCategoryId(2)}>
-              <div />
+              <div style={{color:"#ff6f06"}}><GiSofa/></div>
               <span>가구/인테리어</span>
             </CategoryItem>
             <CategoryItem onClick={() => setCategoryId(3)}>
-              <div />
+              <div style={{color:"rgba(26, 83, 240, 0.902)"}}><GiClothes/></div>
               <span>패션/잡화</span>
             </CategoryItem>
             <CategoryItem onClick={() => setCategoryId(4)}>
-              <div />
+              <div><FcAdvertising/></div>
               <span>삽니다</span>
             </CategoryItem>
           </CategoryList>
@@ -94,7 +99,7 @@ const CategoryItem = styled.div`
   div {
     width: 2rem;
     height: 2rem;
-    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 30px;
   }
   span {
     margin-top: 1rem;
