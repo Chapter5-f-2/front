@@ -2,38 +2,42 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Left from "../../static/svg/Left";
+import getCategory from "../../utils/getCategory";
+import getLocation from "../../utils/getLocation";
+import getStatus from "../../utils/getStatus";
+import timeCheck from "../../utils/timeCheck";
 
-const ItemDetail = ({ btnFn }) => {
+const ItemDetail = ({ btnFn, post }) => {
   const navigate = useNavigate();
+
   return (
     <Wrapper>
       <ImgContainer />
       <Container>
         <UserContainer>
-          <UserImage onClick={() => navigate("/profiles/1")} />
+          <UserImage onClick={() => navigate(`/profiles/${post.userId}`)} />
           <TextContainer>
-            <h3 onClick={() => navigate("/profiles/1")}>나먕쥬 망나뇽</h3>
+            <h3 onClick={() => navigate(`/profiles/${post.userId}`)}>
+              {post.nickname}
+            </h3>
             <div>
-              <span>화도읍</span>
-              <span> · 1시간 전</span>
+              <span>{getLocation(post.locationId)}</span>
             </div>
           </TextContainer>
         </UserContainer>
         <PostContainer>
           <StateBtn onClick={btnFn.openModal}>
-            판매중 <Left _width={2.5} />
+            {getStatus(post.status)} <Left _width={2.5} />
           </StateBtn>
-          <h3>포켓몬 빵 미개봉 상품 일괄 판매</h3>
+          <h3>{post.title}</h3>
           <PostDetailBox>
-            <strong>기타 중고물품</strong>
-            <span> · 13분전</span>
+            <strong>{getCategory(post.categoryId)}</strong>
+            <span> · {timeCheck(+post.createdAt)}</span>
           </PostDetailBox>
-          <PostContent>
-            로켓단 11월 1일, 이상해씨 11월 2일 로켓단 11월 1일,
-          </PostContent>
+          <PostContent>{post.content}</PostContent>
           <PostSub>
-            <span>채팅 1 </span>
-            <span> · 조회 12</span>
+            <span>채팅 {post.chatCount} </span>
+            <span> · 조회 {post.wishCount}</span>
           </PostSub>
         </PostContainer>
       </Container>

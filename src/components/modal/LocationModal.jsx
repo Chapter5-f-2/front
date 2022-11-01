@@ -88,7 +88,7 @@ const LocationModal = ({ setLocation, type = "" }) => {
             <LocationItem onClick={() => setLocationId(20)}>
               일원2동
             </LocationItem>
-            <LocationItem onClick={() => setLocationId(20)}>
+            <LocationItem onClick={() => setLocationId(21)}>
               수서동
             </LocationItem>
           </LocationList>

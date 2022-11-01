@@ -15,10 +15,16 @@ import LocationModal from "../modal/LocationModal";
 import PostCategory from "../modal/PostCategory";
 import PostItem from "../posts/PostItem";
 import { AnimatePresence } from "framer-motion";
+import { useQuery } from "react-query";
+import { readLocationPosts } from "../../apis/query/postApi";
 function Posts() {
   const showCategory = useRecoilValue(showCategoryAtom);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const [location, setLocation] = useState(null);
+  const { data, isLoading } = useQuery(["posts", "locationList"], () =>
+    readLocationPosts()
+  );
+
   return (
     <Layout>
       <Header
@@ -28,8 +34,8 @@ function Posts() {
       />
       <SubMain>
         <Wrapper>
-          {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
-            <PostItem key={idx} />
+          {[1, 2, 3, 4, 5, 6, 7].map((post, idx) => (
+            <PostItem key={idx} post={post} />
           ))}
         </Wrapper>
       </SubMain>

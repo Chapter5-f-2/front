@@ -10,10 +10,14 @@ import State from "../components/modal/State";
 import UpdateModal from "../components/modal/UpdateModal";
 import ItemDetail from "../components/posts/ItemDetail";
 import { AnimatePresence } from "framer-motion";
-const PostDetail = () => {
+import { useParams } from "react-router-dom";
+
+const PostDetail = ({ post }) => {
   const [isShow, setIsShow] = useState(false);
-  const [isWish, setIsWish] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
+  const { id } = useParams();
+  // const { data, isLoading } = useQuery(["posts", "detail"], () => readPost(id));
+
   const btnFn = {
     openModal: () => setIsShow(true),
     closeModal: () => setIsShow(false),
@@ -29,19 +33,19 @@ const PostDetail = () => {
           isDetail={true}
           _onClick={btnFn.openUpdateModal}
         />
-        <ItemDetail btnFn={btnFn} />
+        <ItemDetail btnFn={btnFn} post={post} />
       </SubMain>
-      <PriceFooter isWish={isWish} setIsWish={setIsWish} />
+      <PriceFooter post={post} id={id} />
       <AnimatePresence>
         {isShow ? (
           <Overlay>
-            <State btnFn={btnFn} />
+            <State btnFn={btnFn} id={id} />
           </Overlay>
         ) : null}
 
         {isUpdate ? (
           <Overlay>
-            <UpdateModal btnFn={btnFn} />
+            <UpdateModal btnFn={btnFn} id={id} />
           </Overlay>
         ) : null}
       </AnimatePresence>
@@ -50,3 +54,31 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
+
+PostDetail.defaultProps = {
+  post: {
+    postId: 1,
+    userId: 1,
+    nickname: "나먕쥬 밀탱크",
+    categoryId: 1,
+    locationId: 1,
+    title: "제목",
+    content: "내용",
+    postImgUrl: "imgUrl.png",
+    price: 12000,
+    status: 0,
+    wishCount: 3,
+    chatCount: 5,
+    isWish: true,
+    otherPosts: [
+      {
+        postId: 2,
+        title: "제목",
+        postImgUrl: "imgUrl.png",
+        price: 10000,
+      },
+    ],
+    createdAt: 1667289735209,
+    updatedAt: 162839182,
+  },
+};

@@ -1,11 +1,25 @@
 import React from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { queryClient } from "../..";
+import { editPostStatus } from "../../apis/query/postApi";
 import DotSvg from "../../pages/DotSvg";
 import { FlexAlignBox, FlexColumnBox } from "../../shared/styles/flex";
+import getLocation from "../../utils/getLocation";
+import timeCheck from "../../utils/timeCheck";
 
-const SalesItem = ({ focus }) => {
+const SalesItem = ({ focus, post }) => {
   const navigate = useNavigate();
+  const { mutate } = useMutation(editPostStatus, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["mypage,sales"]);
+    },
+  });
+
+  const onClick = (num) => {
+    mutate({ id: post?.postId, status: num });
+  };
 
   return (
     <ItemWrapper>
@@ -16,14 +30,15 @@ const SalesItem = ({ focus }) => {
         <InfoContainer>
           <TextContainer>
             <div>
-              <h3>포켓몬 빵</h3>
+              <h3>{post.title}</h3>
             </div>
             <div>
-              <span>화도읍</span>
-              <span>· 1시간 전</span>
+              <span>{getLocation(post.locationId)}</span>
+              <span>· {timeCheck(+post.createdAt)}</span>
             </div>
             <strong>
-              {focus ? <StatusBtn>거래완료</StatusBtn> : null}3,000원
+              {focus ? <StatusBtn>거래완료</StatusBtn> : null}
+              {post.price}원
             </strong>
           </TextContainer>
         </InfoContainer>
@@ -33,8 +48,13 @@ const SalesItem = ({ focus }) => {
           <button>후기 작성하기</button>
         ) : (
           <>
-            <button>예약중</button>
-            <button>거래완료</button>
+            {post.status !== 0 && (
+              <button onClick={() => onClick(0)}>판매중</button>
+            )}
+            {post.status !== 1 && (
+              <button onClick={() => onClick(1)}>예약중</button>
+            )}
+            <button onClick={() => onClick(2)}>거래완료</button>
           </>
         )}
       </Btns>

@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { FlexColumnBox } from "../../shared/styles/flex";
 import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
+import getLocation from "../../utils/getLocation";
+import timeCheck from "../../utils/timeCheck";
 
-const PostItem = () => {
+const PostItem = ({ post }) => {
   const navigate = useNavigate();
   return (
     <Item onClick={() => navigate("/posts/1")}>
@@ -14,19 +16,21 @@ const PostItem = () => {
       </ImageContainer>
       <InfoContainer>
         <TextContainer>
-          <h3>포켓몬빵</h3>
+          <h3>{post.title}</h3>
           <div>
-            <span>화도읍</span>
-            <span>· 1시간 전</span>
+            <span>{getLocation(post.locationId)}</span>
+            <span>· {timeCheck(post.createdAt)}</span>
           </div>
-          <strong>3,000원</strong>
+          <strong>{post.price}원</strong>
         </TextContainer>
         <SvgContainer>
           <span>
-            <CommentSvg _width={1.5} />3
+            <CommentSvg _width={1.5} />
+            {post.chatCount}
           </span>
           <span>
-            <EmptyHeartSvg _width={1.5} />2
+            <EmptyHeartSvg _width={1.5} />
+            {post.wishCount}
           </span>
         </SvgContainer>
       </InfoContainer>
