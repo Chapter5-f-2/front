@@ -16,6 +16,7 @@ import Purchases from "../pages/Purchases";
 import Sales from "../pages/Sales";
 import WritePost from "../pages/WritePost";
 
+
 function Router() {
   return (
     <BrowserRouter>
