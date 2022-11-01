@@ -12,6 +12,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
     /* setError, */
+    watch
   } = useForm();
   const onSubmit = () => {};
 
@@ -41,7 +42,7 @@ const Login = () => {
             placeholder="Password"
           />
           <span>{errors?.Password?.message}</span>
-          <button>LogIn</button>
+          {watch("Email") === "" && watch("Password") === "" ? <button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</button> : <button style={{backgroundColor:"#ff6f06"}}>로그인</button>}
         </div>
       </LoginForm>
       <Footer />
@@ -70,13 +71,15 @@ const LoginForm = styled.form`
 
   input {
     width: 100%;
-    height: 4vh;
+    height: 5vh;
     margin: 0 auto;
     font-size: 15px;
-    border: 1px solid #ff6f06; 
+    border: 1px solid ${(props)=> props.theme.fontColor.lightGray}; 
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     padding-left: 0.5rem;
+    &:focus{
+      border-color: #fb3131;
+    }
   }
 
   span {
@@ -95,7 +98,6 @@ const LoginForm = styled.form`
     font-weight: bold;
     font-size: 18px;
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     background-color: #ff6f06
   }
 `;

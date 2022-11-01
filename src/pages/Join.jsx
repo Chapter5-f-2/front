@@ -90,7 +90,7 @@ const onValid = (data) => {
           </Email>
           <span>{errors.email?.message}</span>
           <label>비밀번호</label>
-          <input
+          <Inputs
             {...register("password", {
               required: "비밀번호를 입력해주세요",
               pattern: {
@@ -101,7 +101,7 @@ const onValid = (data) => {
           />
           <span>{errors.password?.message}</span>
           <label>비밀번호 확인</label>
-          <input
+          <Inputs
             {...register("confirm", { required: "비밀번호 확인을 입력해주세요", })} type="password" placeholder="Confirm Password" />
           <span>{errors.confirmPassword?.message}</span>
           <label>동네 설정</label>
@@ -116,7 +116,7 @@ const onValid = (data) => {
           <DupButton onClick={nicknameDup}>Check</DupButton>
           </Nickname>
           <span>{errors.nickname?.message}</span>
-          <Button>완료</Button>
+          {watch("email") === "" && watch("password") === "" && watch("confirm") === "" && watch("nickname") === "" ? <Button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</Button> : <Button style={{backgroundColor:"#ff6f06"}}>로그인</Button>}
         </div>
       </JoinForm>
       <Footer />
@@ -134,19 +134,8 @@ const JoinForm = styled.form`
   &>div {
     display: flex;
     flex-direction: column;
-    &>input {
-    width: 100%;
-    height: 4vh;
-    margin: 0 auto;
-    padding: 0.8rem 1rem;
-    font-size: 15px;
-    border: 1px solid #ff6f06;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-
   }
-  }
-
+  
   h1 {
     margin-top: 1rem;
     font-weight: bold;
@@ -168,17 +157,37 @@ const JoinForm = styled.form`
     font-size: 0.8rem;
     color: #fb3131;
   }
-
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  &:hover {
-    color: ${(props) => props.theme.fontColor.black};
-    transition: color 0.2s ease-in;
-  }
-
+  
   overflow:hidden;
 `;
+
+const Inputs = styled.input`
+    width: 100%;
+    height: 4vh;
+    margin: 0 auto;
+    padding: 0.8rem 1rem;
+    font-size: 15px;
+    border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
+    border-radius: 10px;
+      &:focus {
+        border-color: #fb3131;
+      }
+`;
+
+const Input = styled.input`
+  padding: 0 1rem;
+  height: 4vh;
+  border-radius: 9px 9px 9px 9px;
+  border: white;
+  font-size: 15px;
+  width: 98%;
+  border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
+  &:focus {
+        border: 1px solid #fb3131;
+      }
+`;
+
 const Button = styled.button`
-  border: 2px solid #ff6f06;
   border-radius: 10px;
   width: 100%;
   height: 6vh;
@@ -187,39 +196,26 @@ const Button = styled.button`
   margin-bottom: 10px;
   color: white;
   font-size: 18px;
-  background-color: ${(props) => props.theme.fontColor.darkOrange}
 `;
 
 const Email = styled.div`
   display: grid;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: 1fr 60px;
   border-radius: 10px;
-  border: 1px solid #ff6f06;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 `;
 
 const DupButton = styled.button`
   background-color: #ff6f06;
   border-radius: 5px;
-  line-height: 1.2;
+  /* line-height: 1.2; */
   width: 100%;
-  color: white;
-  border-radius: 5px 6px 6px 5px;
-  margin: 5px 5px 5px -5px;
-`;
-
-const Input = styled.input`
-  padding: 1rem 1rem;
   height: 4vh;
-  border-radius: 10px 0px 0px 10px;
-  border: white;
-  font-size: 15px;
-  width: 100%;
+  color: white;
+  border-radius: 9px 9px 9px px;
+  /* margin: 5px 5px 5px -5px; */
 `;
 
-const Nickname = styled(Email)`
-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-`;
+const Nickname = styled(Email)``;
 
 const Blank = styled.div`
   background-color: white;
@@ -235,7 +231,10 @@ const Blank = styled.div`
 `;
 
 const SelectTown = styled(Email)`
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
+  &:focus {
+        border-color: #fb3131;
+      }
   margin-bottom: 0.25rem;
 `;
 
