@@ -1,19 +1,26 @@
 import React from "react";
+import { useQuery } from "react-query";
 
 import styled from "styled-components";
+import { readWishPosts } from "../apis/query/userApi";
 import Footer from "../components/footer/Footer";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import InterestsItem from "../components/mypage/InterestsItem";
 
-const Purchases = () => {
+const Interests = () => {
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useQuery(["mypage", "interests"], readWishPosts);
   return (
     <Layout>
       <DetailHeader title={"관심목록"} />
       <Main>
-        {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
-          <InterestsItem key={idx} />
+        {posts?.map((post, idx) => (
+          <InterestsItem key={idx} post={post} />
         ))}
       </Main>
       <Footer />
@@ -21,7 +28,7 @@ const Purchases = () => {
   );
 };
 
-export default Purchases;
+export default Interests;
 
 const Main = styled(SubMain)`
   padding-bottom: 0px;
