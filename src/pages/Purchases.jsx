@@ -7,6 +7,7 @@ import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import PurChasesItem from "../components/mypage/PurchasesItem";
+import SmallSpinner from "../static/svg/SmallSpinner";
 
 const Purchases = () => {
   const {
@@ -14,13 +15,18 @@ const Purchases = () => {
     isLoading,
     error,
   } = useQuery(["mypage", "purchases"], readBuyPosts);
+  if (error) return;
   return (
     <Layout isDetail={false}>
       <DetailHeader title={"구매내역"} />
+
       <Main {...mainStyle}>
-        {posts?.map((post, idx) => (
-          <PurChasesItem key={idx} post={post} />
-        ))}
+        {isLoading ? (
+          <SmallSpinner />
+        ) : (
+          posts &&
+          posts?.map((post, idx) => <PurChasesItem key={idx} post={post} />)
+        )}
       </Main>
       <Footer />
     </Layout>

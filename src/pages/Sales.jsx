@@ -9,6 +9,7 @@ import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import SalesItem from "../components/mypage/SalesItem";
+import SmallSpinner from "../static/svg/SmallSpinner";
 
 const Sales = () => {
   const [focus, setFocus] = useState(true);
@@ -38,6 +39,7 @@ const Sales = () => {
           </Btn>
         </Btns>
         <SubMain>
+          {(salesLoading || endSalesLoading) && <SmallSpinner />}
           {focus &&
             sales &&
             sales?.map((post) => (
