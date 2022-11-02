@@ -91,7 +91,8 @@ const EditProfile = () => {
   // 비밀번호를 수정하는 함수
   const onPass = async (inputs) => {
     try {
-      const data = { oldPassword: oldP, newPassword: newP, confirm: con };
+      const { oldPassword, newPassword, confirm } = inputs;
+      const data = { oldPassword, newPassword, confirm };
       const responce = await instance.put(`mypage/password`, data);
       if (responce.status === 200) {
         Swal.fire({
