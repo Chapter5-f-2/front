@@ -18,12 +18,13 @@ import ArchiveSvg from "../static/svg/ArchiveSvg";
 import LocationSvg from "../static/svg/LocationSvg";
 import { TargetSvg } from "../static/svg/TargetSvg";
 import MailSvg from "../static/svg/MailSvg";
-import UseUser from "../hooks/useUser";
 import getLocation from "../utils/getLocation";
+import { useQuery } from "react-query";
+import { readMe } from "../apis/query/userApi";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const user = UseUser();
+  const { data: user } = useQuery(["mypage", "me"], readMe);
   return (
     <Layout>
       <Header title={"나의 당근"} />

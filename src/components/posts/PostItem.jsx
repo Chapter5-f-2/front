@@ -12,7 +12,7 @@ const PostItem = ({ post }) => {
   return (
     <Item onClick={() => navigate(`/posts/${post?.postId}`)}>
       <ImageContainer>
-        <div />
+        <img src={post.postImgUrl} alt={""} />
       </ImageContainer>
       <InfoContainer>
         <TextContainer>
@@ -41,8 +41,9 @@ const PostItem = ({ post }) => {
 export default PostItem;
 
 const ImageContainer = styled.div`
-  div {
+  img {
     width: 5.5rem;
+    object-fit: cover;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     aspect-ratio: 1/1;

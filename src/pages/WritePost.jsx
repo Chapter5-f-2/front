@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { postApi } from "../apis/instance/instance";
 import { addPost } from "../apis/query/postApi";
 import Footer from "../components/footer/Footer";
 import ModalHeader from "../components/header/ModalHeader";
@@ -31,16 +32,19 @@ const WritePost = () => {
     setPreview(fileBlob);
   };
 
-  const onValid = (inputs) => {
+  const onValid = async (inputs) => {
     if (categoryId === 0) return alert("카테고리를 선택해주세요");
+
     const body = {
       ...inputs,
       price: +inputs.price,
       categoryId,
-      postImgUrl:
-        "https://avatars.dicebear.com/api/male/john.svg?background=%230000ff",
+      postImgUrl: file,
     };
-    mutate(body);
+    const response = await postApi.post("post", body);
+    console.log(response);
+    console.log(body);
+    //mutate(body);
   };
 
   const handleClick = () => {

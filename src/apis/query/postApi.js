@@ -23,19 +23,20 @@ export const readKeywordPosts = async (keyword) => {
 /** 거래글 상세 조회*/
 export const readPost = async (postId) => {
   const { data } = await instance.get(`post/${postId}`);
-  console.log(data);
-  return data;
+
+  return data.data;
 };
 
 /** 거래글 추가*/
 export const addPost = async (body) => {
   console.log(body);
-  const { data } = await instance.post("post", body);
+  const { data } = await postApi.post("post", body);
   return data;
 };
 
 /** 거래글 수정*/
 export const editPost = async ({ id, body }) => {
+  console.log(id, body);
   const { data } = await postApi.put(`post/${id}`, body);
   return data;
 };
@@ -55,6 +56,7 @@ export const removePost = async (id) => {
 
 /** 거래글 좋아요 */
 export const toggleWish = async (id) => {
+  console.log(id);
   const data = await instance.put(`post/wish/${id}`);
   return data;
 };

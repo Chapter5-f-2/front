@@ -11,14 +11,14 @@ import HeartSvg from "../../static/svg/HeartSvg";
 // 채팅방 ID 받아야함
 function PriceFooter({ post, id }) {
   const navigate = useNavigate();
-  const { mutate: toggleWishFn } = useMutation(() => toggleWish(id), {
+  const { mutate: toggleWishFn } = useMutation(toggleWish, {
     onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
   });
   return (
     <Wrapper>
       <FooterContainer isWish={post?.isWish}>
         <div>
-          <span onClick={toggleWishFn}>
+          <span onClick={() => toggleWishFn(id)}>
             {post?.isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
           <strong>{post?.price}원</strong>

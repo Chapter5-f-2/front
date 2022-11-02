@@ -7,12 +7,13 @@ import getLocation from "../../utils/getLocation";
 import getStatus from "../../utils/getStatus";
 import timeCheck from "../../utils/timeCheck";
 
-const ItemDetail = ({ btnFn, post }) => {
+const ItemDetail = ({ btnFn, post, userId }) => {
   const navigate = useNavigate();
   if (!post) return;
+  console.log(post.postImgUrl);
   return (
     <Wrapper>
-      <ImgContainer />
+      <ImgContainer src={post.postImgUrl} />
       <Container>
         <UserContainer>
           <UserImage onClick={() => navigate(`/profiles/${post.userId}`)} />
@@ -26,9 +27,11 @@ const ItemDetail = ({ btnFn, post }) => {
           </TextContainer>
         </UserContainer>
         <PostContainer>
-          <StateBtn onClick={btnFn.openModal}>
-            {getStatus(post.status)} <Left _width={2.5} />
-          </StateBtn>
+          {post.userId === userId ? (
+            <StateBtn onClick={btnFn.openModal}>
+              {getStatus(post.status)} <Left _width={2.5} />
+            </StateBtn>
+          ) : null}
           <h3>{post.title}</h3>
           <PostDetailBox>
             <strong>{getCategory(post.categoryId)}</strong>
@@ -47,7 +50,7 @@ const ItemDetail = ({ btnFn, post }) => {
 
 export default ItemDetail;
 
-const ImgContainer = styled.div`
+const ImgContainer = styled.img`
   width: 100%;
   height: 100%;
   max-height: 250px;

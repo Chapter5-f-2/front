@@ -36,8 +36,6 @@ const Join = () => {
       const response = await signUp({
         ...inputs,
         locationId: 2,
-        profileImage:
-          "https://avatars.dicebear.com/api/identicon/wooncloud.svg",
       });
       if (response.data.ok) {
         alert(response.data.message);

@@ -11,16 +11,17 @@ import UpdateModal from "../components/modal/UpdateModal";
 import ItemDetail from "../components/posts/ItemDetail";
 import { AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
-import { editPost, readPost, removePost } from "../apis/query/postApi";
-import { useMutation, useQuery } from "react-query";
-import { queryClient } from "..";
+import { readPost } from "../apis/query/postApi";
+import { useQuery } from "react-query";
+import UseUser from "../hooks/useUser";
 
 const PostDetail = () => {
   const [isShow, setIsShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const { id } = useParams();
-  const { data: post, isLoading } = useQuery(["posts", "detail"], readPost(id));
-
+  const user = UseUser();
+  const { data, isLoading } = useQuery(["posts", "detail"], () => readPost(id));
+  console.log(data?.post);
   const btnFn = {
     openModal: () => setIsShow(true),
     closeModal: () => setIsShow(false),
@@ -36,10 +37,15 @@ const PostDetail = () => {
           title={"상품페이지"}
           isDetail={true}
           _onClick={btnFn.openUpdateModal}
+          isOwner={data?.post.userId === user?.userId}
         />
-        <ItemDetail btnFn={btnFn} post={post?.post} />
+        <ItemDetail
+          btnFn={btnFn}
+          post={data && data.post}
+          userId={user?.userId}
+        />
       </SubMain>
-      <PriceFooter post={post} id={id} />
+      <PriceFooter post={data && data.post} id={id} />
       <AnimatePresence>
         {isShow ? (
           <Overlay>

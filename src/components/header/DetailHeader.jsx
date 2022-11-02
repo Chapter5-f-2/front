@@ -7,7 +7,7 @@ import HomeSvg from "../../static/svg/HomeSvg";
 
 import Left from "../../static/svg/Left";
 
-function DetailHeader({ isDetail, title, _onClick, type }) {
+function DetailHeader({ isDetail, title, _onClick, type, isOwner }) {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ function DetailHeader({ isDetail, title, _onClick, type }) {
         </RightNavItem>
         <LeftNavItem onClick={_onClick}>
           {type === "write" ? <span onClick={_onClick}>완료</span> : null}
-          {isDetail ? <DotSvg /> : null}
+          {isDetail && isOwner ? <DotSvg /> : null}
         </LeftNavItem>
         {isDetail ? null : <Title>{title}</Title>}
       </nav>
@@ -39,6 +39,7 @@ DetailHeader.defaultProps = {
   isDetail: false,
   title: "",
   type: "",
+  owner: false,
 };
 
 const Wrapper = styled.div`

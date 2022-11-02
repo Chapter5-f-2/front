@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UseUser from "../../hooks/useUser";
 import CancelSvg from "../../static/svg/CancelSvg";
 import Left from "../../static/svg/Left";
 
 function ModalHeader({ title, _onClick, type }) {
   const navigate = useNavigate();
+  const user = UseUser();
   return (
     <Wrapper>
       <nav>

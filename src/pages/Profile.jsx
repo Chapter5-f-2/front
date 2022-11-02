@@ -1,5 +1,7 @@
 import React from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { readMe } from "../apis/query/userApi";
 import Footer from "../components/footer/Footer";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
@@ -52,7 +54,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserImage = styled.div`
+const UserImage = styled.img`
   width: 3rem;
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.2);

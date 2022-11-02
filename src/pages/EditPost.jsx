@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { queryClient } from "..";
-import { editPost } from "../apis/query/postApi";
+import { editPost, readPost } from "../apis/query/postApi";
 import Footer from "../components/footer/Footer";
 import ModalHeader from "../components/header/ModalHeader";
 import Layout from "../components/layout/Layout";
@@ -15,19 +16,21 @@ import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import getCategory from "../utils/getCategory";
 
-const EditPost = ({ post }) => {
+const EditPost = () => {
   const { register, handleSubmit, watch, setValue } = useForm();
   const [isShow, setIsShow] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
   const formRef = useRef();
   const [preview, setPreview] = useState();
   const [file, setFile] = useState("");
-  const { mutate: editPostFn, data } = useMutation(editPost, {
+  const { mutate: editPostFn } = useMutation(editPost, {
     onSuccess: () => {
       queryClient.invalidateQueries(["posts", "detail"]);
     },
   });
+  const { id } = useParams();
 
+  const { data: post } = useQuery(["posts", "detail"], () => readPost(id));
   // file input이 변경될 때 변경 사항을 프리뷰로 보여주는 함수
   const onChangePreView = (e) => {
     const fileBlob = URL.createObjectURL(e.target.files[0]);
@@ -45,9 +48,7 @@ const EditPost = ({ post }) => {
       postImgUrl:
         "https://avatars.dicebear.com/api/male/john.svg?background=%230000ff",
     };
-    editPostFn({ id: post?.id, body });
-    console.log(data);
-    // n
+    editPostFn({ id, body });
   };
 
   // 완료버튼을 눌렀을 때 form이 제출되게 하는 함수
@@ -65,12 +66,12 @@ const EditPost = ({ post }) => {
 
   // 마운트 되었을 때 post의 정보를 set 해주는 함수
   useEffect(() => {
-    if (post) {
-      setValue("title", post.title);
-      setValue("price", post.price);
-      setValue("content", post.content);
-      setCategoryId(post.categoryId);
-      setPreview(post.postImgUrl);
+    if (post.post) {
+      setValue("title", post.post.title);
+      setValue("price", post.post.price);
+      setValue("content", post.post.content);
+      setCategoryId(post.post.categoryId);
+      setPreview(post.post.postImgUrl);
     }
   }, [post, setValue]);
 

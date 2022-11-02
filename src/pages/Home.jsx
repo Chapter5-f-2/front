@@ -4,6 +4,7 @@ import UseUser from "../hooks/useUser";
 
 function Home() {
   const user = UseUser();
+
   return <>{!user ? <Start /> : <Posts />}</>;
 }
 
