@@ -58,6 +58,7 @@ const Join = () => {
         title: "회원가입 실패",
         confirmButtonColor: "#ff6f06",
         icon: "error",
+        color:"red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -92,6 +93,7 @@ const Join = () => {
         text: "이미 사용 중인 이메일입니다",
         confirmButtonColor: "#ff6f06",
         icon: "warning",
+        color:"red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -115,6 +117,7 @@ const Join = () => {
         text: "이미 사용 중인 닉네임입니다",
         confirmButtonColor: "#ff6f06",
         icon: "warning",
+        color:"red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -181,6 +184,7 @@ const Join = () => {
                 required: "닉네임을 10자 이내로 입력해주세요",
               })}
               placeholder="NickName"
+              minLength="2"
               maxLength="10"
             />
             <DupButton onClick={onNicknameDup}>Check</DupButton>

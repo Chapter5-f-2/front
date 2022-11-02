@@ -15,6 +15,7 @@ import { FlexBetweenBox, FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import getCategory from "../utils/getCategory";
+import Swal from "sweetalert2";
 
 const WritePost = () => {
   const { register, handleSubmit, watch } = useForm();
@@ -33,7 +34,13 @@ const WritePost = () => {
   };
 
   const onValid = async (inputs) => {
-    if (categoryId === 0) return alert("카테고리를 선택해주세요");
+    if (categoryId === 0) return Swal.fire({
+      text: "카테고리를 선택해주세요",
+      confirmButtonColor: "#ff6f06",
+      confirmButtonText: "확인",
+      icon:"info",
+      width: 320,
+    });
 
     const body = {
       ...inputs,
@@ -46,7 +53,13 @@ const WritePost = () => {
     if (response.status === 200) {
       return navigate(`/posts/${response.data.postId}`);
     } else {
-      return alert("게시글 생성에 실패하였습니다.");
+      return Swal.fire({
+        text: "게시글 생성에 실패했습니다",
+        confirmButtonColor: "#ff6f06",
+        icon:"error",
+        confirmButtonText: "확인",
+        width: 320,
+      });
     }
 
     //mutate(body);
