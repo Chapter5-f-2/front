@@ -1,11 +1,12 @@
-// import instance from "../instance/instance";
+import instance from "../instance/instance";
 
-// export const addChatRoom = async () => {
-//   const data = await instance.pos("/chat");
-//   return data;
-// };
+export const addChatRoom = async () => {
+  const data = await instance.post("/chat");
+  return data;
+};
 
-// export const readChatRoom = async () => {
-//   const data = await instance.get("/chat");
-//   return data;
-// };
+export const readChatRooms = async () => {
+  const { data } = await instance.get("/chat");
+  console.log(data);
+  return data.data;
+};

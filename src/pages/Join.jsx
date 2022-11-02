@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 import styled from "styled-components";
 import axios from "axios";
@@ -20,7 +20,6 @@ const Join = () => {
   const navigate = useNavigate();
   const [dups, setDups] = useState({ nickname: false, email: false });
   const [locationId, setLocationId] = useState(0);
-  console.log(locationId);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const {
     register,
@@ -28,6 +27,7 @@ const Join = () => {
     formState: { errors },
     watch,
     setError,
+    setFocus,
   } = useForm();
 
   const onSubmit = async (inputs) => {
@@ -63,8 +63,15 @@ const Join = () => {
 
   const onEmailDup = async (e) => {
     e.preventDefault();
+    const reg =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
     const email = watch("email");
+    const testing = reg.test(email);
     try {
+      if (!testing) {
+        setFocus("email");
+        return alert("이메일을 확인해주세요");
+      }
       const response = await emailDup({ email });
       if (response.data.ok) {
         alert(response.data.message);

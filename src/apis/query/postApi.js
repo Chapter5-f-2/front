@@ -38,6 +38,7 @@ export const addPost = async (body) => {
 export const editPost = async ({ id, body }) => {
   console.log(id, body);
   const { data } = await postApi.put(`post/${id}`, body);
+  console.log(data);
   return data;
 };
 

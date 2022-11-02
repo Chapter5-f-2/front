@@ -7,17 +7,20 @@ import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import SmallSpinner from "../static/svg/SmallSpinner";
 import { AnimatePresence } from "framer-motion";
-
+import { useMutation, useQuery } from "react-query";
+import { readChatRooms } from "../apis/query/chatApi";
 
 function Chats() {
+  const { mutate: chats } = useQuery(["chats"], readChatRooms);
+  console.log(chats);
   return (
     <Layout>
       <Header title={"채팅"} />
       <SubMain>
         <Wrapper>
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {true ? <SmallSpinner></SmallSpinner> : null}
-          </AnimatePresence>
+          </AnimatePresence> */}
           {[1, 2, 3].map((item, idx) => (
             <ChatsItem key={idx} />
           ))}

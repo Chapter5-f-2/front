@@ -75,9 +75,10 @@ const Item = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  div {
+  img {
     width: 5rem;
     background-color: rgba(0, 0, 0, 0.2);
+    border: none;
     border-radius: 6px;
     aspect-ratio: 1/1;
   }

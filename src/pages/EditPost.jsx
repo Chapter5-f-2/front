@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { queryClient } from "..";
 import { editPost, readPost } from "../apis/query/postApi";
@@ -21,11 +21,13 @@ const EditPost = () => {
   const [isShow, setIsShow] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
   const formRef = useRef();
+  const navigate = useNavigate();
   const [preview, setPreview] = useState();
   const [file, setFile] = useState("");
-  const { mutate: editPostFn } = useMutation(editPost, {
-    onSuccess: () => {
+  const { mutate: editPostFn, data } = useMutation(editPost, {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(["posts", "detail"]);
+      return data;
     },
   });
   const { id } = useParams();
@@ -45,10 +47,12 @@ const EditPost = () => {
       ...inputs,
       price: +inputs.price,
       categoryId,
-      postImgUrl:
-        "https://avatars.dicebear.com/api/male/john.svg?background=%230000ff",
+      postImgUrl: file,
     };
     editPostFn({ id, body });
+    if (data && data.ok) {
+      return navigate(`/posts/${id}`);
+    }
   };
 
   // 완료버튼을 눌렀을 때 form이 제출되게 하는 함수
@@ -66,7 +70,7 @@ const EditPost = () => {
 
   // 마운트 되었을 때 post의 정보를 set 해주는 함수
   useEffect(() => {
-    if (post.post) {
+    if (post && post.post) {
       setValue("title", post.post.title);
       setValue("price", post.post.price);
       setValue("content", post.post.content);

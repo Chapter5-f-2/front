@@ -43,7 +43,12 @@ const WritePost = () => {
     };
     const response = await postApi.post("post", body);
     console.log(response);
-    console.log(body);
+    if (response.status === 200) {
+      return navigate(`/posts/${response.data.postId}`);
+    } else {
+      return alert("게시글 생성에 실패하였습니다.");
+    }
+
     //mutate(body);
   };
 

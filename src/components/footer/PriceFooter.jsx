@@ -2,6 +2,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { queryClient } from "../..";
+import { addChatRoom } from "../../apis/query/chatApi";
 import { toggleWish } from "../../apis/query/postApi";
 import Button from "../../elements/Button";
 import { FlexAlignBox } from "../../shared/styles/flex";
@@ -14,6 +15,13 @@ function PriceFooter({ post, id, isWish }) {
   const { mutate: toggleWishFn } = useMutation(toggleWish, {
     onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
   });
+
+  const onGoChat = async () => {
+    const response = await addChatRoom(post?.postId);
+    console.log(response);
+    // if (response.status === 201)
+    //navigate(`/chats/${post?.response.data.chatListId}`);
+  };
   return (
     <Wrapper>
       <FooterContainer isWish={isWish}>
@@ -23,7 +31,7 @@ function PriceFooter({ post, id, isWish }) {
           </span>
           <strong>{post?.price}원</strong>
         </div>
-        <Button _onClick={() => navigate("/chats/1")}>채팅하기</Button>
+        <Button _onClick={onGoChat}>채팅하기</Button>
       </FooterContainer>
     </Wrapper>
   );

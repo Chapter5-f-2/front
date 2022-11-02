@@ -10,7 +10,6 @@ import timeCheck from "../../utils/timeCheck";
 const ItemDetail = ({ btnFn, post, userId }) => {
   const navigate = useNavigate();
   if (!post) return;
-  console.log(post.postImgUrl);
   return (
     <Wrapper>
       <ImgContainer src={post.postImgUrl} />
