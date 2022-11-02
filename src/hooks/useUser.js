@@ -14,7 +14,6 @@ const UseUser = () => {
   if (isMyTokenIsExpired) {
     removeCookieToken();
   }
-
   const readUser = async () => {
     //const { data } = await instance.get("users");
     const userInfo = decodeToken(myToken);
@@ -27,8 +26,8 @@ const UseUser = () => {
       readUser();
     }
   }, []);
-
-  return user;
+  // 이거 위험
+  return isMyTokenIsExpired ? (window.location.href = "/login") : user;
 };
 
 export default UseUser;

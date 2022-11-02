@@ -28,6 +28,7 @@ function PriceFooter({ post, id }) {
     </Wrapper>
   );
 }
+// 채팅하기 버튼을 클릭하였을 때 채팅방 번호를 받아 거기로 naviagate한다.
 export default PriceFooter;
 
 PriceFooter.defaultProps = {

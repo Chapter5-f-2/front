@@ -8,7 +8,9 @@ export const readLocationPosts = async () => {
 
 /** 카테고리별 거래글 조회*/
 export const readCategoryPosts = async (categoryId) => {
-  const { data } = await instance.get(`post/cat/${categoryId}`);
+  const {
+    data: { data },
+  } = await instance.get(`post/cat/${categoryId}`);
   return data;
 };
 
@@ -27,7 +29,8 @@ export const readPost = async (postId) => {
 
 /** 거래글 추가*/
 export const addPost = async (body) => {
-  const { data } = await postApi.post("post", body);
+  console.log(body);
+  const { data } = await instance.post("post", body);
   return data;
 };
 

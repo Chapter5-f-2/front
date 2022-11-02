@@ -32,7 +32,15 @@ const WritePost = () => {
   };
 
   const onValid = (inputs) => {
-    mutate({ ...inputs, categoryId, postImgUrl: "1234" });
+    if (categoryId === 0) return alert("카테고리를 선택해주세요");
+    const body = {
+      ...inputs,
+      price: +inputs.price,
+      categoryId,
+      postImgUrl:
+        "https://avatars.dicebear.com/api/male/john.svg?background=%230000ff",
+    };
+    mutate(body);
   };
 
   const handleClick = () => {

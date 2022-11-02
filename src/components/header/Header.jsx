@@ -14,7 +14,7 @@ import Magnify from "../../static/svg/Magnify";
 function Header({ title, isHome = false, onClick }) {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
   const navigate = useNavigate();
-  // const user = UseUser();
+  const user = UseUser();
 
   // useEffect(() => {
   //   if (!user) navigate("/login");
