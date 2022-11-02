@@ -49,19 +49,19 @@ export const readSalePosts = async () => {
 /** 나의 구매목록 가져오기*/
 export const readBuyPosts = async () => {
   const { data } = await instance.get("mypage/buy");
-  return data;
+  return data.data;
 };
 
 /** 나의 찜목록 가져오기*/
 export const readWishPosts = async () => {
   const { data } = await instance.get("mypage/wish");
-  return data;
+  return data.deta;
 };
 
 /** 당근 가계부 가져오기*/
 export const readHistory = async () => {
   const { data } = await instance.get("mypage/history");
-  return data;
+  return data.data;
 };
 
 /** 프로필 이미지 수정 */

@@ -1,10 +1,10 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { queryClient } from "..";
-import { editLocation, readMe } from "../apis/query/userApi";
+import { editAvatar, editLocation, readMe } from "../apis/query/userApi";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import LocationModal from "../components/modal/LocationModal";
@@ -20,21 +20,35 @@ const EditProfile = () => {
   const baseURL = process.env.REACT_APP_SERVER_URL;
   const [change, setChange] = useState(true);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
+  const [imgPreview, setImgPreview] = useState("");
   const { data: user, isLoading } = useQuery(["mypage", "profile"], readMe);
   const { mutate: editLocationFn } = useMutation(editLocation, {
     onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
   });
-
+  const { mutate: editAvatarFn } = useMutation(editAvatar, {
+    onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-    setError,
+    setValue,
   } = useForm();
 
+  useEffect(() => {
+    if (user) {
+      setValue("nickname", user.nickname);
+      setImgPreview(user.profileImage);
+    }
+  }, [user, setValue]);
+
+  const onEditProfile = async (e) => {
+    // const fileBlob = URL.createObjectURL(e.target.files[0]);
+    editAvatarFn({ profileImg: e.target.files[0] });
+  };
+
   const onNick = async (data) => {
-    console.log(data);
     try {
       const responce = await instance.post(`mypage/nickname`, data);
       console.log(responce);
@@ -67,54 +81,24 @@ const EditProfile = () => {
     }
   };
 
-  /* const onValid = async (data) => {
-    const { nickname, oldPassword, newPassword, confirm } = data;
-    if(nickname === nickname)
-  }
- */
-  /* const nicknameDup = async (e) => {
-    e.preventDefault();
-    try {
-      const responce = await axios.post("", {email}).then((res) => {
-        if(res.data === true) {
-          alert("이전 닉네임과 동일합니다.")
-        } else {
-          alert("사용 가능한 닉네임입니다.");
-        }
-      })
-    } catch (e) {
-      return console.log(e);
-    }
-  } */
-
-  /* const passwordDup = async (e) => {
-    e.preventDefault();
-    try {
-      const responce = await axios.post("", {password}).then((res) => {
-        if(res.data === true) {
-          alert("이전 비밀번호와 동일합니다.")
-        } else {
-          alert("사용 가능한 비밀번호입니다.");
-        }
-      })
-    } catch (e) {
-      return console.log(e);
-    }
-  } */
-
   return (
     <Layout>
       <DetailHeader title={"프로필 수정"} />
       <Wrapper>
         <ImgContainer>
-          <div />
-          <span>
+          <img src={imgPreview} alt="" />
+          <label>
             <CameraSvg />
-          </span>
+            <input type="file" accept="*/images" onChange={onEditProfile} />
+          </label>
         </ImgContainer>
         <Switch>
-          <button onClick={() => setChange(true)}>기본 정보 변경</button>
-          <button onClick={() => setChange(false)}>비밀번호 변경</button>
+          <SwitchBtn focus={change} onClick={() => setChange(true)}>
+            기본 정보 변경
+          </SwitchBtn>
+          <SwitchBtn focus={!change} onClick={() => setChange(false)}>
+            비밀번호 변경
+          </SwitchBtn>
         </Switch>
         {change ? (
           <UserInfoForm onSubmit={handleSubmit(onNick)}>
@@ -132,7 +116,7 @@ const EditProfile = () => {
                   수정
                 </button>
               ) : (
-                <button style={{ backgroundColor: "#ff6f06" }}>수정</button>
+                <button>수정</button>
               )}
             </div>
             <label>동네변경</label>
@@ -188,13 +172,9 @@ const EditProfile = () => {
             {watch("oldPassword") === "" &&
             watch("newPassword") === "" &&
             watch("confirm") === "" ? (
-              <button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-                비밀번호 수정
-              </button>
+              <PasswordBtn focus={false}>비밀번호 수정</PasswordBtn>
             ) : (
-              <button style={{ backgroundColor: "#ff6f06" }}>
-                비밀번호 수정
-              </button>
+              <PasswordBtn focus={true}>비밀번호 수정</PasswordBtn>
             )}
           </PasswordForm>
         )}
@@ -207,7 +187,6 @@ const EditProfile = () => {
     </Layout>
   );
 };
-// aniamatepresence 55번째 줄 먹여야함
 
 export default EditProfile;
 
@@ -222,13 +201,14 @@ const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
-  div {
+  img {
     width: 8rem;
     height: 8rem;
+    object-fit: cover;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
   }
-  span {
+  label {
     position: absolute;
     right: 33%;
     bottom: 0;
@@ -243,6 +223,9 @@ const ImgContainer = styled.div`
       width: 1.5rem;
       color: white;
     }
+    input {
+      display: none;
+    }
     &:hover {
       background-color: ${(props) => (props) =>
         props.theme.btnColor.darkOrange};
@@ -254,18 +237,22 @@ const Switch = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
-  button {
-    width: 9rem;
-    height: 2.4rem;
-    margin: 0 1rem;
-    color: ${(props) => props.theme.fontColor.black};
-    border: 1px solid ${(props) => props.theme.borderColor.lightGray};
-    border-radius: 5px;
-    &:hover {
-      background-color: ${(props) => props.theme.borderColor.lightGray};
-    }
+`;
+
+const SwitchBtn = styled.button`
+  width: 9rem;
+  height: 2.4rem;
+  margin: 0 1rem;
+  color: ${(props) => (props.focus ? "white" : props.theme.fontColor.black)};
+  border: ${(props) => (props.focus ? "0px" : "1px")} solid
+    ${(props) => props.theme.borderColor.lightGray};
+  border-radius: 5px;
+  background-color: ${(props) =>
+    props.focus ? props.theme.btnColor.orange : "inherit"};
+  &:hover {
   }
 `;
+
 const UserInfoForm = styled.form`
   padding: 1rem 0;
   display: flex;
@@ -296,9 +283,9 @@ const UserInfoForm = styled.form`
     button {
       width: 5rem;
       color: white;
+      font-size: 1rem;
       background-color: ${(props) => props.theme.btnColor.orange};
       border-radius: 0px 3px 3px 0px;
-
       &:hover {
         background-color: ${(props) => props.theme.btnColor.darkOrange};
       }
@@ -354,16 +341,16 @@ const PasswordForm = styled.form`
     color: #fb3131;
     font-size: 0.8rem;
   }
-  button {
-    width: 100%;
-    padding: 0.7rem 1rem;
-    color: ${(props) => props.theme.borderColor.gray};
-    border-radius: 5px;
-  }
-  &:focus-within {
-    button {
-      color: white;
-      border: none;
-    }
-  }
+`;
+
+const PasswordBtn = styled.button`
+  background-color: ${(props) =>
+    props.focus ? props.theme.fontColor.orange : "none"};
+  color: ${(props) => (props.focus ? "white" : props.theme.borderColor.gray)};
+  width: 100%;
+  height: 41px;
+  padding: 0.7rem 1rem;
+  border: ${(props) => (props.focus ? "0px" : "1px")} solid
+    ${(props) => props.theme.borderColor.lightGray};
+  border-radius: 5px;
 `;

@@ -16,10 +16,10 @@ function PriceFooter({ post, id }) {
   });
   return (
     <Wrapper>
-      <FooterContainer isWish={post.isWish}>
+      <FooterContainer isWish={post?.isWish}>
         <div>
           <span onClick={toggleWishFn}>
-            {post.isWish ? <HeartSvg /> : <EmptyHeartSvg />}
+            {post?.isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
           <strong>{post?.price}원</strong>
         </div>

@@ -24,6 +24,7 @@ const Interests = () => {
         {isLoading ? (
           <SmallSpinner />
         ) : (
+          posts &&
           posts?.map((post, idx) => <InterestsItem key={idx} post={post} />)
         )}
       </Main>

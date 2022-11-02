@@ -18,9 +18,7 @@ const PostDetail = () => {
   const [isShow, setIsShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const { id } = useParams();
-  const { data: post, isLoading } = useQuery(["posts", "detail"], () =>
-    readPost(id)
-  );
+  const { data: post, isLoading } = useQuery(["posts", "detail"], readPost(id));
 
   const btnFn = {
     openModal: () => setIsShow(true),
@@ -29,6 +27,7 @@ const PostDetail = () => {
     openUpdateModal: () => setIsUpdate(true),
     closeUpdateModal: () => setIsUpdate(false),
   };
+
   return (
     <Layout isDetail={true}>
       <SubMain>

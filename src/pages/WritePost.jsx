@@ -32,7 +32,7 @@ const WritePost = () => {
   };
 
   const onValid = (inputs) => {
-    mutate({ ...inputs, categoryId, postImgUrl: file });
+    mutate({ ...inputs, categoryId, postImgUrl: "1234" });
   };
 
   const handleClick = () => {

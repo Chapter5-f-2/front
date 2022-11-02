@@ -24,10 +24,12 @@ function Posts() {
   const showCategory = useRecoilValue(showCategoryAtom);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const { data: user } = useQuery(["mypage", "user"], readMe);
+
   const { data: posts, isLoading } = useQuery(
     ["posts", "locationList"],
     readLocationPosts
   );
+  console.log(posts);
   const { mutate: editLocationFn } = useMutation(editLocation, {
     onSuccess: () => {
       queryClient.invalidateQueries(["posts", "locationList"]);
@@ -48,9 +50,8 @@ function Posts() {
       />
       <SubMain>
         <Wrapper>
-          {[1, 2, 3, 4, 5, 6, 7].map((post, idx) => (
-            <PostItem key={idx} post={post} />
-          ))}
+          {posts &&
+            posts.map((post, idx) => <PostItem key={idx} post={post} />)}
         </Wrapper>
       </SubMain>
       <FloatBtn />

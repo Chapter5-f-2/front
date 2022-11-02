@@ -3,8 +3,7 @@ import instance, { postApi } from "../instance/instance";
 /** 위치별 거래글 조회 */
 export const readLocationPosts = async () => {
   const { data } = await instance.get("post/loc");
-
-  return data;
+  return data.data;
 };
 
 /** 카테고리별 거래글 조회*/
@@ -22,6 +21,7 @@ export const readKeywordPosts = async (keyword) => {
 /** 거래글 상세 조회*/
 export const readPost = async (postId) => {
   const { data } = await instance.get(`post/${postId}`);
+  console.log(data);
   return data;
 };
 

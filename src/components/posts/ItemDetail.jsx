@@ -9,7 +9,7 @@ import timeCheck from "../../utils/timeCheck";
 
 const ItemDetail = ({ btnFn, post }) => {
   const navigate = useNavigate();
-
+  if (!post) return;
   return (
     <Wrapper>
       <ImgContainer />

@@ -10,6 +10,7 @@ const UseUser = () => {
 
   // 토큰이 만료되었다면 쿠키를 삭제한다.
   const isMyTokenIsExpired = useMemo(() => isExpired(myToken), []);
+  console.log(isMyTokenIsExpired);
   if (isMyTokenIsExpired) {
     removeCookieToken();
   }
