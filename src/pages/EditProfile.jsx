@@ -50,9 +50,8 @@ const EditProfile = () => {
 
   const onNick = async (data) => {
     try {
-      const responce = await instance.post(`mypage/nickname`, data);
-      console.log(responce);
-      if (responce.ok) {
+      const responce = await instance.put(`mypage/nickname`, data);
+      if (responce.status === 200) {
         alert("닉네임이 수정되었습니다.");
         return;
       } else {
@@ -65,18 +64,27 @@ const EditProfile = () => {
     }
   };
 
-  const onPass = async (data) => {
+  const oldP = watch("oldPassword");
+  const newP = watch("newPassword");
+  const con = watch("confirm");
+
+  const onPass = async () => {
     try {
-      const responce = await axios.post(`${baseURL}mypage/password`, data);
-      if (responce.ok) {
+      const data = { oldPassword: oldP, newPassword: newP, confirm: con };
+      console.log(data);
+      const responce = await instance.put(`mypage/password`, data);
+
+      console.log(responce);
+      if (responce.status === 200) {
         alert("비밀번호가 수정되었습니다.");
         return;
       } else {
-        alert("비밀번호에 실패하였습니다.");
+        alert("비밀번호 수정에 실패하였습니다.");
         return;
       }
     } catch (e) {
-      alert("비밀번호에 실패하였습니다.");
+      console.log(e);
+      alert("비밀번호 수정에 실패하였습니다.");
       return;
     }
   };
@@ -131,12 +139,6 @@ const EditProfile = () => {
             <input
               {...register("oldPassword", {
                 required: "현재 비밀번호를 입력해주세요.",
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
-                  message:
-                    "8자-16자 1개 이상의 대&소문자, 1개의 숫자&특수 문자를 포함해야 합니다",
-                },
               })}
               type="password"
             />
@@ -146,10 +148,8 @@ const EditProfile = () => {
               {...register("newPassword", {
                 required: "새로운 비밀번호를 입력해주세요",
                 pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
-                  message:
-                    "8자-16자 1개 이상의 대&소문자, 1개의 숫자&특수 문자를 포함해야 합니다",
+                  value: /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
+                  message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
                 },
               })}
               type="password"
@@ -160,10 +160,8 @@ const EditProfile = () => {
               {...register("confirm", {
                 required: "비밀번호 확인을 입력해주세요.",
                 pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
-                  message:
-                    "8자-16자 1개 이상의 대&소문자, 1개의 숫자&특수 문자를 포함해야 합니다",
+                  value: /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
+                  message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
                 },
               })}
               type="password"
