@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import DotSvg from "../../pages/DotSvg";
 import HomeSvg from "../../static/svg/HomeSvg";
 
@@ -7,6 +8,7 @@ import Left from "../../static/svg/Left";
 
 function DetailHeader({ isDetail, title, _onClick, type }) {
   const navigate = useNavigate();
+
   return (
     <Wrapper isDetail={isDetail}>
       <nav>

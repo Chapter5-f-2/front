@@ -38,8 +38,12 @@ export const readUser = async (id) => {
 
 /** 나의 판매목록 가져오기*/
 export const readSalePosts = async () => {
-  const { data } = await instance.get("mypage/sale");
-  return data;
+  try {
+    const { data } = await instance.get("mypage/sale");
+    return data.data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 /** 나의 구매목록 가져오기*/

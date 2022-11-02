@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -15,16 +15,24 @@ const Sales = () => {
   const [focus, setFocus] = useState(true);
   const onClick = () => setFocus((prev) => !prev);
   const {
-    data: sales,
+    data: Allsales,
     isLoading: salesLoading,
     error: salesError,
   } = useQuery(["mypage", "sales"], readSalePosts);
 
-  const {
-    data: endSales,
-    isLoading: endSalesLoading,
-    error: endSalesError,
-  } = useQuery(["mypage", "endSales"]);
+  const [endSales, setEndSales] = useState([]);
+  const [sales, setSales] = useState([]);
+  useEffect(() => {
+    if (Allsales) {
+      const endSaleData = Allsales.filter((item) => item.status === 2);
+      const saleData = Allsales.filter((item) => item.status !== 2);
+      setEndSales(endSaleData);
+      setSales(saleData);
+      console.log("re");
+    }
+  }, [Allsales]);
+
+  if (salesError) return;
 
   return (
     <Layout isDetail={false}>
@@ -39,7 +47,7 @@ const Sales = () => {
           </Btn>
         </Btns>
         <SubMain>
-          {(salesLoading || endSalesLoading) && <SmallSpinner />}
+          {salesLoading && <SmallSpinner />}
           {focus &&
             sales &&
             sales?.map((post) => (

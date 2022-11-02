@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
 import { FlexAlignBox, FlexCenterBox } from "../../shared/styles/flex";
 import BellSvg from "../../static/svg/BellSvg";
@@ -10,6 +10,7 @@ import Magnify from "../../static/svg/Magnify";
 
 function Header({ title, isHome = false, onClick }) {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
+
   return (
     <Wrapper>
       <nav>

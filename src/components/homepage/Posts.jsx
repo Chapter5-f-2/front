@@ -17,12 +17,14 @@ import PostItem from "../posts/PostItem";
 import { AnimatePresence } from "framer-motion";
 import { useQuery } from "react-query";
 import { readLocationPosts } from "../../apis/query/postApi";
+import { readSalePosts } from "../../apis/query/userApi";
 function Posts() {
   const showCategory = useRecoilValue(showCategoryAtom);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const [location, setLocation] = useState(null);
-  const { data, isLoading } = useQuery(["posts", "locationList"], () =>
-    readLocationPosts()
+  const { data, isLoading } = useQuery(
+    ["posts", "locationList"],
+    readLocationPosts
   );
 
   return (

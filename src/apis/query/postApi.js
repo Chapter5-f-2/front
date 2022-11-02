@@ -3,6 +3,7 @@ import instance, { postApi } from "../instance/instance";
 /** 위치별 거래글 조회 */
 export const readLocationPosts = async () => {
   const { data } = await instance.get("post/loc");
+
   return data;
 };
 
@@ -38,6 +39,7 @@ export const editPost = async ({ id, body }) => {
 
 /** 거래글 상태 수정*/
 export const editPostStatus = async ({ id, body }) => {
+  console.log(id, body);
   const { data } = await instance.put(`post/status/${id}`, body);
   return data;
 };

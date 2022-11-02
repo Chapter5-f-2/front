@@ -10,6 +10,7 @@ export const instance = axios.create({
   headers: {
     Authorization: myToken,
     "Cache-Control": "no-cache",
+    withCredentials: true,
   },
 });
 
@@ -19,6 +20,7 @@ export const postApi = axios.create({
     Authorization: myToken,
     "Content-Type": "multipart/form-data",
     "Cache-Control": "no-cache",
+    withCredentials: true,
   },
 });
 

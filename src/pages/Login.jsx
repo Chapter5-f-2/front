@@ -5,6 +5,7 @@ import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 import { login } from "../apis/query/userApi";
+import { setAccessToken } from "../shared/Cookie";
 
 const Login = () => {
   const {
@@ -18,10 +19,11 @@ const Login = () => {
   const onSubmit = async (inputs) => {
     try {
       const response = await login({ ...inputs });
-      console.log(response);
       if (response.status === 200) {
         alert("로그인에 성공하였습니다.");
-        // return (window.location.href = "/");
+        console.log(response.data);
+        setAccessToken(response.data.token);
+        return (window.location.href = "/");
       } else {
         alert("로그인에 실패하였습니다.");
       }

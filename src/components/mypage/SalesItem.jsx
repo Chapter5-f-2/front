@@ -13,12 +13,12 @@ const SalesItem = ({ focus, post }) => {
   const navigate = useNavigate();
   const { mutate } = useMutation(editPostStatus, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["mypage,sales"]);
+      queryClient.invalidateQueries(["mypage", "sales"]);
     },
   });
 
   const onClick = (num) => {
-    mutate({ id: post?.postId, status: num });
+    mutate({ id: post?.postId, body: { status: num } });
   };
 
   return (
@@ -37,6 +37,13 @@ const SalesItem = ({ focus, post }) => {
               <span>· {timeCheck(+post.createdAt)}</span>
             </div>
             <strong>
+              {!focus ? (
+                post.status === 1 ? (
+                  <StatusBtn>예약중</StatusBtn>
+                ) : (
+                  <StatusBtn>판매중</StatusBtn>
+                )
+              ) : null}
               {focus ? <StatusBtn>거래완료</StatusBtn> : null}
               {post.price}원
             </strong>
