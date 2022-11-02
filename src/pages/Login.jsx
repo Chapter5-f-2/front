@@ -6,13 +6,15 @@ import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 import { login } from "../apis/query/userApi";
 import { setAccessToken } from "../shared/Cookie";
+import Swal from "sweetalert2";
+
 
 const Login = () => {
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    /* setError, */
     watch,
   } = useForm();
 
@@ -20,16 +22,32 @@ const Login = () => {
     try {
       const response = await login({ ...inputs });
       if (response.status === 200) {
-        alert("로그인에 성공하였습니다.");
-        console.log(response.data);
-        setAccessToken(response.data.token);
-        return (window.location.href = "/");
+        Swal.fire({
+          title: "로그인 성공",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          width:320,
+        }).then(()=> {
+          console.log(response.data);
+          setAccessToken(response.data.token);
+          return (window.location.href = "/");
+        })
       } else {
-        alert("로그인에 실패하였습니다.");
+        Swal.fire({
+          title: "로그인 실패",
+          text: "이메일과 비밀번호를 확인해주세요",
+          icon: "error",
+          width:320,
+        })
       }
     } catch (e) {
       console.log(e);
-      return alert("로그인에 실패하였습니다.");
+      return Swal.fire({
+        title: "로그인 실패",
+        text: "이메일과 비밀번호를 확인해주세요",
+        icon: "error",
+        width:320,
+      })
     }
   };
 

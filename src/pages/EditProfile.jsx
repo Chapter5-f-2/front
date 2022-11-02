@@ -14,6 +14,7 @@ import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import { useForm } from "react-hook-form";
 import instance from "../apis/instance/instance";
+import Swal from "sweetalert2";
 
 const EditProfile = () => {
   const [change, setChange] = useState(true);
@@ -53,30 +54,72 @@ const EditProfile = () => {
     try {
       const responce = await instance.put(`mypage/nickname`, data);
       if (responce.status === 200) {
-        return alert("닉네임이 수정되었습니다.");
+        Swal.fire({
+          text: "닉네임이 수정되었습니다",
+          confirmButtonColor: "#ff6f06",
+          icon: "success",
+          confirmButtonText: "확인",
+          width: 320,
+        }).then(() => {
+          return (window.location.href = "/profiles/2/edit");
+        });
       } else {
-        return alert("닉네임 수정에 실패하였습니다.");
+        Swal.fire({
+          text: "닉네임 수정에 실패했습니다.",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          confirmButtonText: "확인",
+          width: 320,
+        });
+        return;
       }
     } catch (e) {
-      return alert("닉네임 수정에 실패하였습니다.");
+      Swal.fire({
+        text: "닉네임 수정에 실패했습니다.",
+        confirmButtonColor: "#ff6f06",
+        icon: "error",
+        confirmButtonText: "확인",
+        width: 320,
+      });
+      return;
     }
   };
 
   // 비밀번호를 수정하는 함수
   const onPass = async (inputs) => {
     try {
-      const { oldPassword, newPassword, confirm } = inputs;
-      const data = { oldPassword, newPassword, confirm };
-      const response = await instance.put(`mypage/password`, data);
-
-      console.log(response);
-      if (response.status === 200) {
-        return alert("비밀번호가 수정되었습니다.");
+      const data = { oldPassword: oldP, newPassword: newP, confirm: con };
+      const responce = await instance.put(`mypage/password`, data);
+      if (responce.status === 200) {
+        Swal.fire({
+          text: "비밀번호가 수정되었습니다",
+          confirmButtonColor: "#ff6f06",
+          icon: "success",
+          confirmButtonText: "확인",
+          width: 320,
+        }).then(() => {
+          return (window.location.href = "/profiles/2/edit");
+        });
       } else {
-        return alert("비밀번호 수정에 실패하였습니다.");
+        Swal.fire({
+          text: "비밀번호 수정에 실패했습니다.",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          confirmButtonText: "확인",
+          width: 320,
+        });
+        return;
       }
     } catch (e) {
-      return alert("비밀번호 수정에 실패하였습니다.");
+      console.log(e);
+      Swal.fire({
+        text: "비밀번호 수정에 실패했습니다.",
+        confirmButtonColor: "#ff6f06",
+        icon: "error",
+        confirmButtonText: "확인",
+        width: 320,
+      });
+      return;
     }
   };
 
@@ -281,6 +324,7 @@ const UserInfoForm = styled.form`
     }
     span {
       padding: 1rem 1rem;
+      font-size: 0.8rem;
     }
   }
   svg {
