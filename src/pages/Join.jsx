@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { emailDup, nicknameDup, signUp } from "../apis/query/userApi";
+import Swal from "sweetalert2";
 
 /* 배포 URL / 인스턴스 IP주소 */
 
@@ -45,7 +46,13 @@ const Join = () => {
         return;
       }
     } catch (e) {
-      return alert("회원가입에 실패하였습니다.");
+      return Swal.fire({
+        title: "회원가입 실패",
+        confirmButtonColor: '#ff6f06',
+        icon: "error",
+        confirmButtonText: '확인',
+        width:320,
+      });
     }
   };
 
@@ -66,7 +73,13 @@ const Join = () => {
       }
     } catch (e) {
       console.log(e);
-      return alert("이미 사용중인 이메일 입니다.");
+      return Swal.fire({
+        text: "이미 사용 중인 이메일입니다",
+        confirmButtonColor: '#ff6f06',
+        icon: "warning",
+        confirmButtonText: '확인',
+        width:320,
+      });
     }
   };
 
@@ -83,7 +96,13 @@ const Join = () => {
       }
     } catch (e) {
       console.log(e);
-      return alert("이미 사용중인 닉네임 입니다.");
+      return Swal.fire({
+        text: "이미 사용 중인 닉네임입니다",
+        confirmButtonColor: '#ff6f06',
+        icon: "warning",
+        confirmButtonText: '확인',
+        width:320,
+      });
     }
   };
 
@@ -100,7 +119,7 @@ const Join = () => {
                 required: "이메일을 입력해주세요",
                 pattern: {
                   value:
-                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
+                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
                   message: "잘못된 이메일 형식입니다",
                 },
               })}
@@ -173,6 +192,8 @@ const JoinForm = styled.form`
   padding: 0 2rem;
   width: 100%;
   overflow-x: hidden;
+  margin: auto 0;
+  
 
   & > div {
     display: flex;
@@ -180,14 +201,14 @@ const JoinForm = styled.form`
   }
 
   h1 {
-    margin-top: 1rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 1.5rem;
     font-weight: bold;
     font-size: 16px;
+    text-align: center;
   }
 
   label {
-    margin-top: 0.45rem;
+    margin-top: 0.7rem;
     margin-bottom: 0.5rem;
     padding: 0 0.4rem;
   }
@@ -233,7 +254,7 @@ const Button = styled.button`
   width: 100%;
   height: 6vh;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 40px;
   margin-bottom: 10px;
   color: white;
   font-size: 18px;
