@@ -45,7 +45,11 @@ const PostDetail = () => {
           userId={user?.userId}
         />
       </SubMain>
-      <PriceFooter post={data && data.post} id={id} />
+      <PriceFooter
+        post={data && data.post}
+        isWish={data && data.isWish}
+        id={id}
+      />
       <AnimatePresence>
         {isShow ? (
           <Overlay>

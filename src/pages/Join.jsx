@@ -39,7 +39,7 @@ const Join = () => {
       });
       if (response.data.ok) {
         alert(response.data.message);
-        return navigate("/my-page");
+        return navigate("/login");
       } else {
         alert(response.data.message);
         return;

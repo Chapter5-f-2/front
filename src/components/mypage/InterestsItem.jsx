@@ -2,6 +2,8 @@ import React from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { queryClient } from "../..";
+import { toggleWish } from "../../apis/query/postApi";
 import { FlexAlignBox, FlexColumnBox } from "../../shared/styles/flex";
 import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
@@ -11,11 +13,18 @@ import timeCheck from "../../utils/timeCheck";
 
 const InterestsItem = ({ isProfile = false, post }) => {
   const navigate = useNavigate();
-  const { mutate } = useMutation();
+  const { mutate } = useMutation(toggleWish, {
+    onSuccess: () => queryClient.invalidateQueries(["mypage", "interests"]),
+  });
   // toggleWish 하트에 연결 시켜야함
+
+  const clickToggleWish = () => {
+    console.log("hello");
+    mutate(post.postId);
+  };
   return (
     <ItemWrapper isProfile={isProfile}>
-      <Item onClick={() => navigate(`/posts/${post.id}`)}>
+      <Item onClick={() => navigate(`/posts/${post.postId}`)}>
         <ImageContainer>
           <img src={post.postImgUrl} alt="" />
         </ImageContainer>
@@ -44,7 +53,9 @@ const InterestsItem = ({ isProfile = false, post }) => {
           </SvgContainer>
         </InfoContainer>
       </Item>
-      <BtnSvg>{isProfile ? null : <HeartSvg />}</BtnSvg>
+      <BtnSvg onClick={isProfile ? () => {} : clickToggleWish}>
+        {isProfile ? null : <HeartSvg />}
+      </BtnSvg>
     </ItemWrapper>
   );
 };

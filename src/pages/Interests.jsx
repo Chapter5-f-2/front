@@ -17,6 +17,7 @@ const Interests = () => {
     error,
   } = useQuery(["mypage", "interests"], readWishPosts);
   if (error) return;
+  console.log(posts);
   return (
     <Layout>
       <DetailHeader title={"관심목록"} />
