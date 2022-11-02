@@ -91,7 +91,7 @@ const Join = () => {
   return (
     <Layout>
       <DetailHeader title={"회원가입"} />
-      <JoinForm onSubmit={handleSubmit(onSubmit, unValid)}>
+      <JoinForm onSubmit={handleSubmit(onSubmit)}>
         <div>
           <h1>회원정보를 설정해주세요</h1>
           <label>이메일</label>

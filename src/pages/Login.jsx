@@ -50,7 +50,7 @@ const Login = () => {
             })}
             placeholder="Email Address"
           />
-          <span>{errors?.Email?.message}</span>
+          <span>{errors?.email?.message}</span>
           <label>비밀번호</label>
           <input
             {...register("password", {
@@ -60,6 +60,7 @@ const Login = () => {
                 message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
               },
             })}
+            type="password"
             placeholder="Password"
           />
           <span>{errors?.Password?.message}</span>
@@ -82,6 +83,7 @@ export default Login;
 const LoginForm = styled.form`
   padding: 0 2rem;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
 
   div {
