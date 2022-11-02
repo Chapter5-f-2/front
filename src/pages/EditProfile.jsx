@@ -7,17 +7,19 @@ import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import instance from '../apis/instance/instance';
 
 
 const EditProfile = () => {
   const baseURL = process.env.REACT_APP_SERVER_URL;
   const [change, setChange] = useState(true);
   const { register, handleSubmit, formState: { errors }, watch, setError} = useForm();
+  
   const onNick = async (data) => {
     console.log(data);
     try {
-      const responce = await axios.post(`${baseURL}mypage/nickname`, data)
-      
+      const responce = await instance.post(`mypage/nickname`, data)
+      console.log(responce);
       if(responce.ok){
         alert("닉네임이 수정되었습니다.")
         return
