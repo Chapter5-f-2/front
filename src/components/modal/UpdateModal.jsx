@@ -8,10 +8,10 @@ import { removePost } from "../../apis/query/postApi";
 
 const UpdateModal = ({ btnFn, id }) => {
   const navigate = useNavigate();
-  const { mutate: deleteFn } = useMutation(removePost);
+  const { mutate: removePostFn } = useMutation(removePost);
 
   const onDeleteClick = () => {
-    deleteFn(id);
+    removePostFn(id);
     btnFn.closeUpdateModal();
   };
 

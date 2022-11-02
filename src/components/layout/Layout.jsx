@@ -14,8 +14,10 @@ const Wrapper = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  max-width: 425px;
-  max-height: 1000px;
+  // 425
+  max-width: 390px;
+  // 1000
+  max-height: 844px;
   background-color: ${(props) => props.theme.bgColor};
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   display: grid;

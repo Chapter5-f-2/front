@@ -13,21 +13,20 @@ import { FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import instance from "../apis/instance/instance";
 
 const EditProfile = () => {
-  const baseURL = process.env.REACT_APP_SERVER_URL;
   const [change, setChange] = useState(true);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const [imgPreview, setImgPreview] = useState("");
-  const { data: user, isLoading } = useQuery(["mypage", "profile"], readMe);
+  const { data: user } = useQuery(["mypage", "profile"], readMe);
   const { mutate: editLocationFn } = useMutation(editLocation, {
     onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
   });
   const { mutate: editAvatarFn } = useMutation(editAvatar, {
     onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
   });
+
   const {
     register,
     handleSubmit,
@@ -36,6 +35,7 @@ const EditProfile = () => {
     setValue,
   } = useForm();
 
+  // 마운트 되었을 때 nickname과 profileImage를 set하는 기능
   useEffect(() => {
     if (user) {
       setValue("nickname", user.nickname);
@@ -43,49 +43,40 @@ const EditProfile = () => {
     }
   }, [user, setValue]);
 
+  // 이미지가 수정되었을 때 서버에 프로필 수정 요청을 보내는 함수
   const onEditProfile = async (e) => {
-    // const fileBlob = URL.createObjectURL(e.target.files[0]);
     editAvatarFn({ profileImg: e.target.files[0] });
   };
 
+  // 닉네임 수정버튼 클릭시 발생하는 함수
   const onNick = async (data) => {
     try {
       const responce = await instance.put(`mypage/nickname`, data);
       if (responce.status === 200) {
-        alert("닉네임이 수정되었습니다.");
-        return;
+        return alert("닉네임이 수정되었습니다.");
       } else {
-        alert("닉네임 수정에 실패하였습니다.");
-        return;
+        return alert("닉네임 수정에 실패하였습니다.");
       }
     } catch (e) {
-      alert("닉네임 수정에 실패하였습니다.");
-      return;
+      return alert("닉네임 수정에 실패하였습니다.");
     }
   };
 
-  const oldP = watch("oldPassword");
-  const newP = watch("newPassword");
-  const con = watch("confirm");
-
-  const onPass = async () => {
+  // 비밀번호를 수정하는 함수
+  const onPass = async (inputs) => {
     try {
-      const data = { oldPassword: oldP, newPassword: newP, confirm: con };
-      console.log(data);
-      const responce = await instance.put(`mypage/password`, data);
+      const { oldPassword, newPassword, confirm } = inputs;
+      const data = { oldPassword, newPassword, confirm };
+      const response = await instance.put(`mypage/password`, data);
 
-      console.log(responce);
-      if (responce.status === 200) {
-        alert("비밀번호가 수정되었습니다.");
-        return;
+      console.log(response);
+      if (response.status === 200) {
+        return alert("비밀번호가 수정되었습니다.");
       } else {
-        alert("비밀번호 수정에 실패하였습니다.");
-        return;
+        return alert("비밀번호 수정에 실패하였습니다.");
       }
     } catch (e) {
-      console.log(e);
-      alert("비밀번호 수정에 실패하였습니다.");
-      return;
+      return alert("비밀번호 수정에 실패하였습니다.");
     }
   };
 

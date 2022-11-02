@@ -29,7 +29,7 @@ function Posts() {
     ["posts", "locationList"],
     readLocationPosts
   );
-  console.log(posts);
+
   const { mutate: editLocationFn } = useMutation(editLocation, {
     onSuccess: () => {
       queryClient.invalidateQueries(["posts", "locationList"]);

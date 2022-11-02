@@ -11,8 +11,9 @@ import UpdateModal from "../components/modal/UpdateModal";
 import ItemDetail from "../components/posts/ItemDetail";
 import { AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
-import { readPost } from "../apis/query/postApi";
-import { useQuery } from "react-query";
+import { editPost, readPost, removePost } from "../apis/query/postApi";
+import { useMutation, useQuery } from "react-query";
+import { queryClient } from "..";
 
 const PostDetail = () => {
   const [isShow, setIsShow] = useState(false);
@@ -36,7 +37,7 @@ const PostDetail = () => {
           isDetail={true}
           _onClick={btnFn.openUpdateModal}
         />
-        <ItemDetail btnFn={btnFn} post={post} />
+        <ItemDetail btnFn={btnFn} post={post?.post} />
       </SubMain>
       <PriceFooter post={post} id={id} />
       <AnimatePresence>

@@ -1,49 +1,103 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 import styled from "styled-components";
+import { queryClient } from "..";
+import { editPost } from "../apis/query/postApi";
 import Footer from "../components/footer/Footer";
 import ModalHeader from "../components/header/ModalHeader";
 import Layout from "../components/layout/Layout";
 import Main from "../components/layout/Main";
+import PostCategory from "../components/modal/PostCategory";
+import ImagePreview from "../components/posts/ImagePreview";
 import { FlexBetweenBox, FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
-import CancelSvg from "../static/svg/CancelSvg";
 import Left from "../static/svg/Left";
+import getCategory from "../utils/getCategory";
 
-const EditPost = () => {
-  const { register, handleSubmit, watch } = useForm();
-  const navigate = useNavigate();
+const EditPost = ({ post }) => {
+  const { register, handleSubmit, watch, setValue } = useForm();
+  const [isShow, setIsShow] = useState(false);
+  const [categoryId, setCategoryId] = useState(0);
+  const formRef = useRef();
+  const [preview, setPreview] = useState();
+  const [file, setFile] = useState("");
+  const { mutate: editPostFn, data } = useMutation(editPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["posts", "detail"]);
+    },
+  });
+
+  // file input이 변경될 때 변경 사항을 프리뷰로 보여주는 함수
+  const onChangePreView = (e) => {
+    const fileBlob = URL.createObjectURL(e.target.files[0]);
+    setFile((prev) => e.target.files[0]);
+    setPreview(fileBlob);
+  };
+
+  // 완료 버튼 클릭시 수정 요청을 하는 함수
+  const onValid = async (inputs) => {
+    if (categoryId === 0) return alert("카테고리를 선택해주세요");
+    const body = {
+      ...inputs,
+      price: +inputs.price,
+      categoryId,
+      postImgUrl:
+        "https://avatars.dicebear.com/api/male/john.svg?background=%230000ff",
+    };
+    editPostFn({ id: post?.id, body });
+    console.log(data);
+    // n
+  };
+
+  // 완료버튼을 눌렀을 때 form이 제출되게 하는 함수
+  const handleClick = () => {
+    formRef.current.dispatchEvent(
+      new Event("submit", { bubbles: true, cancelable: true })
+    );
+  };
+
+  // 이미지를 삭제하는 함수
+  const onClick = () => {
+    setPreview(null);
+    setFile(null);
+  };
+
+  // 마운트 되었을 때 post의 정보를 set 해주는 함수
+  useEffect(() => {
+    if (post) {
+      setValue("title", post.title);
+      setValue("price", post.price);
+      setValue("content", post.content);
+      setCategoryId(post.categoryId);
+      setPreview(post.postImgUrl);
+    }
+  }, [post, setValue]);
 
   return (
     <Layout>
       <ModalHeader
-        title={"글 수정하기"}
+        title={"중고거래 글 수정하기"}
         type="write"
-        _onClick={() => navigate("/posts/1")}
+        _onClick={handleClick}
       />
       <Main>
-        <Form>
+        <Form onSubmit={handleSubmit(onValid)} ref={formRef}>
           <ImgBoxs>
             <CameraBox>
               <CameraSvg />
-              <span>0/3</span>
-              <input type="file" />
+              <span>{file ? 1 : 0}/1</span>
+              <input onChange={onChangePreView} type="file" accept="*/image" />
             </CameraBox>
-            <ImgPreview>
-              <span>
-                <CancelSvg />
-              </span>
-              <div />
-            </ImgPreview>
+            <ImagePreview preview={preview} onClick={onClick} />
           </ImgBoxs>
           <TitleInput
-            {...register("title")}
+            {...register("title", { required: true })}
             type="text"
             placeholder="글 제목"
           />
-          <CategoryBox>
-            <span>카테고리 선택</span>
+          <CategoryBox onClick={() => setIsShow(true)}>
+            <span>{getCategory(categoryId)}</span>
             <span>
               <Left />
             </span>
@@ -51,18 +105,24 @@ const EditPost = () => {
           <PriceBox isFocus={watch().price}>
             <span>₩</span>
             <input
-              {...register("price")}
+              {...register("price", { required: true })}
               type="number"
               placeholder="가격 (선택사항)"
             />
           </PriceBox>
           <ContentBox
-            {...register("content")}
+            {...register("content", { required: true })}
             placeholder="사이즈,구매 시기, 사용감 (색바램,얼룩, 뜯어짐) 등"
           />
         </Form>
       </Main>
       <Footer />
+      {isShow ? (
+        <PostCategory
+          onClick={() => setIsShow((prev) => !prev)}
+          setCategory={setCategoryId}
+        />
+      ) : null}
     </Layout>
   );
 };

@@ -10,7 +10,7 @@ import timeCheck from "../../utils/timeCheck";
 const PostItem = ({ post }) => {
   const navigate = useNavigate();
   return (
-    <Item onClick={() => navigate("/posts/1")}>
+    <Item onClick={() => navigate(`/posts/${post?.postId}`)}>
       <ImageContainer>
         <div />
       </ImageContainer>

@@ -31,9 +31,12 @@ function Header({ title, isHome = false, onClick }) {
           <li>
             <Magnify />
           </li>
-          <li onClick={() => setShowCategory((prev) => !prev)}>
-            <ListSvg />
-          </li>
+          {isHome ? (
+            <li onClick={() => setShowCategory((prev) => !prev)}>
+              <ListSvg />
+            </li>
+          ) : null}
+
           <li>
             <BellSvg />
           </li>
@@ -81,7 +84,7 @@ const RightNavItem = styled.span`
   ${FlexAlignBox};
   position: relative;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s linear;
   &:hover {

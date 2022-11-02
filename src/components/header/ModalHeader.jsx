@@ -96,6 +96,6 @@ const Title = styled.div`
   top: 16px;
   width: 100%;
   text-align: center;
-  font-weight: 500;
-  font-size: 1.4rem;
+  font-weight: 600;
+  font-size: 1.2rem;
 `;
