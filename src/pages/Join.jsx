@@ -29,6 +29,7 @@ const Join = () => {
         { message: "비밀번호가 일치하지 않습니다" },
         { shouldFocus: true }
       );
+      return;
     }
 
     try {
@@ -40,7 +41,7 @@ const Join = () => {
       });
       if (response.data.ok) {
         alert(response.data.message);
-        return navigate("/login");
+        return navigate("/my-page");
       } else {
         alert(response.data.message);
         return;
@@ -67,7 +68,7 @@ const Join = () => {
       }
     } catch (e) {
       console.log(e);
-      return alert("이미 사용중인 닉네임 입니다.");
+      return alert("이미 사용중인 이메일 입니다.");
     }
   };
 
@@ -131,7 +132,7 @@ const Join = () => {
             type="password"
             placeholder="Confirm Password"
           />
-          <span>{errors.confirmPassword?.message}</span>
+          <span>{errors.confirm?.message}</span>
           <label>동네 설정</label>
           <SelectTown>
             <Blank>Here</Blank>
