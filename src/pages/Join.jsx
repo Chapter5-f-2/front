@@ -8,12 +8,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { emailDup, nicknameDup, signUp } from "../apis/query/userApi";
+import LocationModal from "../components/modal/LocationModal";
+import { AnimatePresence } from "framer-motion";
+import { useRecoilState } from "recoil";
+import { showLocationAtom } from "../shared/atoms/modalAtoms";
+import getLocation from "../utils/getLocation";
 
 /* 배포 URL / 인스턴스 IP주소 */
 
 const Join = () => {
   const navigate = useNavigate();
   const [dups, setDups] = useState({ nickname: false, email: false });
+  const [locationId, setLocationId] = useState(0);
+  console.log(locationId);
+  const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const {
     register,
     handleSubmit,
@@ -35,7 +43,7 @@ const Join = () => {
     try {
       const response = await signUp({
         ...inputs,
-        locationId: 2,
+        locationId,
       });
       if (response.data.ok) {
         alert(response.data.message);
@@ -132,8 +140,10 @@ const Join = () => {
           />
           <span>{errors.confirm?.message}</span>
           <label>동네 설정</label>
-          <SelectTown>
-            <Blank>Here</Blank>
+          <SelectTown onClick={() => setShowLocation(true)}>
+            <Blank>
+              {locationId === 0 ? "동네 설정" : getLocation(locationId)}
+            </Blank>
             <SelectButton>
               <IoIosArrowDown />
             </SelectButton>
@@ -163,6 +173,9 @@ const Join = () => {
         </div>
       </JoinForm>
       <Footer />
+      <AnimatePresence>
+        {showLocation ? <LocationModal setLocation={setLocationId} /> : null}
+      </AnimatePresence>
     </Layout>
   );
 };

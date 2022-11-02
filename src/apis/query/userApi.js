@@ -84,7 +84,8 @@ export const editPassword = async (body) => {
 
 /** 위치 수정 */
 export const editLocation = async (body) => {
-  const { data } = await instance.put("mypage/location");
+  console.log(body);
+  const { data } = await instance.put("mypage/locationId", body);
   console.log(data);
   return data;
 };

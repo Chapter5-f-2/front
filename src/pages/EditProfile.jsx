@@ -14,6 +14,7 @@ import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 import { useForm } from "react-hook-form";
 import instance from "../apis/instance/instance";
+import getLocation from "../utils/getLocation";
 
 const EditProfile = () => {
   const [change, setChange] = useState(true);
@@ -21,10 +22,10 @@ const EditProfile = () => {
   const [imgPreview, setImgPreview] = useState("");
   const { data: user } = useQuery(["mypage", "profile"], readMe);
   const { mutate: editLocationFn } = useMutation(editLocation, {
-    onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
+    onSuccess: () => queryClient.invalidateQueries(["mypage", "profile"]),
   });
   const { mutate: editAvatarFn } = useMutation(editAvatar, {
-    onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
+    onSuccess: () => queryClient.invalidateQueries(["mypage", "profile"]),
   });
 
   const {
@@ -45,7 +46,9 @@ const EditProfile = () => {
 
   // 이미지가 수정되었을 때 서버에 프로필 수정 요청을 보내는 함수
   const onEditProfile = async (e) => {
-    editAvatarFn({ profileImg: e.target.files[0] });
+    const fileBlob = URL.createObjectURL(e.target.files[0]);
+    editAvatarFn({ profileImage: e.target.files[0] });
+    setImgPreview(fileBlob);
   };
 
   // 닉네임 수정버튼 클릭시 발생하는 함수
@@ -120,7 +123,7 @@ const EditProfile = () => {
             </div>
             <label>동네변경</label>
             <Location onClick={() => setShowLocation(true)}>
-              <span>호평동</span>
+              <span>{getLocation(user?.locationId)}</span>
               <Left />
             </Location>
           </UserInfoForm>

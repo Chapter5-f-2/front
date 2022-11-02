@@ -38,7 +38,7 @@ function Posts() {
   });
 
   const setLocation = (num) => {
-    editLocationFn(num);
+    editLocationFn({ locationId: num });
   };
 
   return (

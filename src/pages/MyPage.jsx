@@ -31,7 +31,7 @@ const MyPage = () => {
       <Main>
         <UserContainer>
           <div>
-            <UserImage />
+            <UserImage src={user?.profileImage} alt="" />
             <TextContainer>
               <h3>{user?.nickname}</h3>
               <div>
@@ -160,7 +160,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserImage = styled.div`
+const UserImage = styled.img`
   width: 3rem;
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.2);
