@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UseUser from "../../hooks/useUser";
 
 import DotSvg from "../../pages/DotSvg";
 import HomeSvg from "../../static/svg/HomeSvg";

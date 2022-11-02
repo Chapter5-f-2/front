@@ -1,5 +1,8 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import UseUser from "../../hooks/useUser";
 
 import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
 import { FlexAlignBox, FlexCenterBox } from "../../shared/styles/flex";
@@ -10,7 +13,12 @@ import Magnify from "../../static/svg/Magnify";
 
 function Header({ title, isHome = false, onClick }) {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
+  const navigate = useNavigate();
+  // const user = UseUser();
 
+  // useEffect(() => {
+  //   if (!user) navigate("/login");
+  // }, [user, navigate]);
   return (
     <Wrapper>
       <nav>

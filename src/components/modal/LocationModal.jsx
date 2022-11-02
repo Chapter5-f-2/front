@@ -13,7 +13,12 @@ const LocationModal = ({ setLocation, type = "" }) => {
   const setShowLocation = useSetRecoilState(showLocationAtom);
 
   const setLocationId = (num) => {
-    setLocation(num);
+    if (type === "profile") {
+      setLocation({ locationId: num });
+    } else {
+      setLocation(num);
+    }
+
     setShowLocation(false);
   };
   return (
@@ -101,6 +106,10 @@ const LocationModal = ({ setLocation, type = "" }) => {
 
 export default LocationModal;
 
+LocationModal.defaultProps = {
+  setLocation: () => {},
+  type: "",
+};
 const ModalAni = {
   initial: { x: 450, opacity: 1 },
   animate: { x: 0, opacity: 1 },

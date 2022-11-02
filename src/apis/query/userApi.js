@@ -26,7 +26,7 @@ export const login = async (body) => {
 
 /** 나의 정보 가져오기 */
 export const readMe = async () => {
-  const data = await instance.get("mypage");
+  const { data } = await instance.get("mypage");
   return data;
 };
 
@@ -72,12 +72,19 @@ export const editAvatar = async (body) => {
 
 /** 프로필 닉네임 수정 */
 export const editNickname = async (body) => {
-  const data = await postApi.put("mypage/nickname", body);
+  const data = await instance.put("mypage/nickname", body);
   return data;
 };
 
 /** 프로필 비밀번호 수정 */
 export const editPassword = async (body) => {
-  const data = await postApi.put("mypage/nickname", body);
+  const data = await instance.put("mypage/nickname", body);
+  return data;
+};
+
+/** 위치 수정 */
+export const editLocation = async (body) => {
+  const { data } = await instance.put("mypage/location");
+  console.log(data);
   return data;
 };

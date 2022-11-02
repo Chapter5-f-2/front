@@ -1,13 +1,26 @@
+import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { queryClient } from "..";
+import { editLocation, readMe } from "../apis/query/userApi";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
+import LocationModal from "../components/modal/LocationModal";
+import { showLocationAtom } from "../shared/atoms/modalAtoms";
 import { FlexCenterBox } from "../shared/styles/flex";
 import CameraSvg from "../static/svg/CameraSvg";
 import Left from "../static/svg/Left";
 
 const EditProfile = () => {
   const [change, setChange] = useState(true);
+  const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
+  const { data: user, isLoading } = useQuery(["mypage", "profile"], readMe);
+  const { mutate: editLocationFn } = useMutation(editLocation, {
+    onSuccess: () => queryClient.invalidateQueries(["maypage", "profile"]),
+  });
+
   return (
     <Layout>
       <DetailHeader title={"프로필 수정"} />
@@ -30,7 +43,7 @@ const EditProfile = () => {
               <button>수정</button>
             </div>
             <label>동네변경</label>
-            <Location>
+            <Location onClick={() => setShowLocation(true)}>
               <span>호평동</span>
               <Left />
             </Location>
@@ -47,9 +60,15 @@ const EditProfile = () => {
           </PasswordForm>
         )}
       </Wrapper>
+      <AnimatePresence>
+        {showLocation ? (
+          <LocationModal setLocation={editLocationFn} type="profile" />
+        ) : null}
+      </AnimatePresence>
     </Layout>
   );
 };
+// aniamatepresence 55번째 줄 먹여야함
 
 export default EditProfile;
 
@@ -161,6 +180,7 @@ const UserInfoForm = styled.form`
 
 const Location = styled.div`
   cursor: pointer;
+  border: 1px solid ${(props) => props.theme.borderColor.lightGray};
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
     svg {

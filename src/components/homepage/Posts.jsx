@@ -15,22 +15,34 @@ import LocationModal from "../modal/LocationModal";
 import PostCategory from "../modal/PostCategory";
 import PostItem from "../posts/PostItem";
 import { AnimatePresence } from "framer-motion";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { readLocationPosts } from "../../apis/query/postApi";
-import { readSalePosts } from "../../apis/query/userApi";
+import { editLocation, readMe, readSalePosts } from "../../apis/query/userApi";
+import { queryClient } from "../..";
+import getLocation from "../../utils/getLocation";
 function Posts() {
   const showCategory = useRecoilValue(showCategoryAtom);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
-  const [location, setLocation] = useState(null);
-  const { data, isLoading } = useQuery(
+  const { data: user } = useQuery(["mypage", "user"], readMe);
+  const { data: posts, isLoading } = useQuery(
     ["posts", "locationList"],
     readLocationPosts
   );
+  const { mutate: editLocationFn } = useMutation(editLocation, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["posts", "locationList"]);
+      queryClient.invalidateQueries(["mypage", "user"]);
+    },
+  });
+
+  const setLocation = (num) => {
+    editLocationFn(num);
+  };
 
   return (
     <Layout>
       <Header
-        title={"호평동"}
+        title={getLocation(user?.locationId)}
         isHome={true}
         onClick={() => setShowLocation(true)}
       />

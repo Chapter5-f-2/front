@@ -10,7 +10,10 @@ const UseUser = () => {
 
   // 토큰이 만료되었다면 쿠키를 삭제한다.
   const isMyTokenIsExpired = useMemo(() => isExpired(myToken), []);
-  if (isMyTokenIsExpired) removeCookieToken();
+  if (isMyTokenIsExpired) {
+    removeCookieToken();
+  }
+
   const readUser = async () => {
     //const { data } = await instance.get("users");
     const userInfo = decodeToken(myToken);
