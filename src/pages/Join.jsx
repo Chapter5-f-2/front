@@ -1,78 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import Footer from "../components/footer/Footer";
 import styled from "styled-components";
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
+import { emailDup, nicknameDup, signUp } from "../apis/query/userApi";
 
 /* 배포 URL / 인스턴스 IP주소 */
 
 const Join = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, watch, setError} = useForm();
-  const onSubmit = async (data) => {
-  try {
-    const response = await axios.post("",data)
-    if(response.ok){
-      alert("회원가입에 성공했습니다.")
-      return navigate("/login")
-    } else {
-      alert("회원가입에 실패했습니다.")
-      return 
+  const [dups, setDups] = useState({ nickname: false, email: false });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setError,
+  } = useForm();
+
+  const onSubmit = async (inputs) => {
+    if (inputs.password !== inputs.confirm) {
+      setError(
+        "confirm",
+        { message: "비밀번호가 일치하지 않습니다" },
+        { shouldFocus: true }
+      );
     }
-  } catch (e) {
-    alert("회원가입에 실패했습니다.")
-    return
-  }
-}
 
-const onValid = (data) => {
-  if(data.password !== data.confirm) {
-    setError(
-      "confirm", 
-      { message: "비밀번호가 일치하지 않습니다"},
-      { shouldFocus: true }
-    )
+    try {
+      const response = await signUp({
+        ...inputs,
+        locationId: 2,
+        profileImage:
+          "https://avatars.dicebear.com/api/identicon/wooncloud.svg",
+      });
+      if (response.data.ok) {
+        alert(response.data.message);
+        return navigate("/login");
+      } else {
+        alert(response.data.message);
+        return;
+      }
+    } catch (e) {
+      return alert("회원가입에 실패하였습니다.");
+    }
   };
-}
 
-  // userId, Key, Nickname, pw , email, profileimg, createAt
-  console.log(watch("email"));
+  const unValid = (inputs) => {
+    console.log("실패");
+  };
 
-  const emailDup = async (e) => {
+  const onEmailDup = async (e) => {
     e.preventDefault();
-    const email = watch("email")
+    const email = watch("email");
     try {
-      const response = await axios.post("", { email }).then((res) => {
-        if(res.data === true) {
-          alert("중복된 아이디입니다.")
-        } else {
-          alert("사용 가능한 아이디입니다.");
-        }
-      })
+      const response = await emailDup({ email });
+      if (response.data.ok) {
+        alert(response.data.message);
+        setDups((prev) => ({ ...prev, nickname: true }));
+      } else {
+        alert(response.data.message);
+      }
     } catch (e) {
-      return console.log(e);
+      console.log(e);
+      return alert("이미 사용중인 닉네임 입니다.");
     }
   };
 
-  const nicknameDup = async () => {
-    const nickname = watch("nickname")
+  const onNicknameDup = async (e) => {
+    e.preventDefault();
+    const nickname = watch("nickname");
     try {
-      const response = await axios.post("", { nickname }).then((res) => {
-        if(res.data === true) {
-          alert("중복된 닉네임입니다.")
-        } else {
-          alert("사용 가능한 닉네임입니다.");
-        }
-      })
+      const response = await nicknameDup({ nickname });
+      if (response.data.ok) {
+        alert(response.data.message);
+        setDups((prev) => ({ ...prev, nickname: true }));
+      } else {
+        alert(response.data.message);
+      }
     } catch (e) {
-      return console.log(e);
+      console.log(e);
+      return alert("이미 사용중인 닉네임 입니다.");
     }
   };
-  
+
   return (
     <Layout>
       <DetailHeader title={"회원가입"} />
@@ -81,12 +96,18 @@ const onValid = (data) => {
           <h1>회원정보를 설정해주세요</h1>
           <label>이메일</label>
           <Email>
-          <Input
-            {...register("email", { required: "이메일을 입력해주세요", pattern: { value:  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/, message: "잘못된 이메일 형식입니다", },
-            })}
-            placeholder="Email"
-          />
-          <DupButton onClick={emailDup}>Check</DupButton>
+            <Input
+              {...register("email", {
+                required: "이메일을 입력해주세요",
+                pattern: {
+                  value:
+                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
+                  message: "잘못된 이메일 형식입니다",
+                },
+              })}
+              placeholder="Email"
+            />
+            <DupButton onClick={onEmailDup}>Check</DupButton>
           </Email>
           <span>{errors.email?.message}</span>
           <label>비밀번호</label>
@@ -94,7 +115,9 @@ const onValid = (data) => {
             {...register("password", {
               required: "비밀번호를 입력해주세요",
               pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/, message: "최소 8자 최대 16자 1개 이상의 대,소문자, 1개의 숫자,특수 문자를 포함시켜주세요", },
+                value: /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
+                message: "최소 8자 최대 16자의 비밀번호를 입력해주세요",
+              },
             })}
             type="password"
             placeholder="Password"
@@ -102,21 +125,42 @@ const onValid = (data) => {
           <span>{errors.password?.message}</span>
           <label>비밀번호 확인</label>
           <Inputs
-            {...register("confirm", { required: "비밀번호 확인을 입력해주세요", })} type="password" placeholder="Confirm Password" />
+            {...register("confirm", {
+              required: "비밀번호 확인을 입력해주세요",
+            })}
+            type="password"
+            placeholder="Confirm Password"
+          />
           <span>{errors.confirmPassword?.message}</span>
           <label>동네 설정</label>
           <SelectTown>
-          <Blank>Here</Blank>
-          <SelectButton><IoIosArrowDown/></SelectButton>
+            <Blank>Here</Blank>
+            <SelectButton>
+              <IoIosArrowDown />
+            </SelectButton>
           </SelectTown>
           <label>닉네임</label>
           <Nickname>
-          <Input
-            {...register("nickname", { required: "닉네임을 10자 이내로 입력해주세요", })} placeholder="NickName" maxLength="10" />
-          <DupButton onClick={nicknameDup}>Check</DupButton>
+            <Input
+              {...register("nickname", {
+                required: "닉네임을 10자 이내로 입력해주세요",
+              })}
+              placeholder="NickName"
+              maxLength="10"
+            />
+            <DupButton onClick={onNicknameDup}>Check</DupButton>
           </Nickname>
           <span>{errors.nickname?.message}</span>
-          {watch("email") === "" && watch("password") === "" && watch("confirm") === "" && watch("nickname") === "" ? <Button style={{backgroundColor:"rgba(0,0,0,0.5)"}}>로그인</Button> : <Button style={{backgroundColor:"#ff6f06"}}>로그인</Button>}
+          {watch("email") === "" &&
+          watch("password") === "" &&
+          watch("confirm") === "" &&
+          watch("nickname") === "" ? (
+            <Button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+              로그인
+            </Button>
+          ) : (
+            <Button style={{ backgroundColor: "#ff6f06" }}>로그인</Button>
+          )}
         </div>
       </JoinForm>
       <Footer />
@@ -131,46 +175,45 @@ const JoinForm = styled.form`
   width: 100%;
   overflow-x: hidden;
 
-  &>div {
+  & > div {
     display: flex;
     flex-direction: column;
   }
-  
+
   h1 {
     margin-top: 1rem;
+    margin-bottom: 0.2rem;
     font-weight: bold;
     font-size: 16px;
-    margin-bottom: 0.2rem;
   }
 
   label {
     margin-top: 0.45rem;
     margin-bottom: 0.5rem;
     padding: 0 0.4rem;
-  } 
-
+  }
   span {
     width: 83%;
     margin-top: 5px;
     padding: 0 0.4rem;
-    font-size: 0.8rem;
     color: #fb3131;
+    font-size: 0.8rem;
   }
-  
-  overflow:hidden;
+
+  overflow: hidden;
 `;
 
 const Inputs = styled.input`
-    width: 100%;
-    height: 4vh;
-    margin: 0 auto;
-    padding: 0.8rem 1rem;
-    font-size: 15px;
-    border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
-    border-radius: 10px;
-      &:focus {
-        border-color: #fb3131;
-      }
+  width: 100%;
+  height: 4vh;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
+  font-size: 15px;
+  border: 1px solid ${(props) => props.theme.fontColor.lightGray};
+  border-radius: 10px;
+  &:focus {
+    border-color: #fb3131;
+  }
 `;
 
 const Input = styled.input`
@@ -180,10 +223,10 @@ const Input = styled.input`
   border: white;
   font-size: 15px;
   width: 98%;
-  border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
+  border: 1px solid ${(props) => props.theme.fontColor.lightGray};
   &:focus {
-        border: 1px solid #fb3131;
-      }
+    border: 1px solid #fb3131;
+  }
 `;
 
 const Button = styled.button`
@@ -230,12 +273,11 @@ const Blank = styled.div`
 `;
 
 const SelectTown = styled(Email)`
-  border: 1px solid ${(props)=> props.theme.fontColor.lightGray};
+  border: 1px solid ${(props) => props.theme.fontColor.lightGray};
   &:focus {
-        border-color: #fb3131;
-      }
+    border-color: #fb3131;
+  }
   margin-bottom: 0.25rem;
 `;
 
 const SelectButton = styled.button``;
-
