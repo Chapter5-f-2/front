@@ -64,10 +64,6 @@ const Join = () => {
     }
   };
 
-  const unValid = (inputs) => {
-    console.log("실패");
-  };
-
   const onEmailDup = async (e) => {
     e.preventDefault();
     const reg =
