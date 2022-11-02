@@ -15,6 +15,7 @@ import Left from "../static/svg/Left";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import instance from "../apis/instance/instance";
+import Swal from "sweetalert2";
 
 const EditProfile = () => {
   const baseURL = process.env.REACT_APP_SERVER_URL;
@@ -33,18 +34,37 @@ const EditProfile = () => {
   } = useForm();
 
   const onNick = async (data) => {
-    
     try {
       const responce = await instance.put(`mypage/nickname`, data);
       if (responce.status === 200) {
-        alert("닉네임이 수정되었습니다.");
-        return;
+        Swal.fire({
+          text: "닉네임이 수정되었습니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          confirmButtonText: '확인',
+          width:320,
+        }).then(()=> {
+          return (window.location.href = "/profiles/2/edit");
+        })
+        
       } else {
-        alert("닉네임 수정에 실패하였습니다.");
+        Swal.fire({
+          text: "닉네임 수정에 실패했습니다.",
+          confirmButtonColor: '#ff6f06',
+          icon: "error",
+          confirmButtonText: '확인',
+          width:320,
+        });
         return;
       }
     } catch (e) {
-      alert("닉네임 수정에 실패하였습니다.");
+      Swal.fire({
+        text: "닉네임 수정에 실패했습니다.",
+        confirmButtonColor: '#ff6f06',
+        icon: "error",
+        confirmButtonText: '확인',
+        width:320,
+      });
       return;
     }
   };
@@ -56,58 +76,39 @@ const EditProfile = () => {
   const onPass = async () => {
     try {
       const data = {oldPassword:oldP,newPassword:newP,confirm:con};
-      console.log(data);
       const responce = await instance.put(`mypage/password`, data );
-
-      console.log(responce);
       if (responce.status === 200) {
-        alert("비밀번호가 수정되었습니다.");
-        return;
+        Swal.fire({
+          text: "비밀번호가 수정되었습니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          confirmButtonText: '확인',
+          width:320,
+        }).then(()=> {
+          return (window.location.href = "/profiles/2/edit");
+        })
       } else {
-        alert("비밀번호 수정에 실패하였습니다.");
+        Swal.fire({
+          text: "비밀번호 수정에 실패했습니다.",
+          confirmButtonColor: '#ff6f06',
+          icon: "error",
+          confirmButtonText: '확인',
+          width:320,
+        });
         return;
       }
     } catch (e) {
       console.log(e);
-      alert("비밀번호 수정에 실패하였습니다.");
+      Swal.fire({
+        text: "비밀번호 수정에 실패했습니다.",
+        confirmButtonColor: '#ff6f06',
+        icon: "error",
+        confirmButtonText: '확인',
+        width:320,
+      });
       return;
     }
   };
-
-  /* const onValid = async (data) => {
-    const { nickname, oldPassword, newPassword, confirm } = data;
-    if(nickname === nickname)
-  }
- */
-  /* const nicknameDup = async (e) => {
-    e.preventDefault();
-    try {
-      const responce = await axios.post("", {email}).then((res) => {
-        if(res.data === true) {
-          alert("이전 닉네임과 동일합니다.")
-        } else {
-          alert("사용 가능한 닉네임입니다.");
-        }
-      })
-    } catch (e) {
-      return console.log(e);
-    }
-  } */
-
-  /* const passwordDup = async (e) => {
-    e.preventDefault();
-    try {
-      const responce = await axios.post("", {password}).then((res) => {
-        if(res.data === true) {
-          alert("이전 비밀번호와 동일합니다.")
-        } else {
-          alert("사용 가능한 비밀번호입니다.");
-        }
-      })
-    } catch (e) {
-      return console.log(e);
-    }
-  } */
 
   return (
     <Layout>
@@ -306,6 +307,7 @@ const UserInfoForm = styled.form`
     }
     span {
       padding: 1rem 1rem;
+      font-size: 0.8rem;
     }
   }
   svg {
