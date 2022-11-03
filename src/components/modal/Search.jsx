@@ -17,6 +17,7 @@ const Search = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    setShowSearch(false);
     navigate(`/posts?keyword=${keyword}`);
   };
   return (

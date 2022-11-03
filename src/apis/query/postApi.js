@@ -36,7 +36,6 @@ export const addPost = async (body) => {
 
 /** 거래글 수정*/
 export const editPost = async ({ id, body }) => {
-  console.log(id, body);
   const { data } = await postApi.put(`post/${id}`, body);
   console.log(data);
   return data;
@@ -44,7 +43,6 @@ export const editPost = async ({ id, body }) => {
 
 /** 거래글 상태 수정*/
 export const editPostStatus = async ({ id, body }) => {
-  console.log(id, body);
   const { data } = await instance.put(`post/status/${id}`, body);
   return data;
 };
@@ -57,7 +55,6 @@ export const removePost = async (id) => {
 
 /** 거래글 좋아요 */
 export const toggleWish = async (id) => {
-  console.log(id);
   const data = await instance.put(`post/wish/${id}`);
   return data;
 };

@@ -26,7 +26,7 @@ const PostDetail = () => {
   const user = UseUser();
 
   const { data, isLoading } = useQuery(["posts", "detail"], () => readPost(id));
-
+  console.log(data?.isWish);
   const btnFn = {
     openModal: () => setIsShow(true),
     closeModal: () => setIsShow(false),

@@ -16,7 +16,7 @@ const Purchases = () => {
     error,
   } = useQuery(["mypage", "purchases"], readBuyPosts);
   if (error) return;
-  console.log(posts);
+
   return (
     <Layout isDetail={false}>
       <DetailHeader title={"구매내역"} />

@@ -12,17 +12,11 @@ import priceCheck from "../../utils/priceCheck";
 
 // 채팅방 ID 받아야함
 function PriceFooter({ post, id, isWish }) {
-  console.log(id);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { mutate: toggleWishFn } = useMutation(toggleWish, {
     onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
   });
 
-  const onGoChat = async () => {
-    const response = await addChatRoom({ postId: post?.postId });
-    console.log(response);
-    if (response.status === 201) navigate(`/chats/${post?.response.data}`);
-  };
   return (
     <Wrapper>
       <FooterContainer isWish={isWish}>
@@ -32,7 +26,7 @@ function PriceFooter({ post, id, isWish }) {
           </span>
           <strong>{post && priceCheck(post?.price)}원</strong>
         </div>
-        <Button _onClick={onGoChat}>채팅하기</Button>
+        <Button>채팅하기</Button>
       </FooterContainer>
     </Wrapper>
   );
