@@ -1,4 +1,5 @@
 import React from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import ChatBox from "../components/chat/ChatBox";
 import ProductInfo from "../components/chat/ProductInfo";
@@ -10,6 +11,7 @@ import SubMain from "../components/layout/SubMain";
 
 const Chat = () => {
   const isUser = true;
+  const { data } = useQuery();
   return (
     <Layout>
       <DetailHeader title={"나먕쥬 밀탱크"} />

@@ -17,10 +17,9 @@ function PriceFooter({ post, id, isWish }) {
   });
 
   const onGoChat = async () => {
-    const response = await addChatRoom(post?.postId);
+    const response = await addChatRoom({ postId: post?.postId });
     console.log(response);
-    // if (response.status === 201)
-    //navigate(`/chats/${post?.response.data.chatListId}`);
+    if (response.status === 201) navigate(`/chats/${post?.response.data}`);
   };
   return (
     <Wrapper>

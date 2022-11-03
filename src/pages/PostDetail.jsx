@@ -20,6 +20,7 @@ const PostDetail = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const { id } = useParams();
   const user = UseUser();
+
   const { data, isLoading } = useQuery(["posts", "detail"], () => readPost(id));
 
   const btnFn = {
@@ -37,19 +38,17 @@ const PostDetail = () => {
           title={"상품페이지"}
           isDetail={true}
           _onClick={btnFn.openUpdateModal}
-          isOwner={data?.post.userId === user?.userId}
+          //isOwner={data?.post.userId === user?.userId}
         />
         <ItemDetail
           btnFn={btnFn}
           post={data && data.post}
           userId={user?.userId}
+          id={id}
+          otherPosts={data && data.otherPosts}
         />
       </SubMain>
-      <PriceFooter
-        post={data && data.post}
-        isWish={data && data.isWish}
-        id={id}
-      />
+      <PriceFooter post={data && data.post} isWish={data && data.isWish} />
       <AnimatePresence>
         {isShow ? (
           <Overlay>

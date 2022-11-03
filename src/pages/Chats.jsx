@@ -7,7 +7,7 @@ import Layout from "../components/layout/Layout";
 import SubMain from "../components/layout/SubMain";
 import SmallSpinner from "../static/svg/SmallSpinner";
 import { AnimatePresence } from "framer-motion";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { readChatRooms } from "../apis/query/chatApi";
 
 function Chats() {

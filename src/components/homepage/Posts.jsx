@@ -16,8 +16,13 @@ import PostCategory from "../modal/PostCategory";
 import PostItem from "../posts/PostItem";
 import { AnimatePresence } from "framer-motion";
 import { useMutation, useQuery } from "react-query";
-import { readLocationPosts } from "../../apis/query/postApi";
-import { editLocation, readMe, readSalePosts } from "../../apis/query/userApi";
+import { readKeywordPosts, readLocationPosts } from "../../apis/query/postApi";
+import {
+  editLocation,
+  readHistory,
+  readMe,
+  readSalePosts,
+} from "../../apis/query/userApi";
 import { queryClient } from "../..";
 import getLocation from "../../utils/getLocation";
 function Posts() {
@@ -40,6 +45,12 @@ function Posts() {
   const setLocation = (num) => {
     editLocationFn({ locationId: num });
   };
+
+  // keyword별 불러오기
+  // const { data: keywords } = useQuery(["posts", "keywords"], () =>
+  //   readKeywordPosts("사진")
+  // );
+  // console.log(keywords);
 
   return (
     <Layout>
