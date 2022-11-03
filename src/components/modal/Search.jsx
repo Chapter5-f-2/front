@@ -56,6 +56,7 @@ const Wrapper = styled(motion.form)`
   span {
     position: absolute;
     left: 1.2rem;
+    cursor: pointer;
     ${FlexCenterBox}
     svg {
       width: 1.6rem;

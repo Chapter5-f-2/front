@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { readKeywordPosts } from "../apis/query/postApi";
 import Footer from "../components/footer/Footer";

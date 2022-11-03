@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
-import { set, useForm } from "react-hook-form";
-import Footer from "../components/footer/Footer";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { IoIosArrowDown } from "react-icons/io";
 import { emailDup, nicknameDup, signUp } from "../apis/query/userApi";
 import LocationModal from "../components/modal/LocationModal";
 import { AnimatePresence } from "framer-motion";

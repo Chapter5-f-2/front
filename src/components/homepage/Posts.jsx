@@ -27,7 +27,7 @@ function Posts() {
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
   const isSearch = useRecoilValue(showSearch);
   const { data: user } = useQuery(["mypage", "user"], readMe);
-  const { data: posts, isLoading } = useQuery(
+  const { data: posts } = useQuery(
     ["posts", "locationList"],
     readLocationPosts
   );
