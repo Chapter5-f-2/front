@@ -4,7 +4,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import UseUser from "../../hooks/useUser";
 
-import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
+import { showCategoryAtom, showSearch } from "../../shared/atoms/modalAtoms";
 import { removeCookieToken } from "../../shared/Cookie";
 import { FlexAlignBox, FlexCenterBox } from "../../shared/styles/flex";
 import BellSvg from "../../static/svg/BellSvg";
@@ -15,6 +15,7 @@ import Magnify from "../../static/svg/Magnify";
 
 function Header({ title, isHome = false, onClick }) {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
+  const setIsSearch = useSetRecoilState(showSearch);
   const navigate = useNavigate();
   const user = UseUser();
   // useEffect(() => {
@@ -34,7 +35,7 @@ function Header({ title, isHome = false, onClick }) {
         </RightNavItem>
 
         <LeftNavItem>
-          <li>
+          <li onClick={() => setIsSearch(true)}>
             <Magnify />
           </li>
           {isHome ? (

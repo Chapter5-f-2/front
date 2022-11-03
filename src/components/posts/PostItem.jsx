@@ -5,6 +5,7 @@ import { FlexColumnBox } from "../../shared/styles/flex";
 import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import getLocation from "../../utils/getLocation";
+import priceCheck from "../../utils/priceCheck";
 import timeCheck from "../../utils/timeCheck";
 
 const PostItem = ({ post }) => {
@@ -21,7 +22,7 @@ const PostItem = ({ post }) => {
             <span>{getLocation(post.locationId)}</span>
             <span>· {timeCheck(post.createdAt)}</span>
           </div>
-          <strong>{post.price}원</strong>
+          <strong>{post && priceCheck(post?.price)}원</strong>
         </TextContainer>
         <SvgContainer>
           <span>

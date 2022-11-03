@@ -9,3 +9,8 @@ export const showLocationAtom = atom({
   key: "showLocation",
   default: false,
 });
+
+export const showSearch = atom({
+  key: "showSearch",
+  default: false,
+});

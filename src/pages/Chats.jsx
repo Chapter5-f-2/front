@@ -5,14 +5,14 @@ import Header from "../components/header/Header";
 import Layout from "../components/layout/Layout";
 
 import SubMain from "../components/layout/SubMain";
-import SmallSpinner from "../static/svg/SmallSpinner";
-import { AnimatePresence } from "framer-motion";
-import { useQuery } from "react-query";
-import { readChatRooms } from "../apis/query/chatApi";
+// import SmallSpinner from "../static/svg/SmallSpinner";
+// import { AnimatePresence } from "framer-motion";
+// import { useQuery } from "react-query";
+// import { readChatRooms } from "../apis/query/chatApi";
 
 function Chats() {
-  const { mutate: chats } = useQuery(["chats"], readChatRooms);
-  console.log(chats);
+  // const { mutate: chats } = useQuery(["chats"], readChatRooms);
+  // console.log(chats);
   return (
     <Layout>
       <Header title={"채팅"} />

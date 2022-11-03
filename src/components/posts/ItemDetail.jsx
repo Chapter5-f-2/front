@@ -9,13 +9,17 @@ import timeCheck from "../../utils/timeCheck";
 
 const ItemDetail = ({ btnFn, post, userId, otherPosts }) => {
   const navigate = useNavigate();
+  console.log(post);
   if (!post) return;
   return (
     <Wrapper>
       <ImgContainer src={post.postImgUrl} />
       <Container>
         <UserContainer>
-          <UserImage onClick={() => navigate(`/profiles/${post.userId}`)} />
+          <UserImage
+            onClick={() => navigate(`/profiles/${post.userId}`)}
+            src={post.profileImage}
+          />
           <TextContainer>
             <h3 onClick={() => navigate(`/profiles/${post.userId}`)}>
               {post.nickname}
@@ -87,7 +91,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserImage = styled.div`
+const UserImage = styled.img`
   width: 3rem;
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.2);

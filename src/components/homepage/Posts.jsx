@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import FloatBtn from "../../elements/FloatBtn";
 import {
   showCategoryAtom,
   showLocationAtom,
+  showSearch,
 } from "../../shared/atoms/modalAtoms";
 import Footer from "../footer/Footer";
 
@@ -16,20 +16,17 @@ import PostCategory from "../modal/PostCategory";
 import PostItem from "../posts/PostItem";
 import { AnimatePresence } from "framer-motion";
 import { useMutation, useQuery } from "react-query";
-import { readKeywordPosts, readLocationPosts } from "../../apis/query/postApi";
-import {
-  editLocation,
-  readHistory,
-  readMe,
-  readSalePosts,
-} from "../../apis/query/userApi";
+import { readLocationPosts } from "../../apis/query/postApi";
+import { editLocation, readMe } from "../../apis/query/userApi";
 import { queryClient } from "../..";
 import getLocation from "../../utils/getLocation";
+import Search from "../modal/Search";
+
 function Posts() {
   const showCategory = useRecoilValue(showCategoryAtom);
   const [showLocation, setShowLocation] = useRecoilState(showLocationAtom);
+  const isSearch = useRecoilValue(showSearch);
   const { data: user } = useQuery(["mypage", "user"], readMe);
-
   const { data: posts, isLoading } = useQuery(
     ["posts", "locationList"],
     readLocationPosts
@@ -47,10 +44,6 @@ function Posts() {
   };
 
   // keyword별 불러오기
-  // const { data: keywords } = useQuery(["posts", "keywords"], () =>
-  //   readKeywordPosts("사진")
-  // );
-  // console.log(keywords);
 
   return (
     <Layout>
@@ -72,6 +65,7 @@ function Posts() {
         {showLocation ? (
           <LocationModal type={"header"} setLocation={setLocation} />
         ) : null}
+        {isSearch ? <Search /> : null}
       </AnimatePresence>
     </Layout>
   );

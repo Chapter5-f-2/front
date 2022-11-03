@@ -8,6 +8,7 @@ import EditProfile from "../pages/EditProfile";
 import Home from "../pages/Home";
 import Interests from "../pages/Interests";
 import Join from "../pages/Join";
+import KeywordPosts from "../pages/KeywordPosts";
 import Login from "../pages/Login";
 import MyPage from "../pages/MyPage";
 import PostDetail from "../pages/PostDetail";
@@ -15,7 +16,6 @@ import Profile from "../pages/Profile";
 import Purchases from "../pages/Purchases";
 import Sales from "../pages/Sales";
 import WritePost from "../pages/WritePost";
-
 
 function Router() {
   return (
@@ -53,6 +53,7 @@ function Router() {
         <Route path="/chats/:id" element={<Chat />} />
         <Route path="/categories/:id" element={<Categories />} />
         {/* 카테고리별 상품리스트 페이지 */}
+        <Route path="/posts" element={<KeywordPosts />} />
       </Routes>
     </BrowserRouter>
   );

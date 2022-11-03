@@ -30,7 +30,7 @@ function PriceFooter({ post, id, isWish }) {
           <span onClick={() => toggleWishFn(id)}>
             {isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
-          <strong>{post?.price}원</strong>
+          <strong>{post && priceCheck(post?.price)}원</strong>
         </div>
         <Button _onClick={onGoChat}>채팅하기</Button>
       </FooterContainer>
