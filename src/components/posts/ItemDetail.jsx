@@ -45,11 +45,11 @@ const ItemDetail = ({ btnFn, post, userId, otherPosts }) => {
         <OtherPostsContainer>
           <h3>{post.nickname}님의 판매상품</h3>
           <OtherPostsGrid>
-            {post.otherPosts?.map((otherPost) => (
+            {otherPosts?.map((otherPost) => (
               <OtherPostItem key={otherPost.postId}>
                 <img src={otherPost.postImgUrl} alt="" />
                 <h4>{otherPost.title}</h4>
-                <span>{otherPost.price}</span>
+                <span>{otherPost.price}원</span>
               </OtherPostItem>
             ))}
           </OtherPostsGrid>
@@ -82,6 +82,9 @@ const UserContainer = styled.div`
   padding: 0.8rem 1rem;
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   width: 100%;
+  h3 {
+    font-weight: 500;
+  }
 `;
 
 const UserImage = styled.div`
@@ -117,7 +120,7 @@ const TextContainer = styled.div`
 `;
 
 const PostContainer = styled.div`
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 1.5rem 1rem 0.5rem 1rem;
   h3 {
     font-weight: 600;
     font-size: 1.2rem;
@@ -142,9 +145,9 @@ const StateBtn = styled.button`
 `;
 
 const PostDetailBox = styled.div`
-  padding: 0.8rem 0 1.1rem 0;
+  padding: 0.8rem 0 2rem 0;
   color: ${(props) => props.theme.fontColor.lightGray};
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   strong {
     border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   }
@@ -157,7 +160,7 @@ const PostContent = styled.p`
 
 const PostSub = styled.div`
   color: ${(props) => props.theme.fontColor.lightGray};
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 0.8rem 0;
 `;
 
@@ -170,7 +173,13 @@ const Wrapper = styled.div`
 const OtherPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid ${(props) => props.theme.borderColor.lightGray};
+  h3 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
 `;
 
 const OtherPostsGrid = styled.div`
@@ -188,7 +197,7 @@ const OtherPostItem = styled.div`
     aspect-ratio: 16/9;
   }
   h4 {
-    padding: 0.7rem;
+    padding: 0.4rem 0;
   }
   span {
     font-weight: 600;
