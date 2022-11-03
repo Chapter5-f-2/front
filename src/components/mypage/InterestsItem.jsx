@@ -9,6 +9,7 @@ import CommentSvg from "../../static/svg/CommentSvg";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import HeartSvg from "../../static/svg/HeartSvg";
 import getLocation from "../../utils/getLocation";
+import priceCheck from "../../utils/priceCheck";
 import timeCheck from "../../utils/timeCheck";
 
 const InterestsItem = ({ isProfile = false, post }) => {
@@ -38,7 +39,7 @@ const InterestsItem = ({ isProfile = false, post }) => {
               <span>· {timeCheck(+post.createdAt)}</span>
             </div>
             <strong>
-              <StatusBtn>거래완료</StatusBtn> {post.price}원
+              <StatusBtn>거래완료</StatusBtn> {post && priceCheck(post.price)}원
             </strong>
           </TextContainer>
           <SvgContainer>

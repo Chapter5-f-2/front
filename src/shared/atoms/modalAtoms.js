@@ -10,7 +10,11 @@ export const showLocationAtom = atom({
   default: false,
 });
 
+export const showSearch = atom({
+  key: "showSearch",
+  default: false,
+});
 export const ShowYearAtom = atom({
   key: "showYear",
   default: false,
-})
+});

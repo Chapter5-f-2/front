@@ -8,19 +8,20 @@ import Button from "../../elements/Button";
 import { FlexAlignBox } from "../../shared/styles/flex";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import HeartSvg from "../../static/svg/HeartSvg";
+import priceCheck from "../../utils/priceCheck";
 
 // 채팅방 ID 받아야함
 function PriceFooter({ post, id, isWish }) {
+  console.log(id);
   const navigate = useNavigate();
   const { mutate: toggleWishFn } = useMutation(toggleWish, {
     onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),
   });
 
   const onGoChat = async () => {
-    const response = await addChatRoom(post?.postId);
+    const response = await addChatRoom({ postId: post?.postId });
     console.log(response);
-    // if (response.status === 201)
-    //navigate(`/chats/${post?.response.data.chatListId}`);
+    if (response.status === 201) navigate(`/chats/${post?.response.data}`);
   };
   return (
     <Wrapper>
@@ -29,7 +30,7 @@ function PriceFooter({ post, id, isWish }) {
           <span onClick={() => toggleWishFn(id)}>
             {isWish ? <HeartSvg /> : <EmptyHeartSvg />}
           </span>
-          <strong>{post?.price}원</strong>
+          <strong>{post && priceCheck(post?.price)}원</strong>
         </div>
         <Button _onClick={onGoChat}>채팅하기</Button>
       </FooterContainer>

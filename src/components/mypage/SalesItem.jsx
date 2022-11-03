@@ -7,6 +7,7 @@ import { editPostStatus } from "../../apis/query/postApi";
 import DotSvg from "../../pages/DotSvg";
 import { FlexAlignBox, FlexColumnBox } from "../../shared/styles/flex";
 import getLocation from "../../utils/getLocation";
+import priceCheck from "../../utils/priceCheck";
 import timeCheck from "../../utils/timeCheck";
 
 const SalesItem = ({ focus, post }) => {
@@ -23,7 +24,7 @@ const SalesItem = ({ focus, post }) => {
 
   return (
     <ItemWrapper>
-      <Item onClick={() => navigate("/posts/1")}>
+      <Item onClick={() => navigate(`/posts/${post.postId}`)}>
         <ImageContainer>
           <div />
         </ImageContainer>
@@ -45,7 +46,7 @@ const SalesItem = ({ focus, post }) => {
                 )
               ) : null}
               {focus ? <StatusBtn>거래완료</StatusBtn> : null}
-              {post.price}원
+              {post && priceCheck(post.price)}원
             </strong>
           </TextContainer>
         </InfoContainer>

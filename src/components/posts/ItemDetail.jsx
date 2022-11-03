@@ -7,15 +7,19 @@ import getLocation from "../../utils/getLocation";
 import getStatus from "../../utils/getStatus";
 import timeCheck from "../../utils/timeCheck";
 
-const ItemDetail = ({ btnFn, post, userId }) => {
+const ItemDetail = ({ btnFn, post, userId, otherPosts }) => {
   const navigate = useNavigate();
+  console.log(post);
   if (!post) return;
   return (
     <Wrapper>
       <ImgContainer src={post.postImgUrl} />
       <Container>
         <UserContainer>
-          <UserImage onClick={() => navigate(`/profiles/${post.userId}`)} />
+          <UserImage
+            onClick={() => navigate(`/profiles/${post.userId}`)}
+            src={post.profileImage}
+          />
           <TextContainer>
             <h3 onClick={() => navigate(`/profiles/${post.userId}`)}>
               {post.nickname}
@@ -42,6 +46,18 @@ const ItemDetail = ({ btnFn, post, userId }) => {
             <span> · 조회 {post.wishCount}</span>
           </PostSub>
         </PostContainer>
+        <OtherPostsContainer>
+          <h3>{post.nickname}님의 판매상품</h3>
+          <OtherPostsGrid>
+            {otherPosts?.map((otherPost) => (
+              <OtherPostItem key={otherPost.postId}>
+                <img src={otherPost.postImgUrl} alt="" />
+                <h4>{otherPost.title}</h4>
+                <span>{otherPost.price}원</span>
+              </OtherPostItem>
+            ))}
+          </OtherPostsGrid>
+        </OtherPostsContainer>
       </Container>
     </Wrapper>
   );
@@ -70,9 +86,12 @@ const UserContainer = styled.div`
   padding: 0.8rem 1rem;
   border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   width: 100%;
+  h3 {
+    font-weight: 500;
+  }
 `;
 
-const UserImage = styled.div`
+const UserImage = styled.img`
   width: 3rem;
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.2);
@@ -105,7 +124,7 @@ const TextContainer = styled.div`
 `;
 
 const PostContainer = styled.div`
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 1.5rem 1rem 0.5rem 1rem;
   h3 {
     font-weight: 600;
     font-size: 1.2rem;
@@ -130,9 +149,9 @@ const StateBtn = styled.button`
 `;
 
 const PostDetailBox = styled.div`
-  padding: 0.8rem 0 1.1rem 0;
+  padding: 0.8rem 0 2rem 0;
   color: ${(props) => props.theme.fontColor.lightGray};
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   strong {
     border-bottom: 1px solid ${(props) => props.theme.borderColor.lightGray};
   }
@@ -145,7 +164,7 @@ const PostContent = styled.p`
 
 const PostSub = styled.div`
   color: ${(props) => props.theme.fontColor.lightGray};
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 0.8rem 0;
 `;
 
@@ -153,4 +172,39 @@ const PostSub = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const OtherPostsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid ${(props) => props.theme.borderColor.lightGray};
+  h3 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+`;
+
+const OtherPostsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+`;
+const OtherPostItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    aspect-ratio: 16/9;
+  }
+  h4 {
+    padding: 0.4rem 0;
+  }
+  span {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
 `;

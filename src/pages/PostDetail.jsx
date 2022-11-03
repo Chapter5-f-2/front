@@ -14,12 +14,17 @@ import { useParams } from "react-router-dom";
 import { readPost } from "../apis/query/postApi";
 import { useQuery } from "react-query";
 import UseUser from "../hooks/useUser";
+import { useRecoilValue } from "recoil";
+import { showUsers } from "../shared/atoms/modalAtoms";
 
 const PostDetail = () => {
   const [isShow, setIsShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
+
+  //const isShowUsers = useRecoilValue(showUsers);
   const { id } = useParams();
   const user = UseUser();
+
   const { data, isLoading } = useQuery(["posts", "detail"], () => readPost(id));
 
   const btnFn = {
@@ -43,6 +48,8 @@ const PostDetail = () => {
           btnFn={btnFn}
           post={data && data.post}
           userId={user?.userId}
+          id={id}
+          otherPosts={data && data.otherPosts}
         />
       </SubMain>
       <PriceFooter
@@ -62,6 +69,7 @@ const PostDetail = () => {
             <UpdateModal btnFn={btnFn} id={id} />
           </Overlay>
         ) : null}
+        {/* //{isShowUsers ? }  */}
       </AnimatePresence>
     </Layout>
   );

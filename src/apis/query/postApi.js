@@ -17,7 +17,7 @@ export const readCategoryPosts = async (categoryId) => {
 /** 키워드에 대한 거래글 조회*/
 export const readKeywordPosts = async (keyword) => {
   const { data } = await instance.get(`post/search?keyword=${keyword}`);
-  return data;
+  return data.data;
 };
 
 /** 거래글 상세 조회*/
@@ -31,7 +31,7 @@ export const readPost = async (postId) => {
 export const addPost = async (body) => {
   console.log(body);
   const { data } = await postApi.post("post", body);
-  return data;
+  return data.data;
 };
 
 /** 거래글 수정*/

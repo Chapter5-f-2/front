@@ -32,8 +32,8 @@ export const readMe = async () => {
 
 /** 다른 유저 정보 가져오기 */
 export const readUser = async (id) => {
-  const data = await instance.get(`mypage/${id}`);
-  return data;
+  const { data } = await instance.get(`mypage/profiles/${id}`);
+  return data.data;
 };
 
 /** 나의 판매목록 가져오기*/
@@ -84,8 +84,6 @@ export const editPassword = async (body) => {
 
 /** 위치 수정 */
 export const editLocation = async (body) => {
-  console.log(body);
   const { data } = await instance.put("mypage/locationId", body);
-  console.log(data);
   return data;
 };

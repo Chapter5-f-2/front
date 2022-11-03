@@ -24,12 +24,7 @@ const EditPost = () => {
   const navigate = useNavigate();
   const [preview, setPreview] = useState();
   const [file, setFile] = useState("");
-  const { mutate: editPostFn, data } = useMutation(editPost, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(["posts", "detail"]);
-      return data;
-    },
-  });
+
   const { id } = useParams();
 
   const { data: post } = useQuery(["posts", "detail"], () => readPost(id));
@@ -49,8 +44,9 @@ const EditPost = () => {
       categoryId,
       postImgUrl: file,
     };
-    editPostFn({ id, body });
-    if (data && data.ok) {
+    const response = await editPost({ id, body });
+    console.log(response);
+    if (response && response.ok) {
       return navigate(`/posts/${id}`);
     }
   };

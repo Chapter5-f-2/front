@@ -1,15 +1,21 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { readMe } from "../apis/query/userApi";
+import { readUser } from "../apis/query/userApi";
+
 import Footer from "../components/footer/Footer";
 import DetailHeader from "../components/header/DetailHeader";
 import Layout from "../components/layout/Layout";
 
 import SubMain from "../components/layout/SubMain";
 import InterestsItem from "../components/mypage/InterestsItem";
+import getLocation from "../utils/getLocation";
 
 const Profile = () => {
+  const { id } = useParams();
+  const { data: user } = useQuery(["profile", "user"], () => readUser(id));
+  if (!user) return;
   return (
     <Layout>
       <DetailHeader title={"밀탱크님의 프로필"} />
@@ -18,9 +24,9 @@ const Profile = () => {
           <div>
             <UserImage />
             <TextContainer>
-              <h3>나먕쥬 밀탱크</h3>
+              <h3>{user && user[0].nickname}</h3>
               <div>
-                <span>화도읍</span>
+                <span>{user && getLocation(user[0].locationId)}</span>
               </div>
             </TextContainer>
           </div>
@@ -31,9 +37,10 @@ const Profile = () => {
           </Btn>
         </Btns>
         <SubMain>
-          {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
-            <InterestsItem key={idx} isProfile={true} />
-          ))}
+          {user &&
+            user.map((item, idx) => (
+              <InterestsItem key={idx} isProfile={true} post={item} />
+            ))}
         </SubMain>
         <Footer />
       </SubMain>
