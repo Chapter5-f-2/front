@@ -57,17 +57,34 @@ const Join = () => {
         locationId,
       });
       if (response.data.ok) {
-        alert(response.data.message);
-        return navigate("/login");
+        /* alert(response.data.message);
+        return navigate("/login") */
+        Swal.fire({
+          title: "회원가입 \n성공",
+          confirmButtonColor: "#ff6f06",
+          icon: "success",
+          width: 320,
+        }).then(() => {
+          return navigate("/login");
+        });
       } else {
-        alert(response.data.message);
-        return;
+        /* alert(response.data.message);
+        return */
+        Swal.fire({
+          title: "회원가입 실패",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          color: "red",
+          confirmButtonText: "확인",
+          width: 320,
+        });
       }
     } catch (e) {
       return Swal.fire({
         title: "회원가입 실패",
         confirmButtonColor: "#ff6f06",
         icon: "error",
+        color: "red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -98,6 +115,7 @@ const Join = () => {
         text: "이미 사용 중인 이메일입니다",
         confirmButtonColor: "#ff6f06",
         icon: "warning",
+        color: "red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -122,6 +140,7 @@ const Join = () => {
         text: "이미 사용 중인 닉네임입니다",
         confirmButtonColor: "#ff6f06",
         icon: "warning",
+        color: "red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -344,4 +363,10 @@ const SelectTown = styled.div`
   }
 `;
 
-const SelectButton = styled.button``;
+const SelectButton = styled.button`
+  border-radius: 0px 5px 5px 0px;
+  &:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;

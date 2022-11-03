@@ -71,6 +71,7 @@ const EditProfile = () => {
           text: "닉네임 수정에 실패했습니다.",
           confirmButtonColor: "#ff6f06",
           icon: "error",
+          color:"red",
           confirmButtonText: "확인",
           width: 320,
         });
@@ -81,6 +82,7 @@ const EditProfile = () => {
         text: "닉네임 수정에 실패했습니다.",
         confirmButtonColor: "#ff6f06",
         icon: "error",
+        color:"red",
         confirmButtonText: "확인",
         width: 320,
       });
@@ -109,6 +111,7 @@ const EditProfile = () => {
           text: "비밀번호 수정에 실패했습니다.",
           confirmButtonColor: "#ff6f06",
           icon: "error",
+          color:"red",
           confirmButtonText: "확인",
           width: 320,
         });
@@ -120,6 +123,7 @@ const EditProfile = () => {
         text: "비밀번호 수정에 실패했습니다.",
         confirmButtonColor: "#ff6f06",
         icon: "error",
+        color:"red",
         confirmButtonText: "확인",
         width: 320,
       });
