@@ -61,6 +61,7 @@ const EditProfile = () => {
           text: "닉네임이 수정되었습니다",
           confirmButtonColor: "#ff6f06",
           icon: "success",
+          color:"green",
           confirmButtonText: "확인",
           width: 320,
         }).then(() => {
@@ -101,6 +102,7 @@ const EditProfile = () => {
           text: "비밀번호가 수정되었습니다",
           confirmButtonColor: "#ff6f06",
           icon: "success",
+          color:"green",
           confirmButtonText: "확인",
           width: 320,
         }).then(() => {
