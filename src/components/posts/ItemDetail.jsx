@@ -9,7 +9,6 @@ import timeCheck from "../../utils/timeCheck";
 
 const ItemDetail = ({ btnFn, post, userId, otherPosts }) => {
   const navigate = useNavigate();
-  console.log(post);
   if (!post) return;
   return (
     <Wrapper>
@@ -50,7 +49,13 @@ const ItemDetail = ({ btnFn, post, userId, otherPosts }) => {
           <h3>{post.nickname}님의 판매상품</h3>
           <OtherPostsGrid>
             {otherPosts?.map((otherPost) => (
-              <OtherPostItem key={otherPost.postId}>
+              <OtherPostItem
+                key={otherPost.postId}
+                onClick={() => {
+                  navigate(`/posts/${otherPost.postId}`);
+                  window.location.reload();
+                }}
+              >
                 <img src={otherPost.postImgUrl} alt="" />
                 <h4>{otherPost.title}</h4>
                 <span>{otherPost.price}원</span>
@@ -194,6 +199,7 @@ const OtherPostsGrid = styled.div`
 const OtherPostItem = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   img {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
