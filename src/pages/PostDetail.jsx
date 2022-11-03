@@ -20,7 +20,7 @@ import { showUsers } from "../shared/atoms/modalAtoms";
 const PostDetail = () => {
   const [isShow, setIsShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
-  const isShowUsers = useRecoilValue(showUsers);
+  //const isShowUsers = useRecoilValue(showUsers);
   const { id } = useParams();
   const user = UseUser();
 
