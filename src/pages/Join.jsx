@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 /* 배포 URL / 인스턴스 IP주소 */
 
 const Join = () => {
+  
   const navigate = useNavigate();
   const [dups, setDups] = useState({ nickname: false, email: false });
   const [locationId, setLocationId] = useState(0);
@@ -47,11 +48,27 @@ const Join = () => {
         locationId,
       });
       if (response.data.ok) {
-        alert(response.data.message);
-        return navigate("/login");
+        /* alert(response.data.message);
+        return navigate("/login") */
+        Swal.fire({
+          title: "회원가입 \n성공",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          width:320,
+        }).then(()=> {
+          return navigate("/login")
+        });
       } else {
-        alert(response.data.message);
-        return;
+        /* alert(response.data.message);
+        return */
+        Swal.fire({
+          title: "회원가입 실패",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          color:"red",
+          confirmButtonText: "확인",
+          width: 320,
+        });
       }
     } catch (e) {
       return Swal.fire({
@@ -171,7 +188,7 @@ const Join = () => {
           <label>동네 설정</label>
           <SelectTown onClick={() => setShowLocation(true)}>
             <Blank>
-              {locationId === 0 ? "동네 설정" : getLocation(locationId)}
+              {locationId === 0 ? "" : getLocation(locationId)}
             </Blank>
             <SelectButton>
               <IoIosArrowDown />
@@ -195,10 +212,10 @@ const Join = () => {
           watch("confirm") === "" &&
           watch("nickname") === "" ? (
             <Button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-              로그인
+              완료
             </Button>
           ) : (
-            <Button style={{ backgroundColor: "#ff6f06" }}>로그인</Button>
+            <Button style={{ backgroundColor: "#ff6f06" }}>완료</Button>
           )}
         </div>
       </JoinForm>
@@ -292,12 +309,10 @@ const Email = styled.div`
 const DupButton = styled.button`
   background-color: #ff6f06;
   border-radius: 5px;
-  /* line-height: 1.2; */
   width: 100%;
   height: 4vh;
   color: white;
-  border-radius: 9px 9px 9px px;
-  /* margin: 5px 5px 5px -5px; */
+  border-radius: 9px 9px 9px 9px;
 `;
 
 const Nickname = styled(Email)``;
@@ -323,4 +338,10 @@ const SelectTown = styled(Email)`
   margin-bottom: 0.25rem;
 `;
 
-const SelectButton = styled.button``;
+const SelectButton = styled.button`
+  border-radius: 0px 5px 5px 0px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+`;

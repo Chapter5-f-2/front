@@ -109,7 +109,7 @@ const LoginForm = styled.form`
   div {
     display: flex;
     flex-direction: column;
-    margin-top: 35%;
+    margin-top: 60%;
   }
 
   label {
