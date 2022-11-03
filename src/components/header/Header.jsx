@@ -5,20 +5,26 @@ import styled from "styled-components";
 import UseUser from "../../hooks/useUser";
 
 import { showCategoryAtom } from "../../shared/atoms/modalAtoms";
+import { removeCookieToken } from "../../shared/Cookie";
 import { FlexAlignBox, FlexCenterBox } from "../../shared/styles/flex";
 import BellSvg from "../../static/svg/BellSvg";
 import BottomArrowSvg from "../../static/svg/BottomArrowSvg";
 import ListSvg from "../../static/svg/ListSvg";
+import LogoutSvg from "../../static/svg/LogoutSvg";
 import Magnify from "../../static/svg/Magnify";
 
 function Header({ title, isHome = false, onClick }) {
   const setShowCategory = useSetRecoilState(showCategoryAtom);
   const navigate = useNavigate();
   const user = UseUser();
-
   // useEffect(() => {
   //   if (!user) navigate("/login");
   // }, [user, navigate]);
+  const logOut = () => {
+    removeCookieToken();
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <Wrapper>
       <nav>
@@ -37,8 +43,8 @@ function Header({ title, isHome = false, onClick }) {
             </li>
           ) : null}
 
-          <li>
-            <BellSvg />
+          <li onClick={logOut}>
+            <LogoutSvg _width={1.6} />
           </li>
         </LeftNavItem>
       </nav>

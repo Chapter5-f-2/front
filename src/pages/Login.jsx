@@ -8,9 +8,7 @@ import { login } from "../apis/query/userApi";
 import { setAccessToken } from "../shared/Cookie";
 import Swal from "sweetalert2";
 
-
 const Login = () => {
-
   const {
     register,
     handleSubmit,
@@ -24,30 +22,29 @@ const Login = () => {
       if (response.status === 200) {
         Swal.fire({
           title: "로그인 성공",
-          confirmButtonColor: '#ff6f06',
+          confirmButtonColor: "#ff6f06",
           icon: "success",
-          width:320,
-        }).then(()=> {
+          width: 320,
+        }).then(() => {
           console.log(response.data);
           setAccessToken(response.data.token);
           return (window.location.href = "/");
-        })
+        });
       } else {
         Swal.fire({
           title: "로그인 실패",
           text: "이메일과 비밀번호를 확인해주세요",
           icon: "error",
-          width:320,
-        })
+          width: 320,
+        });
       }
     } catch (e) {
-      console.log(e);
       return Swal.fire({
         title: "로그인 실패",
         text: "이메일과 비밀번호를 확인해주세요",
         icon: "error",
-        width:320,
-      })
+        width: 320,
+      });
     }
   };
 
@@ -82,16 +79,15 @@ const Login = () => {
             placeholder="Password"
           />
           <span>{errors?.Password?.message}</span>
-          {watch("email") === "" && watch("password") === "" ? (
-            <button style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-              로그인
-            </button>
+          {Object.keys(watch()).length === 0 ||
+          (watch("email") === "" && watch("password") === "") ? (
+            <Btn focus={false}>로그인</Btn>
           ) : (
-            <button style={{ backgroundColor: "#ff6f06" }}>로그인</button>
+            <Btn focus={true}>로그인</Btn>
           )}
         </div>
       </LoginForm>
-      <Footer />
+      <div />
     </Layout>
   );
 };
@@ -118,33 +114,39 @@ const LoginForm = styled.form`
 
   input {
     width: 100%;
-    height: 5vh;
+    height: 3rem;
     margin: 0 auto;
-    padding-left: 0.5rem;
-    font-size: 15px;
-    border: 1px solid ${(props) => props.theme.fontColor.lightGray};
-    border-radius: 10px;
+    padding-left: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid ${(props) => props.theme.borderColor.lightGray};
+    border-radius: 5px;
     &:focus {
-      border-color: #fb3131;
+      border-color: ${(props) => props.theme.fontColor.orange};
+    }
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.35);
     }
   }
 
   span {
-    margin-top: 5px;
-    margin-left: 12%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    margin-left: 0.2rem;
     color: #fb3131;
     font-size: 0.8rem;
   }
+`;
 
-  button {
-    width: 100%;
-    height: 6vh;
-    margin: 0 auto;
-    margin-top: 20px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    background-color: #ff6f06;
-    border-radius: 10px;
-  }
+const Btn = styled.button`
+  width: 100%;
+  height: 3rem;
+  margin: 0 auto;
+  margin-top: 1rem;
+  color: ${(props) => (props.focus ? "white" : "rgba(0, 0, 0, 0.4);")};
+  font-weight: 600;
+  font-size: 1rem;
+  border: ${(props) => (props.focus ? "0px" : "1px")} solid
+    ${(props) => props.theme.borderColor.lightGray};
+  border-radius: 5px;
+  background-color: ${(props) => (props.focus ? "#ff6f06" : "none")};
 `;

@@ -205,9 +205,10 @@ const EditProfile = () => {
               type="password"
             />
             <span>{errors?.confirm?.message}</span>
-            {watch("oldPassword") === "" &&
-            watch("newPassword") === "" &&
-            watch("confirm") === "" ? (
+            {Object.keys(watch()).length === 0 ||
+            (watch("oldPassword") === "" &&
+              watch("newPassword") === "" &&
+              watch("confirm") === "") ? (
               <PasswordBtn focus={false}>비밀번호 수정</PasswordBtn>
             ) : (
               <PasswordBtn focus={true}>비밀번호 수정</PasswordBtn>
