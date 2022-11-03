@@ -50,6 +50,7 @@ const btnStyle = {
   _width: "100%",
   _bgColor: "#EF904D",
   _hoverBgColor: "#FF5501",
+  _padding: "0.8rem",
 };
 
 const Wrapper = styled.div`
@@ -89,9 +90,9 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   span {
-    margin-top: 2rem;
+    margin-top: 1.7rem;
+    margin-bottom: 1rem;
     color: ${(props) => props.theme.fontColor.lightGray};
     font-weight: 400;
     strong {
