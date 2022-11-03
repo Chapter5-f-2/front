@@ -116,6 +116,7 @@ const Join = () => {
           confirmButtonColor: '#ff6f06',
           icon: "success",
           color:"green",
+          confirmButtonText: "확인",
           width:320,
         })
         setDups((prev) => ({ ...prev, nickname: true }));
@@ -146,6 +147,7 @@ const Join = () => {
           confirmButtonColor: '#ff6f06',
           icon: "success",
           color:"green",
+          confirmButtonText: "확인",
           width:320,
         });
         setDups((prev) => ({ ...prev, nickname: true }));
