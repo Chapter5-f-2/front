@@ -97,11 +97,25 @@ const Join = () => {
     try {
       if (!testing) {
         setFocus("email");
-        return alert("이메일을 확인해주세요");
+        return Swal.fire({
+          text:"이메일을 확인해주세요",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          color:"red",
+          confirmButtonText: "확인",
+          width: 320,
+        });
       }
       const response = await emailDup({ email });
       if (response.data.ok) {
-        alert(response.data.message);
+        Swal.fire({
+          text: "사용가능한 \n이메일입니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          color:"green",
+          confirmButtonText: "확인",
+          width:320,
+        })
         setDups((prev) => ({ ...prev, nickname: true }));
       } else {
         alert(response.data.message);
@@ -125,7 +139,14 @@ const Join = () => {
     try {
       const response = await nicknameDup({ nickname });
       if (response.data.ok) {
-        alert(response.data.message);
+        Swal.fire({
+          text: "사용가능한 \n닉네임입니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          color:"green",
+          confirmButtonText: "확인",
+          width:320,
+        });
         setDups((prev) => ({ ...prev, nickname: true }));
       } else {
         alert(response.data.message);
