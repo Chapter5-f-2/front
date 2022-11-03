@@ -8,9 +8,11 @@ import Button from "../../elements/Button";
 import { FlexAlignBox } from "../../shared/styles/flex";
 import EmptyHeartSvg from "../../static/svg/EmptyHeartSvg";
 import HeartSvg from "../../static/svg/HeartSvg";
+import priceCheck from "../../utils/priceCheck";
 
 // 채팅방 ID 받아야함
 function PriceFooter({ post, id, isWish }) {
+  console.log(id);
   const navigate = useNavigate();
   const { mutate: toggleWishFn } = useMutation(toggleWish, {
     onSuccess: () => queryClient.invalidateQueries(["posts", "detail"]),

@@ -23,7 +23,7 @@ const SalesItem = ({ focus, post }) => {
 
   return (
     <ItemWrapper>
-      <Item onClick={() => navigate("/posts/1")}>
+      <Item onClick={() => navigate(`/posts/${post.postId}`)}>
         <ImageContainer>
           <div />
         </ImageContainer>
