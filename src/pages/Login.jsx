@@ -37,6 +37,7 @@ const Login = () => {
           title: "로그인 실패",
           text: "이메일과 비밀번호를 확인해주세요",
           icon: "error",
+          color:"red",
           width:320,
         })
       }
@@ -46,6 +47,7 @@ const Login = () => {
         title: "로그인 실패",
         text: "이메일과 비밀번호를 확인해주세요",
         icon: "error",
+        color:"red",
         width:320,
       })
     }
@@ -107,7 +109,7 @@ const LoginForm = styled.form`
   div {
     display: flex;
     flex-direction: column;
-    margin-top: 35%;
+    margin-top: 60%;
   }
 
   label {
