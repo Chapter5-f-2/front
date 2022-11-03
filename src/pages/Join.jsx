@@ -18,7 +18,6 @@ import Swal from "sweetalert2";
 /* 배포 URL / 인스턴스 IP주소 */
 
 const Join = () => {
-  
   const navigate = useNavigate();
   const [dups, setDups] = useState({ nickname: false, email: false });
   const [locationId, setLocationId] = useState(0);
@@ -91,11 +90,24 @@ const Join = () => {
     try {
       if (!testing) {
         setFocus("email");
-        return alert("이메일을 확인해주세요");
+        return Swal.fire({
+          text:"이메일을 확인해주세요",
+          confirmButtonColor: "#ff6f06",
+          icon: "error",
+          color:"red",
+          confirmButtonText: "확인",
+          width: 320,
+        });
       }
       const response = await emailDup({ email });
       if (response.data.ok) {
-        alert(response.data.message);
+        Swal.fire({
+          text: "사용가능한 \n이메일입니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          color:"green",
+          width:320,
+        })
         setDups((prev) => ({ ...prev, nickname: true }));
       } else {
         alert(response.data.message);
@@ -119,7 +131,13 @@ const Join = () => {
     try {
       const response = await nicknameDup({ nickname });
       if (response.data.ok) {
-        alert(response.data.message);
+        Swal.fire({
+          text: "사용가능한 \n닉네임입니다",
+          confirmButtonColor: '#ff6f06',
+          icon: "success",
+          color:"green",
+          width:320,
+        });
         setDups((prev) => ({ ...prev, nickname: true }));
       } else {
         alert(response.data.message);
