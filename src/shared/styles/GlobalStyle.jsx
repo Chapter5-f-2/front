@@ -71,7 +71,6 @@ body{
 *{
   box-sizing: border-box;
   transition: background-color 0.2s linear;
- 
 }
 input{
   outline: none;

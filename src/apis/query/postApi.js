@@ -29,7 +29,6 @@ export const readPost = async (postId) => {
 
 /** 거래글 추가*/
 export const addPost = async (body) => {
-  console.log(body);
   const { data } = await postApi.post("post", body);
   return data.data;
 };
